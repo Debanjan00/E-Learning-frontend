@@ -1,0 +1,47 @@
+.futuristic-input {
+  width: 100%;
+
+  padding: 14px;
+
+  background: #0f0f0f !important;
+
+  color: white !important;
+
+  border:
+    1px solid rgba(255,140,0,0.3);
+
+  border-radius: 12px;
+
+  outline: none;
+
+  font-size: 16px;
+
+  box-sizing: border-box;
+}
+
+.futuristic-input::placeholder {
+  color: #ffb74d;
+}
+
+/* AUTOFILL FIX */
+
+input.futuristic-input:-webkit-autofill,
+input.futuristic-input:-webkit-autofill:hover,
+input.futuristic-input:-webkit-autofill:focus,
+input.futuristic-input:-webkit-autofill:active {
+
+  -webkit-text-fill-color:
+    white !important;
+
+  -webkit-box-shadow:
+    0 0 0 1000px #0f0f0f inset !important;
+
+  box-shadow:
+    0 0 0 1000px #0f0f0f inset !important;
+
+  transition:
+    background-color 999999s ease-in-out 0s;
+
+  border:
+    1px solid rgba(255,140,0,0.3) !important;
+}
