@@ -79,10 +79,29 @@ function ChatPage() {
       "receiveMessage",
       (data) => {
 
-        setMessages((prev) => [
-          ...prev,
-          data,
-        ]);
+        setMessages((prev) => {
+
+          // PREVENT DUPLICATE MESSAGES
+          const exists =
+            prev.some(
+              (msg) =>
+                msg.message === data.message &&
+                (
+                  msg.sender === data.senderId ||
+                  msg.senderId === data.senderId
+                )
+            );
+
+          if (exists) return prev;
+
+          return [
+            ...prev,
+            {
+              sender: data.senderId,
+              message: data.message,
+            },
+          ];
+        });
       }
     );
 
@@ -356,7 +375,7 @@ function ChatPage() {
 
                 background:
                   selectedUser ===
-                  u._id
+                    u._id
                     ? "linear-gradient(135deg,#ff9800,#ff5e00)"
                     : "rgba(255,255,255,0.04)",
               }}
@@ -446,7 +465,7 @@ function ChatPage() {
 
                   style={
                     msg.sender ===
-                    user._id
+                      user._id
                       ? styles.myMessage
                       : styles.otherMessage
                   }
