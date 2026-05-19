@@ -3,7 +3,6 @@
 import { io } from "socket.io-client";
 
 const socket = io(
-  "https://e-learning-backend-render.onrender.com",
   "https://e-learning-backend-iota.vercel.app",
   {
     transports: ["websocket"],
