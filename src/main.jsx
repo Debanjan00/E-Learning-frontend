@@ -16,6 +16,9 @@ import {
 
 export const server =
   "https://e-learning-backend-render.onrender.com";
+
+export const server =
+  "https://e-learning-backend-iota.vercel.app";
  
 
 ReactDOM.createRoot(
