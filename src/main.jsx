@@ -15,7 +15,7 @@ import {
 } from "react-toastify";
 
 export const server =
-  "https://e-learning-backend-iota.vercel.app";
+  "https://e-learning-backend-render.onrender.com";
  
 
 ReactDOM.createRoot(
