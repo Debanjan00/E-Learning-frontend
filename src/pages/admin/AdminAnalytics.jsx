@@ -9,15 +9,6 @@ import {
   motion,
 } from "framer-motion";
 
-import CountUp from "react-countup";
-
-import {
-  CircularProgressbar,
-  buildStyles,
-} from "react-circular-progressbar";
-
-import "react-circular-progressbar/dist/styles.css";
-
 import {
   FaUsers,
   FaBook,
@@ -94,15 +85,13 @@ function AdminAnalytics() {
   const cards = [
 
     {
-      title:
-        "Users",
+      title: "Users",
 
       value:
-        analytics
-          ?.totalUsers || 0,
+        analytics?.totalUsers || 0,
 
       icon:
-        <FaUsers />,
+        FaUsers,
 
       color:
         "#ff9800",
@@ -113,11 +102,10 @@ function AdminAnalytics() {
         "Courses",
 
       value:
-        analytics
-          ?.totalCourses || 0,
+        analytics?.totalCourses || 0,
 
       icon:
-        <FaBook />,
+        FaBook,
 
       color:
         "#ff5e00",
@@ -128,11 +116,10 @@ function AdminAnalytics() {
         "Tests",
 
       value:
-        analytics
-          ?.totalTests || 0,
+        analytics?.totalTests || 0,
 
       icon:
-        <FaClipboardList />,
+        FaClipboardList,
 
       color:
         "#10b981",
@@ -143,11 +130,10 @@ function AdminAnalytics() {
         "Live Classes",
 
       value:
-        analytics
-          ?.totalLiveClasses || 0,
+        analytics?.totalLiveClasses || 0,
 
       icon:
-        <FaVideo />,
+        FaVideo,
 
       color:
         "#ef4444",
@@ -158,11 +144,10 @@ function AdminAnalytics() {
         "Results",
 
       value:
-        analytics
-          ?.totalResults || 0,
+        analytics?.totalResults || 0,
 
       icon:
-        <FaChartBar />,
+        FaChartBar,
 
       color:
         "#8b5cf6",
@@ -173,11 +158,10 @@ function AdminAnalytics() {
         "Revenue",
 
       value:
-        analytics
-          ?.totalRevenue || 0,
+        analytics?.totalRevenue || 0,
 
       icon:
-        <FaRupeeSign />,
+        FaRupeeSign,
 
       color:
         "#14b8a6",
@@ -192,8 +176,7 @@ function AdminAnalytics() {
         "Users",
 
       value:
-        analytics
-          ?.totalUsers || 0,
+        analytics?.totalUsers || 0,
     },
 
     {
@@ -201,8 +184,7 @@ function AdminAnalytics() {
         "Courses",
 
       value:
-        analytics
-          ?.totalCourses || 0,
+        analytics?.totalCourses || 0,
     },
 
     {
@@ -210,8 +192,7 @@ function AdminAnalytics() {
         "Tests",
 
       value:
-        analytics
-          ?.totalTests || 0,
+        analytics?.totalTests || 0,
     },
 
     {
@@ -219,8 +200,7 @@ function AdminAnalytics() {
         "Classes",
 
       value:
-        analytics
-          ?.totalLiveClasses || 0,
+        analytics?.totalLiveClasses || 0,
     },
   ];
 
@@ -232,8 +212,7 @@ function AdminAnalytics() {
         "Revenue",
 
       value:
-        analytics
-          ?.totalRevenue || 0,
+        analytics?.totalRevenue || 0,
     },
 
     {
@@ -241,8 +220,7 @@ function AdminAnalytics() {
         "Results",
 
       value:
-        analytics
-          ?.totalResults || 0,
+        analytics?.totalResults || 0,
     },
   ];
 
@@ -283,6 +261,7 @@ function AdminAnalytics() {
   return (
     <div style={styles.page}>
 
+      {/* HEADING */}
       <motion.h1
         initial={{
           opacity: 0,
@@ -349,7 +328,9 @@ function AdminAnalytics() {
                 }}
               >
 
-                {card.icon}
+                {React.createElement(
+                  card.icon
+                )}
 
               </div>
 
@@ -359,15 +340,7 @@ function AdminAnalytics() {
                 }
               >
 
-                <CountUp
-                  end={
-                    Number(
-                      card.value
-                    )
-                  }
-
-                  duration={2}
-                />
+                {card.value}
 
               </h2>
 
@@ -488,7 +461,7 @@ function AdminAnalytics() {
 
       </div>
 
-      {/* LINE GRAPH */}
+      {/* LINE CHART */}
       <div style={styles.chartCard}>
 
         <h2 style={styles.chartTitle}>
@@ -529,79 +502,6 @@ function AdminAnalytics() {
           </LineChart>
 
         </ResponsiveContainer>
-
-      </div>
-
-      {/* PROGRESS */}
-      <div style={styles.progressGrid}>
-
-        <div style={styles.progressCard}>
-
-          <h3 style={styles.progressTitle}>
-            Course Completion
-          </h3>
-
-          <div
-            style={{
-              width: 150,
-              height: 150,
-            }}
-          >
-
-            <CircularProgressbar
-              value={80}
-
-              text={"80%"}
-
-              styles={buildStyles({
-                pathColor:
-                  "#ff9800",
-
-                textColor:
-                  "#fff",
-
-                trailColor:
-                  "#333",
-              })}
-            />
-
-          </div>
-
-        </div>
-
-        <div style={styles.progressCard}>
-
-          <h3 style={styles.progressTitle}>
-            AI Usage
-          </h3>
-
-          <div
-            style={{
-              width: 150,
-              height: 150,
-            }}
-          >
-
-            <CircularProgressbar
-              value={65}
-
-              text={"65%"}
-
-              styles={buildStyles({
-                pathColor:
-                  "#ff5e00",
-
-                textColor:
-                  "#fff",
-
-                trailColor:
-                  "#333",
-              })}
-            />
-
-          </div>
-
-        </div>
 
       </div>
 
@@ -765,42 +665,6 @@ const styles = {
     marginBottom: "20px",
 
     textAlign: "center",
-  },
-
-  progressGrid: {
-    display: "grid",
-
-    gridTemplateColumns:
-      "repeat(auto-fit,minmax(220px,1fr))",
-
-    gap: "25px",
-
-    marginTop: "30px",
-
-    marginBottom: "30px",
-  },
-
-  progressCard: {
-    background:
-      "rgba(255,255,255,0.05)",
-
-    padding: "24px",
-
-    borderRadius: "24px",
-
-    display: "flex",
-
-    flexDirection:
-      "column",
-
-    alignItems:
-      "center",
-
-    gap: "18px",
-  },
-
-  progressTitle: {
-    color: "white",
   },
 
   aiCard: {
