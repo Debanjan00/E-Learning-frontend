@@ -9,6 +9,15 @@ import {
   motion,
 } from "framer-motion";
 
+import CountUp from "react-countup";
+
+import {
+  CircularProgressbar,
+  buildStyles,
+} from "react-circular-progressbar";
+
+import "react-circular-progressbar/dist/styles.css";
+
 import {
   FaUsers,
   FaBook,
@@ -16,15 +25,16 @@ import {
   FaVideo,
   FaChartBar,
   FaRupeeSign,
+  FaRobot,
 } from "react-icons/fa";
 
 import {
+  ResponsiveContainer,
   BarChart,
   Bar,
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer,
   PieChart,
   Pie,
   Cell,
@@ -34,7 +44,7 @@ import {
 } from "recharts";
 
 import { server }
-  from "../../main";
+from "../../main";
 
 function AdminAnalytics() {
 
@@ -80,6 +90,7 @@ function AdminAnalytics() {
       }
     };
 
+  // ANALYTICS CARDS
   const cards = [
 
     {
@@ -88,7 +99,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalUsers,
+          ?.totalUsers || 0,
 
       icon:
         <FaUsers />,
@@ -103,7 +114,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalCourses,
+          ?.totalCourses || 0,
 
       icon:
         <FaBook />,
@@ -118,13 +129,13 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalTests,
+          ?.totalTests || 0,
 
       icon:
         <FaClipboardList />,
 
       color:
-        "#f59e0b",
+        "#10b981",
     },
 
     {
@@ -133,7 +144,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalLiveClasses,
+          ?.totalLiveClasses || 0,
 
       icon:
         <FaVideo />,
@@ -148,7 +159,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalResults,
+          ?.totalResults || 0,
 
       icon:
         <FaChartBar />,
@@ -162,7 +173,8 @@ function AdminAnalytics() {
         "Revenue",
 
       value:
-        `₹${analytics?.totalRevenue}`,
+        analytics
+          ?.totalRevenue || 0,
 
       icon:
         <FaRupeeSign />,
@@ -181,7 +193,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalUsers,
+          ?.totalUsers || 0,
     },
 
     {
@@ -190,7 +202,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalCourses,
+          ?.totalCourses || 0,
     },
 
     {
@@ -199,7 +211,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalTests,
+          ?.totalTests || 0,
     },
 
     {
@@ -208,7 +220,7 @@ function AdminAnalytics() {
 
       value:
         analytics
-          ?.totalLiveClasses,
+          ?.totalLiveClasses || 0,
     },
   ];
 
@@ -239,43 +251,58 @@ function AdminAnalytics() {
     "#ff5e00",
   ];
 
-  // LINE DATA
+  // REVENUE GRAPH
   const lineData = [
 
     {
       month: "Jan",
-      revenue: 2000,
-    },
-
-    {
-      month: "Feb",
       revenue: 5000,
     },
 
     {
-      month: "Mar",
-      revenue: 8000,
+      month: "Feb",
+      revenue: 9000,
     },
 
     {
-      month: "Apr",
+      month: "Mar",
       revenue: 12000,
     },
 
     {
-      month: "May",
+      month: "Apr",
       revenue: 18000,
+    },
+
+    {
+      month: "May",
+      revenue: 25000,
     },
   ];
 
   return (
     <div style={styles.page}>
 
-      <h1 style={styles.heading}>
-        Analytics Dashboard 📊
-      </h1>
+      {/* HEADING */}
+      <motion.h1
+        initial={{
+          opacity: 0,
+          y: -20,
+        }}
 
-      {/* CARDS */}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+
+        style={styles.heading}
+      >
+
+        Futuristic Analytics 🚀
+
+      </motion.h1>
+
+      {/* TOP CARDS */}
       <div style={styles.grid}>
 
         {cards.map(
@@ -286,6 +313,10 @@ function AdminAnalytics() {
 
             <motion.div
               key={index}
+
+              whileHover={{
+                scale: 1.04,
+              }}
 
               initial={{
                 opacity: 0,
@@ -300,10 +331,6 @@ function AdminAnalytics() {
               transition={{
                 delay:
                   index * 0.1,
-              }}
-
-              whileHover={{
-                scale: 1.03,
               }}
 
               style={{
@@ -333,7 +360,15 @@ function AdminAnalytics() {
                 }
               >
 
-                {card.value}
+                <CountUp
+                  end={
+                    Number(
+                      card.value
+                    )
+                  }
+
+                  duration={2}
+                />
 
               </h2>
 
@@ -372,7 +407,9 @@ function AdminAnalytics() {
               data={barData}
             >
 
-              <XAxis dataKey="name" />
+              <XAxis
+                dataKey="name"
+              />
 
               <YAxis />
 
@@ -380,7 +417,9 @@ function AdminAnalytics() {
 
               <Bar
                 dataKey="value"
+
                 fill="#ff9800"
+
                 radius={[
                   10,
                   10,
@@ -430,8 +469,8 @@ function AdminAnalytics() {
 
                       fill={
                         COLORS[
-                        index %
-                        COLORS.length
+                          index %
+                            COLORS.length
                         ]
                       }
                     />
@@ -501,6 +540,107 @@ function AdminAnalytics() {
 
       </div>
 
+      {/* CIRCULAR ANALYTICS */}
+      <div style={styles.progressGrid}>
+
+        <div style={styles.progressCard}>
+
+          <h3 style={styles.progressTitle}>
+            Course Completion
+          </h3>
+
+          <div
+            style={{
+              width: 150,
+              height: 150,
+            }}
+          >
+
+            <CircularProgressbar
+              value={80}
+
+              text={`80%`}
+
+              styles={buildStyles({
+                pathColor:
+                  "#ff9800",
+
+                textColor:
+                  "#fff",
+
+                trailColor:
+                  "#333",
+              })}
+            />
+
+          </div>
+
+        </div>
+
+        <div style={styles.progressCard}>
+
+          <h3 style={styles.progressTitle}>
+            AI Usage
+          </h3>
+
+          <div
+            style={{
+              width: 150,
+              height: 150,
+            }}
+          >
+
+            <CircularProgressbar
+              value={65}
+
+              text={`65%`}
+
+              styles={buildStyles({
+                pathColor:
+                  "#ff5e00",
+
+                textColor:
+                  "#fff",
+
+                trailColor:
+                  "#333",
+              })}
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* AI CARD */}
+      <motion.div
+        whileHover={{
+          scale: 1.02,
+        }}
+
+        style={styles.aiCard}
+      >
+
+        <FaRobot
+          style={styles.aiIcon}
+        />
+
+        <div>
+
+          <h2 style={styles.aiTitle}>
+            AI Tutor Activity
+          </h2>
+
+          <p style={styles.aiText}>
+            1,240 AI conversations
+            this month 🚀
+          </p>
+
+        </div>
+
+      </motion.div>
+
     </div>
   );
 }
@@ -510,10 +650,13 @@ const styles = {
   page: {
     minHeight: "100vh",
 
-    padding: "40px",
+    padding: "20px",
 
     background:
       "linear-gradient(135deg,#0f0f0f,#111827)",
+
+    overflowX:
+      "hidden",
   },
 
   heading: {
@@ -522,26 +665,29 @@ const styles = {
     textAlign:
       "center",
 
-    marginBottom: "40px",
+    marginBottom: "30px",
 
-    fontSize: "48px",
+    fontSize:
+      "clamp(28px,6vw,52px)",
+
+    lineHeight: 1.2,
   },
 
   grid: {
     display: "grid",
 
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(250px,1fr))",
+      "repeat(auto-fit,minmax(220px,1fr))",
 
-    gap: "25px",
+    gap: "20px",
 
-    marginBottom: "40px",
+    marginBottom: "30px",
   },
 
   card: {
-    padding: "30px",
+    padding: "22px",
 
-    borderRadius: "28px",
+    borderRadius: "24px",
 
     background:
       "rgba(255,255,255,0.05)",
@@ -555,7 +701,7 @@ const styles = {
     textAlign: "center",
 
     boxShadow:
-      "0 0 25px rgba(255,255,255,0.05)",
+      "0 0 30px rgba(255,152,0,0.1)",
   },
 
   icon: {
@@ -584,39 +730,49 @@ const styles = {
   value: {
     color: "white",
 
-    fontSize: "38px",
+    fontSize:
+      "clamp(28px,6vw,40px)",
 
     marginBottom: "10px",
+
+    wordBreak:
+      "break-word",
   },
 
   title: {
     color: "#aaa",
 
-    fontSize: "18px",
+    fontSize:
+      "clamp(14px,3vw,18px)",
   },
 
   chartGrid: {
     display: "grid",
 
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(350px,1fr))",
+      "repeat(auto-fit,minmax(280px,1fr))",
 
-    gap: "30px",
+    gap: "25px",
+
+    marginBottom: "35px",
   },
 
   chartCard: {
     background:
       "rgba(255,255,255,0.05)",
 
-    borderRadius: "28px",
+    borderRadius: "24px",
 
-    padding: "25px",
+    padding: "18px",
 
     backdropFilter:
       "blur(14px)",
 
     boxShadow:
       "0 0 25px rgba(255,255,255,0.05)",
+
+    overflowX:
+      "auto",
   },
 
   chartTitle: {
@@ -625,6 +781,83 @@ const styles = {
     marginBottom: "20px",
 
     textAlign: "center",
+  },
+
+  progressGrid: {
+    display: "grid",
+
+    gridTemplateColumns:
+      "repeat(auto-fit,minmax(220px,1fr))",
+
+    gap: "25px",
+
+    marginBottom: "35px",
+  },
+
+  progressCard: {
+    background:
+      "rgba(255,255,255,0.05)",
+
+    padding: "24px",
+
+    borderRadius: "24px",
+
+    display: "flex",
+
+    flexDirection:
+      "column",
+
+    alignItems:
+      "center",
+
+    gap: "18px",
+  },
+
+  progressTitle: {
+    color: "white",
+  },
+
+  aiCard: {
+    background:
+      "linear-gradient(135deg,#ff9800,#ff5e00)",
+
+    borderRadius: "26px",
+
+    padding: "22px",
+
+    display: "flex",
+
+    flexWrap: "wrap",
+
+    alignItems:
+      "center",
+
+    justifyContent:
+      "center",
+
+    gap: "18px",
+
+    color: "white",
+
+    textAlign: "center",
+
+    boxShadow:
+      "0 0 40px rgba(255,152,0,0.3)",
+  },
+
+  aiIcon: {
+    fontSize: "60px",
+  },
+
+  aiTitle: {
+    fontSize:
+      "clamp(22px,5vw,30px)",
+  },
+
+  aiText: {
+    marginTop: "8px",
+
+    opacity: 0.9,
   },
 };
 
