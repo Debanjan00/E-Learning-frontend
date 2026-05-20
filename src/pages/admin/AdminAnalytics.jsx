@@ -44,7 +44,7 @@ import {
 } from "recharts";
 
 import { server }
-from "../../main";
+  from "../../main";
 
 function AdminAnalytics() {
 
@@ -469,8 +469,8 @@ function AdminAnalytics() {
 
                       fill={
                         COLORS[
-                          index %
-                            COLORS.length
+                        index %
+                        COLORS.length
                         ]
                       }
                     />
