@@ -220,7 +220,9 @@ function Footer() {
           </p>
 
         </motion.div>
+
       </div>
+
     </div>
   );
 }

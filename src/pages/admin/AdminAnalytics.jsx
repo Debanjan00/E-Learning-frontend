@@ -18,8 +18,23 @@ import {
   FaRupeeSign,
 } from "react-icons/fa";
 
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  LineChart,
+  Line,
+  CartesianGrid,
+} from "recharts";
+
 import { server }
-from "../../main";
+  from "../../main";
 
 function AdminAnalytics() {
 
@@ -79,7 +94,7 @@ function AdminAnalytics() {
         <FaUsers />,
 
       color:
-        "#3b82f6",
+        "#ff9800",
     },
 
     {
@@ -94,7 +109,7 @@ function AdminAnalytics() {
         <FaBook />,
 
       color:
-        "#10b981",
+        "#ff5e00",
     },
 
     {
@@ -157,6 +172,102 @@ function AdminAnalytics() {
     },
   ];
 
+  // BAR DATA
+  const barData = [
+
+    {
+      name:
+        "Users",
+
+      value:
+        analytics
+          ?.totalUsers,
+    },
+
+    {
+      name:
+        "Courses",
+
+      value:
+        analytics
+          ?.totalCourses,
+    },
+
+    {
+      name:
+        "Tests",
+
+      value:
+        analytics
+          ?.totalTests,
+    },
+
+    {
+      name:
+        "Classes",
+
+      value:
+        analytics
+          ?.totalLiveClasses,
+    },
+  ];
+
+  // PIE DATA
+  const pieData = [
+
+    {
+      name:
+        "Revenue",
+
+      value:
+        analytics
+          ?.totalRevenue || 0,
+    },
+
+    {
+      name:
+        "Results",
+
+      value:
+        analytics
+          ?.totalResults || 0,
+    },
+  ];
+
+  const COLORS = [
+    "#ff9800",
+    "#ff5e00",
+  ];
+
+  // LINE DATA
+  const lineData = [
+
+    {
+      month: "Jan",
+      revenue: 2000,
+    },
+
+    {
+      month: "Feb",
+      revenue: 5000,
+    },
+
+    {
+      month: "Mar",
+      revenue: 8000,
+    },
+
+    {
+      month: "Apr",
+      revenue: 12000,
+    },
+
+    {
+      month: "May",
+      revenue: 18000,
+    },
+  ];
+
   return (
     <div style={styles.page}>
 
@@ -164,6 +275,7 @@ function AdminAnalytics() {
         Analytics Dashboard 📊
       </h1>
 
+      {/* CARDS */}
       <div style={styles.grid}>
 
         {cards.map(
@@ -241,6 +353,154 @@ function AdminAnalytics() {
 
       </div>
 
+      {/* CHARTS */}
+      <div style={styles.chartGrid}>
+
+        {/* BAR CHART */}
+        <div style={styles.chartCard}>
+
+          <h2 style={styles.chartTitle}>
+            Platform Overview
+          </h2>
+
+          <ResponsiveContainer
+            width="100%"
+            height={300}
+          >
+
+            <BarChart
+              data={barData}
+            >
+
+              <XAxis dataKey="name" />
+
+              <YAxis />
+
+              <Tooltip />
+
+              <Bar
+                dataKey="value"
+                fill="#ff9800"
+                radius={[
+                  10,
+                  10,
+                  0,
+                  0,
+                ]}
+              />
+
+            </BarChart>
+
+          </ResponsiveContainer>
+
+        </div>
+
+        {/* PIE CHART */}
+        <div style={styles.chartCard}>
+
+          <h2 style={styles.chartTitle}>
+            Revenue Ratio
+          </h2>
+
+          <ResponsiveContainer
+            width="100%"
+            height={300}
+          >
+
+            <PieChart>
+
+              <Pie
+                data={pieData}
+
+                dataKey="value"
+
+                outerRadius={100}
+
+                label
+              >
+
+                {pieData.map(
+                  (
+                    entry,
+                    index
+                  ) => (
+
+                    <Cell
+                      key={index}
+
+                      fill={
+                        COLORS[
+                        index %
+                        COLORS.length
+                        ]
+                      }
+                    />
+                  )
+                )}
+
+              </Pie>
+
+              <Tooltip />
+
+            </PieChart>
+
+          </ResponsiveContainer>
+
+        </div>
+
+        {/* LINE CHART */}
+        <div
+          style={{
+            ...styles.chartCard,
+
+            gridColumn:
+              "1 / -1",
+          }}
+        >
+
+          <h2 style={styles.chartTitle}>
+            Revenue Growth
+          </h2>
+
+          <ResponsiveContainer
+            width="100%"
+            height={350}
+          >
+
+            <LineChart
+              data={lineData}
+            >
+
+              <CartesianGrid
+                strokeDasharray="3 3"
+              />
+
+              <XAxis
+                dataKey="month"
+              />
+
+              <YAxis />
+
+              <Tooltip />
+
+              <Line
+                type="monotone"
+
+                dataKey="revenue"
+
+                stroke="#ff9800"
+
+                strokeWidth={4}
+              />
+
+            </LineChart>
+
+          </ResponsiveContainer>
+
+        </div>
+
+      </div>
+
     </div>
   );
 }
@@ -274,6 +534,8 @@ const styles = {
       "repeat(auto-fit,minmax(250px,1fr))",
 
     gap: "25px",
+
+    marginBottom: "40px",
   },
 
   card: {
@@ -331,6 +593,38 @@ const styles = {
     color: "#aaa",
 
     fontSize: "18px",
+  },
+
+  chartGrid: {
+    display: "grid",
+
+    gridTemplateColumns:
+      "repeat(auto-fit,minmax(350px,1fr))",
+
+    gap: "30px",
+  },
+
+  chartCard: {
+    background:
+      "rgba(255,255,255,0.05)",
+
+    borderRadius: "28px",
+
+    padding: "25px",
+
+    backdropFilter:
+      "blur(14px)",
+
+    boxShadow:
+      "0 0 25px rgba(255,255,255,0.05)",
+  },
+
+  chartTitle: {
+    color: "white",
+
+    marginBottom: "20px",
+
+    textAlign: "center",
   },
 };
 
