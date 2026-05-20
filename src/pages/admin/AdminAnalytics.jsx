@@ -44,7 +44,7 @@ import {
 } from "recharts";
 
 import { server }
-  from "../../main";
+from "../../main";
 
 function AdminAnalytics() {
 
@@ -90,7 +90,7 @@ function AdminAnalytics() {
       }
     };
 
-  // ANALYTICS CARDS
+  // CARDS
   const cards = [
 
     {
@@ -251,7 +251,7 @@ function AdminAnalytics() {
     "#ff5e00",
   ];
 
-  // REVENUE GRAPH
+  // LINE DATA
   const lineData = [
 
     {
@@ -283,7 +283,6 @@ function AdminAnalytics() {
   return (
     <div style={styles.page}>
 
-      {/* HEADING */}
       <motion.h1
         initial={{
           opacity: 0,
@@ -302,7 +301,7 @@ function AdminAnalytics() {
 
       </motion.h1>
 
-      {/* TOP CARDS */}
+      {/* CARDS */}
       <div style={styles.grid}>
 
         {cards.map(
@@ -313,10 +312,6 @@ function AdminAnalytics() {
 
             <motion.div
               key={index}
-
-              whileHover={{
-                scale: 1.04,
-              }}
 
               initial={{
                 opacity: 0,
@@ -331,6 +326,10 @@ function AdminAnalytics() {
               transition={{
                 delay:
                   index * 0.1,
+              }}
+
+              whileHover={{
+                scale: 1.03,
               }}
 
               style={{
@@ -469,8 +468,8 @@ function AdminAnalytics() {
 
                       fill={
                         COLORS[
-                        index %
-                        COLORS.length
+                          index %
+                            COLORS.length
                         ]
                       }
                     />
@@ -487,60 +486,53 @@ function AdminAnalytics() {
 
         </div>
 
-        {/* LINE CHART */}
-        <div
-          style={{
-            ...styles.chartCard,
+      </div>
 
-            gridColumn:
-              "1 / -1",
-          }}
+      {/* LINE GRAPH */}
+      <div style={styles.chartCard}>
+
+        <h2 style={styles.chartTitle}>
+          Revenue Growth
+        </h2>
+
+        <ResponsiveContainer
+          width="100%"
+          height={350}
         >
 
-          <h2 style={styles.chartTitle}>
-            Revenue Growth
-          </h2>
-
-          <ResponsiveContainer
-            width="100%"
-            height={350}
+          <LineChart
+            data={lineData}
           >
 
-            <LineChart
-              data={lineData}
-            >
+            <CartesianGrid
+              strokeDasharray="3 3"
+            />
 
-              <CartesianGrid
-                strokeDasharray="3 3"
-              />
+            <XAxis
+              dataKey="month"
+            />
 
-              <XAxis
-                dataKey="month"
-              />
+            <YAxis />
 
-              <YAxis />
+            <Tooltip />
 
-              <Tooltip />
+            <Line
+              type="monotone"
 
-              <Line
-                type="monotone"
+              dataKey="revenue"
 
-                dataKey="revenue"
+              stroke="#ff9800"
 
-                stroke="#ff9800"
+              strokeWidth={4}
+            />
 
-                strokeWidth={4}
-              />
+          </LineChart>
 
-            </LineChart>
-
-          </ResponsiveContainer>
-
-        </div>
+        </ResponsiveContainer>
 
       </div>
 
-      {/* CIRCULAR ANALYTICS */}
+      {/* PROGRESS */}
       <div style={styles.progressGrid}>
 
         <div style={styles.progressCard}>
@@ -559,7 +551,7 @@ function AdminAnalytics() {
             <CircularProgressbar
               value={80}
 
-              text={`80%`}
+              text={"80%"}
 
               styles={buildStyles({
                 pathColor:
@@ -593,7 +585,7 @@ function AdminAnalytics() {
             <CircularProgressbar
               value={65}
 
-              text={`65%`}
+              text={"65%"}
 
               styles={buildStyles({
                 pathColor:
@@ -669,8 +661,6 @@ const styles = {
 
     fontSize:
       "clamp(28px,6vw,52px)",
-
-    lineHeight: 1.2,
   },
 
   grid: {
@@ -734,9 +724,6 @@ const styles = {
       "clamp(28px,6vw,40px)",
 
     marginBottom: "10px",
-
-    wordBreak:
-      "break-word",
   },
 
   title: {
@@ -754,7 +741,7 @@ const styles = {
 
     gap: "25px",
 
-    marginBottom: "35px",
+    marginBottom: "30px",
   },
 
   chartCard: {
@@ -770,9 +757,6 @@ const styles = {
 
     boxShadow:
       "0 0 25px rgba(255,255,255,0.05)",
-
-    overflowX:
-      "auto",
   },
 
   chartTitle: {
@@ -791,7 +775,9 @@ const styles = {
 
     gap: "25px",
 
-    marginBottom: "35px",
+    marginTop: "30px",
+
+    marginBottom: "30px",
   },
 
   progressCard: {
