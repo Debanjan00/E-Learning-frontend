@@ -28,7 +28,7 @@ import AllTests from "./pages/test/AllTests";
 import TestResults from "./pages/test/TestResults";
 import AdminAnalytics from "./pages/admin/AdminAnalytics.jsx";
 import BuyCourse from "./pages/payment/BuyCourse.jsx";
-import About from "./pages/About/About";
+import About from "./pages/about/about.jsx";
 
 
 

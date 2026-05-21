@@ -108,7 +108,9 @@ function Header() {
       }}
     >
 
+      {/* ========================= */}
       {/* LEFT */}
+      {/* ========================= */}
 
       <div
         style={{
@@ -171,7 +173,9 @@ function Header() {
 
       </div>
 
-      {/* CENTER */}
+      {/* ========================= */}
+      {/* CENTER NAVIGATION */}
+      {/* ========================= */}
 
       <div
         style={{
@@ -278,7 +282,7 @@ function Header() {
               isMobile={isMobile}
             />
 
-            {/* ADMIN */}
+            {/* ANALYTICS */}
 
             {user?.role ===
               "admin" && (
@@ -359,7 +363,9 @@ function Header() {
 
       </div>
 
+      {/* ========================= */}
       {/* RIGHT */}
+      {/* ========================= */}
 
       <div
         style={{
@@ -425,6 +431,8 @@ function Header() {
             }}
           >
 
+            {/* LOGIN */}
+
             <Link
               to="/login"
               style={{
@@ -437,6 +445,8 @@ function Header() {
             >
               Login
             </Link>
+
+            {/* REGISTER */}
 
             <Link
               to="/register"
@@ -514,159 +524,255 @@ const NavItem = ({
 
 const styles = {
 
+  // HEADER
+
   header: {
     position: "sticky",
+
     top: 0,
+
     zIndex: 999,
+
     width: "100%",
+
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "space-between",
+
     background:
       "rgba(15,15,15,0.96)",
+
     backdropFilter:
       "blur(18px)",
+
     borderBottom:
       "1px solid rgba(255,140,0,0.08)",
+
     boxSizing:
       "border-box",
   },
 
+  // LEFT
+
   left: {
     display: "flex",
+
     alignItems: "center",
+
     gap: "12px",
+
     flexShrink: 0,
   },
 
   logoBox: {
     borderRadius: "14px",
+
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     boxShadow:
       "0 0 20px rgba(255,140,0,0.22)",
+
     flexShrink: 0,
   },
 
   logo: {
     margin: 0,
+
     color: "white",
+
     fontWeight: "700",
   },
 
   tagline: {
     margin: "2px 0 0 0",
+
     color: "#8d8d8d",
+
     letterSpacing: "1px",
   },
 
+  // NAVIGATION
+
   nav: {
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
+
     gap: "8px",
+
     flex: 1,
+
     overflowX: "auto",
+
     scrollbarWidth: "none",
+
     marginLeft: "20px",
+
     marginRight: "20px",
   },
 
+  // NAV LINK
+
   link: {
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
+
     gap: "6px",
+
     borderRadius: "12px",
+
     background:
       "rgba(255,255,255,0.04)",
+
     border:
       "1px solid rgba(255,255,255,0.03)",
+
     color: "#d8d8d8",
+
     textDecoration:
       "none",
+
     fontWeight: "500",
+
     transition: "0.25s ease",
+
     minHeight: "38px",
+
     whiteSpace: "nowrap",
+
     flexShrink: 0,
   },
+
+  // ACTIVE NAV
 
   activeLink: {
     background:
       "linear-gradient(135deg,#ff9800,#ff6a00)",
+
     color: "white",
+
     boxShadow:
       "0 0 18px rgba(255,140,0,0.18)",
   },
 
+  // RIGHT
+
   right: {
     display: "flex",
+
     alignItems: "center",
+
     flexShrink: 0,
   },
 
+  // LOGOUT
+
   logoutBtn: {
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
+
     gap: "6px",
+
     border: "none",
+
     borderRadius: "12px",
+
     background:
       "linear-gradient(135deg,#ff3d00,#ff6a00)",
+
     color: "white",
+
     fontWeight: "bold",
+
     fontSize: "12px",
+
     cursor: "pointer",
+
     boxShadow:
       "0 0 16px rgba(255,80,0,0.18)",
   },
 
+  // AUTH
+
   authBtns: {
     display: "flex",
+
     gap: "8px",
   },
 
   loginBtn: {
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
+
     height: "38px",
+
     borderRadius: "12px",
+
     background:
       "rgba(255,255,255,0.05)",
+
     color: "white",
+
     textDecoration:
       "none",
+
     fontWeight: "600",
+
     fontSize: "12px",
+
     padding: "0 18px",
   },
 
   registerBtn: {
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
+
     height: "38px",
+
     borderRadius: "12px",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     color: "white",
+
     textDecoration:
       "none",
+
     fontWeight: "600",
+
     fontSize: "12px",
+
     padding: "0 18px",
   },
 
