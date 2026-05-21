@@ -1,7 +1,6 @@
 import React, {
   useState,
   useRef,
-  useEffect,
 } from "react";
 
 import axios from "axios";
@@ -36,25 +35,11 @@ function AITutor() {
   const [listening, setListening] =
     useState(false);
 
-  const chatEndRef =
-    useRef(null);
-
   const recognitionRef =
     useRef(null);
 
-  // =========================
-  // AUTO SCROLL
-  // =========================
-  useEffect(() => {
-
-    if (chatEndRef.current) {
-
-      chatEndRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-
-  }, [chat, loading]);
+  const isMobile =
+    window.innerWidth <= 768;
 
   // =========================
   // VOICE TO TEXT
@@ -65,7 +50,6 @@ function AITutor() {
       window.SpeechRecognition ||
       window.webkitSpeechRecognition;
 
-    // CHECK SUPPORT
     if (!SpeechRecognition) {
 
       alert(
@@ -75,13 +59,11 @@ function AITutor() {
       return;
     }
 
-    // STOP OLD SESSION
     if (recognitionRef.current) {
 
       recognitionRef.current.stop();
     }
 
-    // TOGGLE STOP
     if (listening) {
 
       setListening(false);
@@ -104,33 +86,33 @@ function AITutor() {
 
     recognition.start();
 
-    // RESULT
-    recognition.onresult = (event) => {
+    recognition.onresult =
+      (event) => {
 
-      const transcript =
-        event.results[0][0]
-          .transcript;
+        const transcript =
+          event.results[0][0]
+            .transcript;
 
-      // APPEND TEXT
-      setQuestion((prev) =>
-        prev
-          ? prev + " " + transcript
-          : transcript
-      );
-    };
+        setQuestion((prev) =>
+          prev
+            ? prev +
+              " " +
+              transcript
+            : transcript
+        );
+      };
 
-    // ERROR
-    recognition.onerror = (event) => {
+    recognition.onerror =
+      (event) => {
 
-      console.log(
-        "Speech error:",
-        event.error
-      );
+        console.log(
+          "Speech error:",
+          event.error
+        );
 
-      setListening(false);
-    };
+        setListening(false);
+      };
 
-    // END
     recognition.onend = () => {
 
       setListening(false);
@@ -229,7 +211,19 @@ function AITutor() {
   };
 
   return (
-    <div style={styles.page}>
+    <div
+      style={{
+        ...styles.page,
+
+        padding: isMobile
+          ? "12px"
+          : "20px",
+
+        paddingTop: isMobile
+          ? "90px"
+          : "100px",
+      }}
+    >
 
       {/* GLOW */}
       <div style={styles.glow1}></div>
@@ -252,11 +246,32 @@ function AITutor() {
           duration: 0.6,
         }}
 
-        style={styles.container}
+        style={{
+          ...styles.container,
+
+          borderRadius:
+            isMobile
+              ? "22px"
+              : "30px",
+
+          height: "auto",
+        }}
       >
 
         {/* HEADER */}
-        <div style={styles.header}>
+        <div
+          style={{
+            ...styles.header,
+
+            gap: isMobile
+              ? "12px"
+              : "18px",
+
+            padding: isMobile
+              ? "16px"
+              : "25px 30px",
+          }}
+        >
 
           <motion.div
             animate={{
@@ -275,7 +290,22 @@ function AITutor() {
               duration: 3,
             }}
 
-            style={styles.robot}
+            style={{
+              ...styles.robot,
+
+              width: isMobile
+                ? "55px"
+                : "70px",
+
+              height: isMobile
+                ? "55px"
+                : "70px",
+
+              fontSize:
+                isMobile
+                  ? "24px"
+                  : "32px",
+            }}
           >
 
             <FaRobot />
@@ -284,11 +314,29 @@ function AITutor() {
 
           <div>
 
-            <h1 style={styles.title}>
+            <h1
+              style={{
+                ...styles.title,
+
+                fontSize:
+                  isMobile
+                    ? "24px"
+                    : "34px",
+              }}
+            >
               AI Tutor
             </h1>
 
-            <p style={styles.subtitle}>
+            <p
+              style={{
+                ...styles.subtitle,
+
+                fontSize:
+                  isMobile
+                    ? "12px"
+                    : "14px",
+              }}
+            >
               Futuristic learning powered by AI ⚡
             </p>
 
@@ -297,7 +345,15 @@ function AITutor() {
         </div>
 
         {/* CHAT */}
-        <div style={styles.chatBox}>
+        <div
+          style={{
+            ...styles.chatBox,
+
+            padding: isMobile
+              ? "14px"
+              : "25px",
+          }}
+        >
 
           <AnimatePresence>
 
@@ -351,14 +407,41 @@ function AITutor() {
                         ...(isUser
                           ? styles.userMsg
                           : styles.aiMsg),
+
+                        maxWidth:
+                          isMobile
+                            ? "92%"
+                            : isUser
+                            ? "75%"
+                            : "80%",
+
+                        padding:
+                          isMobile
+                            ? "14px"
+                            : "18px",
+
+                        borderRadius:
+                          isMobile
+                            ? "18px"
+                            : "22px",
+
+                        fontSize:
+                          isMobile
+                            ? "14px"
+                            : "15px",
                       }}
                     >
 
                       {/* TOP */}
                       <div
-                        style={
-                          styles.messageTop
-                        }
+                        style={{
+                          ...styles.messageTop,
+
+                          fontSize:
+                            isMobile
+                              ? "11px"
+                              : "13px",
+                        }}
                       >
 
                         {isUser ? (
@@ -382,7 +465,10 @@ function AITutor() {
                             "pre-wrap",
 
                           lineHeight:
-                            "1.9",
+                            "1.8",
+
+                          wordBreak:
+                            "break-word",
                         }}
                       >
 
@@ -418,7 +504,21 @@ function AITutor() {
               }}
             >
 
-              <div style={styles.aiMsg}>
+              <div
+                style={{
+                  ...styles.aiMsg,
+
+                  maxWidth:
+                    isMobile
+                      ? "92%"
+                      : "80%",
+
+                  padding:
+                    isMobile
+                      ? "14px"
+                      : "18px",
+                }}
+              >
 
                 <div
                   style={
@@ -439,17 +539,22 @@ function AITutor() {
             </motion.div>
           )}
 
-          <div
-            ref={chatEndRef}
-            style={{
-              height: "1px",
-            }}
-          ></div>
-
         </div>
 
         {/* INPUT AREA */}
-        <div style={styles.inputBox}>
+        <div
+          style={{
+            ...styles.inputBox,
+
+            gap: isMobile
+              ? "8px"
+              : "14px",
+
+            padding: isMobile
+              ? "12px"
+              : "22px",
+          }}
+        >
 
           {/* INPUT */}
           <input
@@ -472,7 +577,24 @@ function AITutor() {
               handleKeyDown
             }
 
-            style={styles.input}
+            style={{
+              ...styles.input,
+
+              fontSize:
+                isMobile
+                  ? "14px"
+                  : "15px",
+
+              padding:
+                isMobile
+                  ? "14px"
+                  : "18px",
+
+              borderRadius:
+                isMobile
+                  ? "14px"
+                  : "18px",
+            }}
           />
 
           {/* MIC BUTTON */}
@@ -494,6 +616,24 @@ function AITutor() {
 
             style={{
               ...styles.btn,
+
+              width: isMobile
+                ? "50px"
+                : "65px",
+
+              height: isMobile
+                ? "50px"
+                : "65px",
+
+              fontSize:
+                isMobile
+                  ? "16px"
+                  : "20px",
+
+              borderRadius:
+                isMobile
+                  ? "14px"
+                  : "18px",
 
               background:
                 listening
@@ -527,7 +667,27 @@ function AITutor() {
               askAI();
             }}
 
-            style={styles.btn}
+            style={{
+              ...styles.btn,
+
+              width: isMobile
+                ? "50px"
+                : "65px",
+
+              height: isMobile
+                ? "50px"
+                : "65px",
+
+              fontSize:
+                isMobile
+                  ? "16px"
+                  : "20px",
+
+              borderRadius:
+                isMobile
+                  ? "14px"
+                  : "18px",
+            }}
           >
 
             <FaPaperPlane />
@@ -554,11 +714,7 @@ const styles = {
 
     justifyContent: "center",
 
-    alignItems: "center",
-
-    padding: "30px",
-
-    paddingTop: "100px",
+    alignItems: "flex-start",
 
     position: "relative",
 
@@ -608,8 +764,6 @@ const styles = {
 
     maxWidth: "1100px",
 
-    height: "calc(100vh - 140px)",
-
     display: "flex",
 
     flexDirection: "column",
@@ -619,8 +773,6 @@ const styles = {
 
     backdropFilter:
       "blur(18px)",
-
-    borderRadius: "30px",
 
     border:
       "1px solid rgba(255,140,0,0.2)",
@@ -640,10 +792,6 @@ const styles = {
 
     alignItems: "center",
 
-    gap: "18px",
-
-    padding: "25px 30px",
-
     borderBottom:
       "1px solid rgba(255,255,255,0.08)",
 
@@ -652,10 +800,6 @@ const styles = {
   },
 
   robot: {
-    width: "70px",
-
-    height: "70px",
-
     borderRadius: "20px",
 
     display: "flex",
@@ -664,8 +808,6 @@ const styles = {
 
     justifyContent:
       "center",
-
-    fontSize: "32px",
 
     color: "white",
 
@@ -680,8 +822,6 @@ const styles = {
     margin: 0,
 
     color: "white",
-
-    fontSize: "34px",
   },
 
   subtitle: {
@@ -691,23 +831,12 @@ const styles = {
   },
 
   chatBox: {
-    flex: 1,
+    paddingBottom: "10px",
 
-    overflowY: "auto",
-
-    padding: "25px",
-
-    scrollBehavior:
-      "smooth",
+    minHeight: "0px",
   },
 
   userMsg: {
-    maxWidth: "75%",
-
-    padding: "18px",
-
-    borderRadius: "22px",
-
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
 
@@ -718,12 +847,6 @@ const styles = {
   },
 
   aiMsg: {
-    maxWidth: "80%",
-
-    padding: "18px",
-
-    borderRadius: "22px",
-
     background:
       "rgba(255,255,255,0.06)",
 
@@ -742,23 +865,24 @@ const styles = {
 
     marginBottom: "10px",
 
-    fontSize: "13px",
-
     opacity: 0.8,
   },
 
   inputBox: {
     display: "flex",
 
-    gap: "14px",
-
-    padding: "22px",
-
     borderTop:
       "1px solid rgba(255,255,255,0.08)",
 
     background:
       "rgba(255,255,255,0.03)",
+
+    position: "sticky",
+
+    bottom: 0,
+
+    backdropFilter:
+      "blur(18px)",
   },
 
   input: {
@@ -767,12 +891,6 @@ const styles = {
     minWidth: 0,
 
     outline: "none",
-
-    fontSize: "15px",
-
-    padding: "18px",
-
-    borderRadius: "18px",
 
     border: "none",
 
@@ -783,23 +901,19 @@ const styles = {
   },
 
   btn: {
-    width: "65px",
-
     border: "none",
-
-    borderRadius: "18px",
 
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
 
     color: "white",
 
-    fontSize: "20px",
-
     cursor: "pointer",
 
     boxShadow:
       "0 0 25px rgba(255,140,0,0.35)",
+
+    flexShrink: 0,
   },
 };
 

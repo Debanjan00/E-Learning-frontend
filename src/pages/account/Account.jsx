@@ -38,6 +38,13 @@ function Account() {
   const [preview, setPreview] =
     useState("");
 
+  const isMobile =
+    window.innerWidth <= 768;
+
+  // DEFAULT IMAGE
+  const defaultImage =
+    "https://i.pravatar.cc/200";
+
   // LOAD USER
   useEffect(() => {
 
@@ -60,7 +67,12 @@ function Account() {
       );
 
       setPreview(
-        parsedUser.image || ""
+        parsedUser.image &&
+        parsedUser.image !== "null" &&
+        parsedUser.image !==
+          "undefined"
+          ? parsedUser.image
+          : defaultImage
       );
     }
 
@@ -71,6 +83,8 @@ function Account() {
 
     const file =
       e.target.files[0];
+
+    if (!file) return;
 
     setImage(file);
 
@@ -133,7 +147,10 @@ function Account() {
       setUser(data.user);
 
       setPreview(
-        data.user.image
+        data.user.image &&
+        data.user.image !== "null"
+          ? data.user.image
+          : defaultImage
       );
 
       setEditMode(false);
@@ -155,20 +172,30 @@ function Account() {
   if (!user) {
 
     return (
-      <h2 style={{
-        color: "white",
-        textAlign: "center",
-        marginTop: "100px",
-      }}>
+      <h2
+        style={{
+          color: "white",
+          textAlign: "center",
+          marginTop: "100px",
+        }}
+      >
         Loading...
       </h2>
     );
   }
 
   return (
-    <div style={styles.container}>
+    <div
+      style={{
+        ...styles.container,
 
-      {/* BACKGROUND GLOW */}
+        padding: isMobile
+          ? "20px 12px"
+          : "40px",
+      }}
+    >
+
+      {/* GLOW */}
       <div style={styles.glow1}></div>
 
       <div style={styles.glow2}></div>
@@ -188,7 +215,18 @@ function Account() {
           duration: 0.7,
         }}
 
-        style={styles.profileCard}
+        style={{
+          ...styles.profileCard,
+
+          padding: isMobile
+            ? "25px 18px"
+            : "40px",
+
+          borderRadius:
+            isMobile
+              ? "22px"
+              : "30px",
+        }}
       >
 
         {/* TOP */}
@@ -199,21 +237,63 @@ function Account() {
               scale: 1.05,
             }}
 
-            style={styles.imageWrapper}
+            style={{
+              ...styles.imageWrapper,
+
+              width: isMobile
+                ? "120px"
+                : "160px",
+            }}
           >
 
             <img
               src={
-                preview ||
-                "https://i.pravatar.cc/200"
+                preview &&
+                preview !== "null" &&
+                preview !==
+                  "undefined"
+                  ? preview
+                  : defaultImage
               }
 
               alt="profile"
 
-              style={styles.image}
+              onError={(e) => {
+                e.target.src =
+                  defaultImage;
+              }}
+
+              style={{
+                ...styles.image,
+
+                width: isMobile
+                  ? "120px"
+                  : "160px",
+
+                height: isMobile
+                  ? "120px"
+                  : "160px",
+              }}
             />
 
-            <div style={styles.camera}>
+            <div
+              style={{
+                ...styles.camera,
+
+                width: isMobile
+                  ? "34px"
+                  : "40px",
+
+                height: isMobile
+                  ? "34px"
+                  : "40px",
+
+                fontSize:
+                  isMobile
+                    ? "13px"
+                    : "16px",
+              }}
+            >
               <FaCamera />
             </div>
 
@@ -230,7 +310,14 @@ function Account() {
                 imageHandler
               }
 
-              style={styles.fileInput}
+              style={{
+                ...styles.fileInput,
+
+                fontSize:
+                  isMobile
+                    ? "12px"
+                    : "14px",
+              }}
             />
           )}
 
@@ -250,24 +337,73 @@ function Account() {
                 )
               }
 
-              style={styles.input}
+              style={{
+                ...styles.input,
+
+                padding:
+                  isMobile
+                    ? "12px"
+                    : "14px",
+
+                fontSize:
+                  isMobile
+                    ? "14px"
+                    : "15px",
+              }}
             />
 
           ) : (
 
-            <h1 style={styles.name}>
+            <h1
+              style={{
+                ...styles.name,
+
+                fontSize:
+                  isMobile
+                    ? "24px"
+                    : "32px",
+              }}
+            >
               {user.name}
             </h1>
           )}
 
-          <p style={styles.email}>
+          <p
+            style={{
+              ...styles.email,
+
+              fontSize:
+                isMobile
+                  ? "13px"
+                  : "15px",
+
+              wordBreak:
+                "break-word",
+            }}
+          >
             {user.email}
           </p>
 
-          <div style={styles.role}>
+          <div
+            style={{
+              ...styles.role,
+
+              padding:
+                isMobile
+                  ? "8px 16px"
+                  : "10px 20px",
+
+              fontSize:
+                isMobile
+                  ? "13px"
+                  : "15px",
+            }}
+          >
+
             <FaUserAstronaut />
 
             {user.role}
+
           </div>
 
           {/* BIO */}
@@ -284,18 +420,49 @@ function Account() {
 
               placeholder="Tell something futuristic about yourself..."
 
-              style={styles.textarea}
+              style={{
+                ...styles.textarea,
+
+                height:
+                  isMobile
+                    ? "100px"
+                    : "120px",
+
+                fontSize:
+                  isMobile
+                    ? "14px"
+                    : "15px",
+
+                padding:
+                  isMobile
+                    ? "12px"
+                    : "15px",
+              }}
             />
 
           ) : (
 
-            <p style={styles.bio}>
+            <p
+              style={{
+                ...styles.bio,
+
+                fontSize:
+                  isMobile
+                    ? "14px"
+                    : "16px",
+
+                lineHeight:
+                  isMobile
+                    ? "1.6"
+                    : "1.7",
+              }}
+            >
               {bio ||
                 "No bio added yet"}
             </p>
           )}
 
-          {/* BUTTONS */}
+          {/* BUTTON */}
           {editMode ? (
 
             <motion.button
@@ -307,7 +474,22 @@ function Account() {
                 scale: 0.95,
               }}
 
-              style={styles.saveBtn}
+              style={{
+                ...styles.saveBtn,
+
+                width:
+                  isMobile
+                    ? "100%"
+                    : "auto",
+
+                justifyContent:
+                  "center",
+
+                padding:
+                  isMobile
+                    ? "13px"
+                    : "14px 28px",
+              }}
 
               onClick={saveProfile}
             >
@@ -329,7 +511,22 @@ function Account() {
                 scale: 0.95,
               }}
 
-              style={styles.editBtn}
+              style={{
+                ...styles.editBtn,
+
+                width:
+                  isMobile
+                    ? "100%"
+                    : "auto",
+
+                justifyContent:
+                  "center",
+
+                padding:
+                  isMobile
+                    ? "13px"
+                    : "14px 28px",
+              }}
 
               onClick={() =>
                 setEditMode(true)
@@ -367,11 +564,12 @@ const styles = {
 
     alignItems: "center",
 
-    padding: "40px",
-
     position: "relative",
 
     overflow: "hidden",
+
+    boxSizing:
+      "border-box",
   },
 
   glow1: {
@@ -414,6 +612,7 @@ const styles = {
 
   profileCard: {
     width: "100%",
+
     maxWidth: "550px",
 
     background:
@@ -425,10 +624,6 @@ const styles = {
     border:
       "1px solid rgba(255,140,0,0.2)",
 
-    borderRadius: "30px",
-
-    padding: "40px",
-
     textAlign: "center",
 
     boxShadow:
@@ -437,6 +632,9 @@ const styles = {
     position: "relative",
 
     zIndex: 2,
+
+    boxSizing:
+      "border-box",
   },
 
   topSection: {
@@ -446,16 +644,10 @@ const styles = {
   imageWrapper: {
     position: "relative",
 
-    width: "160px",
-
     margin: "auto",
   },
 
   image: {
-    width: "160px",
-
-    height: "160px",
-
     borderRadius: "50%",
 
     objectFit: "cover",
@@ -465,18 +657,18 @@ const styles = {
 
     boxShadow:
       "0 0 30px rgba(255,140,0,0.4)",
+
+    display: "block",
+
+    margin: "auto",
   },
 
   camera: {
     position: "absolute",
 
-    bottom: "10px",
+    bottom: "5px",
 
-    right: "10px",
-
-    width: "40px",
-
-    height: "40px",
+    right: "5px",
 
     borderRadius: "50%",
 
@@ -495,7 +687,10 @@ const styles = {
 
   fileInput: {
     marginTop: "20px",
+
     color: "white",
+
+    width: "100%",
   },
 
   info: {
@@ -504,12 +699,16 @@ const styles = {
 
   name: {
     color: "white",
-    fontSize: "32px",
+
     marginBottom: "8px",
+
+    wordBreak:
+      "break-word",
   },
 
   email: {
     color: "#aaa",
+
     marginBottom: "15px",
   },
 
@@ -519,9 +718,6 @@ const styles = {
     alignItems: "center",
 
     gap: "8px",
-
-    padding:
-      "10px 20px",
 
     borderRadius: "20px",
 
@@ -533,20 +729,21 @@ const styles = {
     fontWeight: "bold",
 
     marginBottom: "20px",
+
+    flexWrap: "wrap",
   },
 
   bio: {
     color: "#ddd",
 
-    lineHeight: "1.7",
-
     marginTop: "20px",
+
+    wordBreak:
+      "break-word",
   },
 
   input: {
     width: "100%",
-
-    padding: "14px",
 
     borderRadius: "14px",
 
@@ -561,14 +758,13 @@ const styles = {
     marginTop: "15px",
 
     outline: "none",
+
+    boxSizing:
+      "border-box",
   },
 
   textarea: {
     width: "100%",
-
-    height: "120px",
-
-    padding: "15px",
 
     marginTop: "20px",
 
@@ -583,6 +779,11 @@ const styles = {
     color: "white",
 
     outline: "none",
+
+    resize: "none",
+
+    boxSizing:
+      "border-box",
   },
 
   editBtn: {
@@ -593,9 +794,6 @@ const styles = {
     alignItems: "center",
 
     gap: "10px",
-
-    padding:
-      "14px 28px",
 
     border: "none",
 
@@ -622,9 +820,6 @@ const styles = {
     alignItems: "center",
 
     gap: "10px",
-
-    padding:
-      "14px 28px",
 
     border: "none",
 
