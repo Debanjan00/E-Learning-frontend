@@ -23,19 +23,21 @@ function ResumeBuilder() {
 
   const previewRef = useRef();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
-  const [resume, setResume] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    role: "",
-    skills: "",
-    education: "",
-    projects: "",
-    experience: "",
-    summary: "",
-  });
+  const [resume, setResume] =
+    useState({
+      name: "",
+      email: "",
+      phone: "",
+      role: "",
+      skills: "",
+      education: "",
+      projects: "",
+      experience: "",
+      summary: "",
+    });
 
   // =========================
   // HANDLE INPUT
@@ -45,13 +47,14 @@ function ResumeBuilder() {
 
     setResume({
       ...resume,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
 
   };
 
   // =========================
-  // REAL ATS SCORE SYSTEM
+  // MCA ATS SCORE SYSTEM
   // =========================
 
   const calculateATSScore = () => {
@@ -72,94 +75,250 @@ function ResumeBuilder() {
       ${resume.summary}
     `.toLowerCase();
 
-    // NAME
-    if (resume.name.trim().length > 2) {
+    // =========================
+    // BASIC DETAILS
+    // =========================
+
+    if (
+      resume.name.trim().length > 2
+    ) {
       score += 5;
     } else {
-      suggestions.push("Add proper full name");
+      suggestions.push(
+        "Add proper full name"
+      );
     }
 
     // EMAIL
+
     const emailRegex =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (emailRegex.test(resume.email)) {
+    if (
+      emailRegex.test(
+        resume.email
+      )
+    ) {
       score += 5;
     } else {
-      suggestions.push("Add valid email");
+      suggestions.push(
+        "Add valid email"
+      );
     }
 
     // PHONE
+
     const phoneRegex =
       /^[0-9]{10}$/;
 
     if (
       phoneRegex.test(
-        resume.phone.replace(/\s/g, "")
+        resume.phone.replace(
+          /\s/g,
+          ""
+        )
       )
     ) {
       score += 5;
     } else {
-      suggestions.push("Add valid phone number");
+      suggestions.push(
+        "Add valid phone number"
+      );
     }
 
+    // =========================
     // ROLE
-    if (resume.role.trim().length > 3) {
-      score += 10;
+    // =========================
+
+    if (
+      resume.role.trim().length > 3
+    ) {
+      score += 8;
     } else {
-      suggestions.push("Add target role");
+      suggestions.push(
+        "Add target role"
+      );
     }
 
     // =========================
-    // SKILLS ANALYSIS
+    // EDUCATION
     // =========================
 
-    const importantSkills = [
-      "react",
-      "node",
-      "mongodb",
-      "express",
-      "javascript",
-      "python",
-      "java",
-      "sql",
+    const educationText =
+      resume.education.toLowerCase();
+
+    if (
+      educationText.includes("mca")
+    ) {
+      score += 15;
+    } else {
+      suggestions.push(
+        "Mention MCA degree"
+      );
+    }
+
+    if (
+      educationText.includes(
+        "makaut"
+      ) ||
+      educationText.includes(
+        "university"
+      )
+    ) {
+      score += 5;
+    }
+
+    // =========================
+    // MCA TECH SKILLS
+    // =========================
+
+    const mcaSkills = [
+
+      // FRONTEND
       "html",
       "css",
-      "aws",
-      "docker",
-      "git",
-      "api",
+      "javascript",
+      "react",
       "redux",
       "next",
-      "typescript",
-      "firebase",
-      "machine learning",
+
+      // BACKEND
+      "node",
+      "express",
+      "mongodb",
+      "mysql",
+      "sql",
+      "php",
+
+      // PROGRAMMING
+      "java",
+      "python",
+      "c",
+      "c++",
+
+      // CORE MCA
+      "data structures",
+      "operating system",
+      "computer networks",
+      "dbms",
+      "oops",
       "ai",
+      "machine learning",
+      "cloud computing",
+      "cyber security",
+
+      // TOOLS
+      "git",
+      "github",
+      "docker",
+      "api",
+      "firebase",
+
     ];
 
-    let matchedSkills = 0;
+    let skillMatch = 0;
 
-    importantSkills.forEach((skill) => {
+    mcaSkills.forEach(
+      (skill) => {
 
-      if (
-        resume.skills
-          .toLowerCase()
-          .includes(skill)
-      ) {
-        matchedSkills++;
+        if (
+          resume.skills
+            .toLowerCase()
+            .includes(skill)
+        ) {
+          skillMatch++;
+        }
+
       }
-
-    });
-
-    score += Math.min(
-      matchedSkills * 3,
-      20
     );
 
-    if (matchedSkills < 3) {
+    score += Math.min(
+      skillMatch * 2,
+      25
+    );
+
+    if (skillMatch < 5) {
+
       suggestions.push(
-        "Add more industry relevant skills"
+        "Add more MCA technical skills"
       );
+
+    }
+
+    // =========================
+    // PROJECTS
+    // =========================
+
+    const projectText =
+      resume.projects.toLowerCase();
+
+    if (
+      resume.projects.trim()
+        .length > 80
+    ) {
+
+      score += 10;
+
+    } else {
+
+      suggestions.push(
+        "Add detailed projects"
+      );
+
+    }
+
+    const projectKeywords = [
+      "mern",
+      "ai",
+      "chatbot",
+      "e-learning",
+      "management system",
+      "authentication",
+      "dashboard",
+      "api",
+      "admin",
+      "responsive",
+      "full stack",
+    ];
+
+    let projectScore = 0;
+
+    projectKeywords.forEach(
+      (word) => {
+
+        if (
+          projectText.includes(
+            word
+          )
+        ) {
+          projectScore++;
+        }
+
+      }
+    );
+
+    score += Math.min(
+      projectScore * 2,
+      10
+    );
+
+    // =========================
+    // EXPERIENCE
+    // =========================
+
+    if (
+      resume.experience.trim()
+        .length > 40
+    ) {
+
+      score += 10;
+
+    } else {
+
+      suggestions.push(
+        "Add internship or experience"
+      );
+
     }
 
     // =========================
@@ -170,78 +329,40 @@ function ResumeBuilder() {
       "developed",
       "built",
       "created",
-      "managed",
       "implemented",
       "optimized",
       "designed",
-      "led",
-      "improved",
-      "deployed",
+      "managed",
       "integrated",
-      "achieved",
+      "deployed",
+      "improved",
     ];
 
     let actionCount = 0;
 
-    actionWords.forEach((word) => {
+    actionWords.forEach(
+      (word) => {
 
-      if (allText.includes(word)) {
-        actionCount++;
+        if (
+          allText.includes(word)
+        ) {
+          actionCount++;
+        }
+
       }
-
-    });
+    );
 
     score += Math.min(
       actionCount * 2,
-      15
+      10
     );
 
     if (actionCount < 3) {
+
       suggestions.push(
         "Use strong action words"
       );
-    }
 
-    // =========================
-    // PROJECTS
-    // =========================
-
-    if (
-      resume.projects.trim().length > 50
-    ) {
-      score += 10;
-    } else {
-      suggestions.push(
-        "Add detailed projects"
-      );
-    }
-
-    // =========================
-    // EXPERIENCE
-    // =========================
-
-    if (
-      resume.experience.trim().length > 50
-    ) {
-      score += 10;
-    } else {
-      suggestions.push(
-        "Add proper experience details"
-      );
-    }
-
-    // =========================
-    // EDUCATION
-    // =========================
-
-    if (
-      resume.education.trim().length > 20
-    ) {
-      score += 10;
-    } else {
-      suggestions.push(
-        "Add education details"
-      );
     }
 
     // =========================
@@ -249,28 +370,37 @@ function ResumeBuilder() {
     // =========================
 
     if (
-      resume.summary.trim().length > 40
+      resume.summary.trim()
+        .length > 50
     ) {
-      score += 10;
+
+      score += 8;
+
     } else {
+
       suggestions.push(
-        "Add professional summary"
+        "Generate professional summary"
       );
+
     }
 
     // =========================
-    // WORD COUNT
+    // CONTENT LENGTH
     // =========================
 
     const words =
       allText.split(/\s+/);
 
     if (words.length > 120) {
-      score += 10;
+
+      score += 7;
+
     } else {
+
       suggestions.push(
         "Resume content is too short"
       );
+
     }
 
     // =========================
@@ -290,20 +420,24 @@ function ResumeBuilder() {
 
     let fakeDetected = false;
 
-    fakeWords.forEach((word) => {
+    fakeWords.forEach(
+      (word) => {
 
-      if (allText.includes(word)) {
-        fakeDetected = true;
+        if (
+          allText.includes(word)
+        ) {
+          fakeDetected = true;
+        }
+
       }
-
-    });
+    );
 
     if (fakeDetected) {
 
       score -= 30;
 
       suggestions.push(
-        "Remove fake or meaningless content"
+        "Remove fake content"
       );
 
     }
@@ -326,15 +460,14 @@ function ResumeBuilder() {
 
     let repeated = 0;
 
-    Object.values(wordMap).forEach(
-      (count) => {
+    Object.values(wordMap)
+      .forEach((count) => {
 
         if (count > 8) {
           repeated++;
         }
 
-      }
-    );
+      });
 
     if (repeated > 5) {
 
@@ -350,58 +483,111 @@ function ResumeBuilder() {
     // ROLE MATCHING
     // =========================
 
+    const role =
+      resume.role.toLowerCase();
+
+    const skills =
+      resume.skills.toLowerCase();
+
+    // FRONTEND
+
     if (
-      resume.role
-        .toLowerCase()
-        .includes("frontend")
+      role.includes(
+        "frontend"
+      )
     ) {
 
       if (
-        resume.skills
-          .toLowerCase()
-          .includes("react")
+        skills.includes(
+          "react"
+        ) &&
+        skills.includes(
+          "javascript"
+        )
       ) {
+
         score += 5;
+
       }
 
     }
 
+    // BACKEND
+
     if (
-      resume.role
-        .toLowerCase()
-        .includes("backend")
+      role.includes(
+        "backend"
+      )
     ) {
 
       if (
-        resume.skills
-          .toLowerCase()
-          .includes("node")
+        skills.includes(
+          "node"
+        ) &&
+        skills.includes(
+          "mongodb"
+        )
       ) {
+
         score += 5;
+
       }
 
     }
 
+    // FULL STACK
+
     if (
-      resume.role
-        .toLowerCase()
-        .includes("full stack")
+      role.includes(
+        "full stack"
+      )
     ) {
 
       if (
-        resume.skills
-          .toLowerCase()
-          .includes("react") &&
-        resume.skills
-          .toLowerCase()
-          .includes("node")
+        skills.includes(
+          "react"
+        ) &&
+        skills.includes(
+          "node"
+        ) &&
+        skills.includes(
+          "mongodb"
+        )
       ) {
+
         score += 8;
+
       }
 
     }
 
+    // AI / ML
+
+    if (
+      role.includes("ai") ||
+      role.includes(
+        "machine learning"
+      )
+    ) {
+
+      if (
+        skills.includes(
+          "python"
+        ) ||
+        skills.includes(
+          "machine learning"
+        )
+      ) {
+
+        score += 8;
+
+      }
+
+    }
+
+    // =========================
     // LIMIT SCORE
+    // =========================
 
     if (score > 100) {
       score = 100;
@@ -419,7 +605,7 @@ function ResumeBuilder() {
   };
 
   // =========================
-  // AI GENERATE
+  // AI SUMMARY
   // =========================
 
   const generateAIResume =
@@ -430,10 +616,12 @@ function ResumeBuilder() {
         setLoading(true);
 
         const token =
-          localStorage.getItem("token");
+          localStorage.getItem(
+            "token"
+          );
 
         const prompt = `
-Create a professional ATS-friendly resume summary.
+Create a professional ATS-friendly resume summary for an MCA student.
 
 Role:
 ${resume.role}
@@ -455,18 +643,21 @@ ${resume.education}
           await axios.post(
             `${server}/api/ai/ask`,
             {
-              question: prompt,
+              question:
+                prompt,
             },
             {
               headers: {
-                Authorization: token,
+                Authorization:
+                  token,
               },
             }
           );
 
         setResume({
           ...resume,
-          summary: data.answer,
+          summary:
+            data.answer,
         });
 
       } catch (error) {
@@ -489,43 +680,46 @@ ${resume.education}
   // DOWNLOAD PDF
   // =========================
 
-  const downloadPDF = async () => {
+  const downloadPDF =
+    async () => {
 
-    const element =
-      previewRef.current;
+      const element =
+        previewRef.current;
 
-    const canvas =
-      await html2canvas(
-        element
+      const canvas =
+        await html2canvas(
+          element
+        );
+
+      const imgData =
+        canvas.toDataURL(
+          "image/png"
+        );
+
+      const pdf =
+        new jsPDF();
+
+      const imgWidth = 190;
+
+      const imgHeight =
+        (canvas.height *
+          imgWidth) /
+        canvas.width;
+
+      pdf.addImage(
+        imgData,
+        "PNG",
+        10,
+        10,
+        imgWidth,
+        imgHeight
       );
 
-    const imgData =
-      canvas.toDataURL(
-        "image/png"
+      pdf.save(
+        "Resume.pdf"
       );
 
-    const pdf =
-      new jsPDF();
-
-    const imgWidth = 190;
-
-    const imgHeight =
-      (canvas.height *
-        imgWidth) /
-      canvas.width;
-
-    pdf.addImage(
-      imgData,
-      "PNG",
-      10,
-      10,
-      imgWidth,
-      imgHeight
-    );
-
-    pdf.save("Resume.pdf");
-
-  };
+    };
 
   const atsResult =
     calculateATSScore();
@@ -557,7 +751,7 @@ ${resume.education}
         </h1>
 
         <p style={styles.subtitle}>
-          Build ATS Optimized Resume 🚀
+          MCA Student ATS Resume 🚀
         </p>
 
         <InputBox
@@ -565,7 +759,9 @@ ${resume.education}
           name="name"
           placeholder="Full Name"
           value={resume.name}
-          onChange={handleChange}
+          onChange={
+            handleChange
+          }
         />
 
         <InputBox
@@ -573,7 +769,9 @@ ${resume.education}
           name="email"
           placeholder="Email"
           value={resume.email}
-          onChange={handleChange}
+          onChange={
+            handleChange
+          }
         />
 
         <InputBox
@@ -581,7 +779,9 @@ ${resume.education}
           name="phone"
           placeholder="Phone"
           value={resume.phone}
-          onChange={handleChange}
+          onChange={
+            handleChange
+          }
         />
 
         <InputBox
@@ -589,7 +789,9 @@ ${resume.education}
           name="role"
           placeholder="Target Role"
           value={resume.role}
-          onChange={handleChange}
+          onChange={
+            handleChange
+          }
         />
 
         <TextAreaBox
@@ -597,31 +799,49 @@ ${resume.education}
           name="skills"
           placeholder="Skills"
           value={resume.skills}
-          onChange={handleChange}
+          onChange={
+            handleChange
+          }
         />
 
         <TextAreaBox
-          icon={<FaGraduationCap />}
+          icon={
+            <FaGraduationCap />
+          }
           name="education"
           placeholder="Education"
-          value={resume.education}
-          onChange={handleChange}
+          value={
+            resume.education
+          }
+          onChange={
+            handleChange
+          }
         />
 
         <TextAreaBox
           icon={<FaFileAlt />}
           name="projects"
           placeholder="Projects"
-          value={resume.projects}
-          onChange={handleChange}
+          value={
+            resume.projects
+          }
+          onChange={
+            handleChange
+          }
         />
 
         <TextAreaBox
-          icon={<FaBriefcase />}
+          icon={
+            <FaBriefcase />
+          }
           name="experience"
           placeholder="Experience"
-          value={resume.experience}
-          onChange={handleChange}
+          value={
+            resume.experience
+          }
+          onChange={
+            handleChange
+          }
         />
 
         {/* AI BUTTON */}
@@ -634,16 +854,16 @@ ${resume.education}
             scale: 0.95,
           }}
           style={styles.aiBtn}
-          onClick={generateAIResume}
+          onClick={
+            generateAIResume
+          }
         >
 
           <FaRobot />
 
-          {
-            loading
-              ? "Generating..."
-              : "Generate AI Summary"
-          }
+          {loading
+            ? "Generating..."
+            : "Generate AI Summary"}
 
         </motion.button>
 
@@ -663,7 +883,11 @@ ${resume.education}
 
           </div>
 
-          <div style={styles.progressBar}>
+          <div
+            style={
+              styles.progressBar
+            }
+          >
 
             <motion.div
               initial={{
@@ -676,30 +900,54 @@ ${resume.education}
               transition={{
                 duration: 0.7,
               }}
-              style={styles.progress}
+              style={
+                styles.progress
+              }
             />
 
           </div>
 
-          <div style={styles.analysisBox}>
+          <div
+            style={
+              styles.analysisBox
+            }
+          >
 
-            {atsResult.score < 50 && (
+            {atsResult.score <
+              50 && (
+
               <p style={styles.badText}>
                 Weak Resume ❌
               </p>
+
             )}
 
-            {atsResult.score >= 50 &&
-              atsResult.score < 80 && (
-                <p style={styles.midText}>
+            {atsResult.score >=
+              50 &&
+              atsResult.score <
+                80 && (
+
+                <p
+                  style={
+                    styles.midText
+                  }
+                >
                   Good Resume ⚠
                 </p>
+
               )}
 
-            {atsResult.score >= 80 && (
-              <p style={styles.goodText}>
+            {atsResult.score >=
+              80 && (
+
+              <p
+                style={
+                  styles.goodText
+                }
+              >
                 Excellent Resume ✅
               </p>
+
             )}
 
             {/* SUGGESTIONS */}
@@ -711,14 +959,20 @@ ${resume.education}
             >
 
               {atsResult.suggestions.map(
-                (item, index) => (
+                (
+                  item,
+                  index
+                ) => (
 
                   <p
                     key={index}
                     style={{
-                      color: "#aaa",
-                      fontSize: "13px",
-                      marginBottom: "6px",
+                      color:
+                        "#aaa",
+                      fontSize:
+                        "13px",
+                      marginBottom:
+                        "6px",
                     }}
                   >
                     • {item}
@@ -742,8 +996,12 @@ ${resume.education}
           whileTap={{
             scale: 0.95,
           }}
-          style={styles.downloadBtn}
-          onClick={downloadPDF}
+          style={
+            styles.downloadBtn
+          }
+          onClick={
+            downloadPDF
+          }
         >
 
           <FaDownload />
@@ -766,35 +1024,29 @@ ${resume.education}
           opacity: 1,
           x: 0,
         }}
-        style={styles.previewCard}
+        style={
+          styles.previewCard
+        }
       >
 
         <h1 style={styles.name}>
-          {
-            resume.name ||
-            "Your Name"
-          }
+          {resume.name ||
+            "Your Name"}
         </h1>
 
         <p style={styles.info}>
-          {
-            resume.email ||
-            "email@example.com"
-          }
+          {resume.email ||
+            "email@example.com"}
         </p>
 
         <p style={styles.info}>
-          {
-            resume.phone ||
-            "+91 XXXXX XXXXX"
-          }
+          {resume.phone ||
+            "+91 XXXXX XXXXX"}
         </p>
 
         <p style={styles.role}>
-          {
-            resume.role ||
-            "Target Role"
-          }
+          {resume.role ||
+            "Target Role"}
         </p>
 
         <Section
@@ -868,7 +1120,9 @@ function InputBox({
       <input
         type="text"
         name={name}
-        placeholder={placeholder}
+        placeholder={
+          placeholder
+        }
         value={value}
         onChange={onChange}
         style={styles.input}
@@ -902,7 +1156,9 @@ function TextAreaBox({
 
       <textarea
         name={name}
-        placeholder={placeholder}
+        placeholder={
+          placeholder
+        }
         value={value}
         onChange={onChange}
         style={styles.textarea}
@@ -983,7 +1239,8 @@ const styles = {
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
     display: "flex",
-    justifyContent: "center",
+    justifyContent:
+      "center",
     alignItems: "center",
     color: "white",
     fontSize: "34px",
@@ -1021,7 +1278,8 @@ const styles = {
 
   input: {
     flex: 1,
-    background: "transparent",
+    background:
+      "transparent",
     border: "none",
     outline: "none",
     color: "white",
@@ -1030,12 +1288,14 @@ const styles = {
   textarea: {
     flex: 1,
     minHeight: "90px",
-    background: "transparent",
+    background:
+      "transparent",
     border: "none",
     outline: "none",
     resize: "none",
     color: "white",
-    fontFamily: "inherit",
+    fontFamily:
+      "inherit",
   },
 
   aiBtn: {
@@ -1048,7 +1308,8 @@ const styles = {
       "rgba(255,140,0,0.12)",
     color: "#ffb347",
     display: "flex",
-    justifyContent: "center",
+    justifyContent:
+      "center",
     alignItems: "center",
     gap: "10px",
     fontWeight: "bold",
@@ -1117,7 +1378,8 @@ const styles = {
       "linear-gradient(135deg,#ff9800,#ff5e00)",
     color: "white",
     display: "flex",
-    justifyContent: "center",
+    justifyContent:
+      "center",
     alignItems: "center",
     gap: "10px",
     fontWeight: "bold",
@@ -1152,7 +1414,8 @@ const styles = {
   sectionText: {
     color: "#333",
     lineHeight: "1.7",
-    whiteSpace: "pre-wrap",
+    whiteSpace:
+      "pre-wrap",
   },
 
 };
