@@ -63,20 +63,18 @@ function ResumeBuilder() {
       });
     };
 
-  // IMPROVED ATS SCORE
+  // ATS SCORE
   const calculateATSScore =
     () => {
 
       let score = 0;
 
-      // REGEX
       const emailRegex =
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
       const phoneRegex =
         /^[0-9]{10}$/;
 
-      // ATS KEYWORDS
       const skillKeywords = [
         "react",
         "node",
@@ -95,10 +93,8 @@ function ResumeBuilder() {
         "redux",
         "typescript",
         "nextjs",
-        "firebase",
       ];
 
-      // ACTION WORDS
       const actionWords = [
         "developed",
         "created",
@@ -108,7 +104,6 @@ function ResumeBuilder() {
         "built",
         "optimized",
         "improved",
-        "integrated",
         "deployed",
       ];
 
@@ -148,7 +143,7 @@ function ResumeBuilder() {
         score += 10;
       }
 
-      // SKILLS ANALYSIS
+      // SKILLS
       const skillsText =
         resume.skills.toLowerCase();
 
@@ -200,9 +195,7 @@ function ResumeBuilder() {
         (word) => {
 
           if (
-            expText.includes(
-              word
-            )
+            expText.includes(word)
           ) {
             matchedActions++;
           }
@@ -214,7 +207,7 @@ function ResumeBuilder() {
         15
       );
 
-      // SUMMARY QUALITY
+      // SUMMARY
       if (
         resume.summary
           .trim()
@@ -223,10 +216,7 @@ function ResumeBuilder() {
         score += 10;
       }
 
-      return Math.min(
-        score,
-        100
-      );
+      return Math.min(score, 100);
     };
 
   // ATS FEEDBACK
@@ -247,7 +237,7 @@ function ResumeBuilder() {
         )
       ) {
         feedback.push(
-          "Valid email missing"
+          "Enter a valid email"
         );
       }
 
@@ -257,7 +247,7 @@ function ResumeBuilder() {
         )
       ) {
         feedback.push(
-          "Phone number should be 10 digits"
+          "Phone number must be 10 digits"
         );
       }
 
@@ -430,7 +420,7 @@ ${resume.education}
         </h1>
 
         <p style={styles.subtitle}>
-          Build professional ATS-friendly resumes 🚀
+          Build AI-powered professional resumes 🚀
         </p>
 
         <InputBox
@@ -508,9 +498,7 @@ ${resume.education}
 
           style={styles.aiBtn}
 
-          onClick={
-            generateAIResume
-          }
+          onClick={generateAIResume}
         >
 
           <FaRobot />
@@ -745,99 +733,249 @@ ${resume.education}
   );
 }
 
-// INPUT
-function InputBox({
-  icon,
-  name,
-  placeholder,
-  value,
-  onChange,
-}) {
-
-  return (
-    <div style={styles.inputBox}>
-
-      <div style={styles.icon}>
-        {icon}
-      </div>
-
-      <input
-        type="text"
-
-        name={name}
-
-        placeholder={placeholder}
-
-        value={value}
-
-        onChange={onChange}
-
-        style={styles.input}
-      />
-
-    </div>
-  );
-}
-
-// TEXTAREA
-function TextAreaBox({
-  icon,
-  name,
-  placeholder,
-  value,
-  onChange,
-}) {
-
-  return (
-    <div style={styles.inputBox}>
-
-      <div style={styles.icon}>
-        {icon}
-      </div>
-
-      <textarea
-        name={name}
-
-        placeholder={placeholder}
-
-        value={value}
-
-        onChange={onChange}
-
-        style={styles.textarea}
-      />
-
-    </div>
-  );
-}
-
-// SECTION
-function Section({
-  title,
-  text,
-}) {
-
-  return (
-    <div style={styles.section}>
-
-      <h3 style={styles.sectionTitle}>
-        {title}
-      </h3>
-
-      <p style={styles.sectionText}>
-        {text}
-      </p>
-
-    </div>
-  );
-}
-
 const styles = {
+
+  page: {
+    minHeight: "100vh",
+    display: "grid",
+    gridTemplateColumns:
+      "repeat(auto-fit,minmax(360px,1fr))",
+    gap: "30px",
+    padding: "40px",
+    background:
+      "linear-gradient(135deg,#0f0f0f,#111827)",
+  },
+
+  formCard: {
+    padding: "35px",
+    borderRadius: "30px",
+    background:
+      "rgba(255,255,255,0.04)",
+    backdropFilter:
+      "blur(18px)",
+    border:
+      "1px solid rgba(255,140,0,0.15)",
+    boxShadow:
+      "0 10px 40px rgba(0,0,0,0.4)",
+  },
+
+  previewCard: {
+    padding: "45px",
+    borderRadius: "30px",
+    background: "white",
+    color: "#111",
+    boxShadow:
+      "0 10px 40px rgba(0,0,0,0.25)",
+  },
+
+  logo: {
+    width: "80px",
+    height: "80px",
+    borderRadius: "24px",
+    background:
+      "linear-gradient(135deg,#ff9800,#ff5e00)",
+    display: "flex",
+    justifyContent:
+      "center",
+    alignItems: "center",
+    color: "white",
+    fontSize: "34px",
+    marginBottom: "20px",
+    boxShadow:
+      "0 10px 25px rgba(255,94,0,0.35)",
+  },
+
+  title: {
+    color: "white",
+    fontSize: "42px",
+    marginBottom: "10px",
+    fontWeight: "bold",
+  },
+
+  subtitle: {
+    color: "#aaa",
+    marginBottom: "30px",
+    fontSize: "15px",
+  },
+
+  inputBox: {
+    display: "flex",
+    gap: "12px",
+    marginBottom: "18px",
+    padding: "14px 18px",
+    borderRadius: "18px",
+    background:
+      "rgba(255,255,255,0.04)",
+    border:
+      "1px solid rgba(255,140,0,0.15)",
+    transition: "0.3s",
+  },
+
+  icon: {
+    color: "#ff9800",
+    fontSize: "18px",
+    marginTop: "5px",
+  },
+
+  input: {
+    flex: 1,
+    background:
+      "transparent",
+    border: "none",
+    outline: "none",
+    color: "white",
+    fontSize: "15px",
+  },
+
+  textarea: {
+    flex: 1,
+    minHeight: "90px",
+    background:
+      "transparent",
+    border: "none",
+    outline: "none",
+    resize: "none",
+    color: "white",
+    fontFamily:
+      "inherit",
+    fontSize: "15px",
+  },
+
+  aiBtn: {
+    width: "100%",
+    marginTop: "10px",
+    padding: "16px",
+    border: "none",
+    borderRadius: "18px",
+    background:
+      "rgba(255,140,0,0.12)",
+    color: "#ffb347",
+    display: "flex",
+    justifyContent:
+      "center",
+    alignItems: "center",
+    gap: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    fontSize: "15px",
+  },
+
+  leftATSBox: {
+    marginTop: "20px",
+    padding: "20px",
+    borderRadius: "20px",
+    background:
+      "rgba(255,255,255,0.04)",
+    border:
+      "1px solid rgba(255,140,0,0.15)",
+  },
+
+  leftATSTop: {
+    display: "flex",
+    justifyContent:
+      "space-between",
+    marginBottom: "12px",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "16px",
+  },
+
+  progressBar: {
+    width: "100%",
+    height: "12px",
+    borderRadius: "10px",
+    background: "#222",
+    overflow: "hidden",
+  },
+
+  progress: {
+    height: "100%",
+    background:
+      "linear-gradient(90deg,#ff9800,#ff5e00)",
+  },
+
+  analysisBox: {
+    marginTop: "15px",
+  },
 
   feedbackBox: {
     marginTop: "20px",
+    padding: "15px",
+    borderRadius: "16px",
+    background:
+      "rgba(255,255,255,0.03)",
+    border:
+      "1px solid rgba(255,255,255,0.06)",
   },
 
-};
+  goodText: {
+    color: "#4ade80",
+    fontWeight: "bold",
+  },
 
-export default ResumeBuilder;
+  midText: {
+    color: "#facc15",
+    fontWeight: "bold",
+  },
+
+  badText: {
+    color: "#f87171",
+    fontWeight: "bold",
+  },
+
+  downloadBtn: {
+    width: "100%",
+    marginTop: "20px",
+    padding: "16px",
+    border: "none",
+    borderRadius: "18px",
+    background:
+      "linear-gradient(135deg,#ff9800,#ff5e00)",
+    color: "white",
+    display: "flex",
+    justifyContent:
+      "center",
+    alignItems: "center",
+    gap: "10px",
+    fontWeight: "bold",
+    cursor: "pointer",
+    fontSize: "15px",
+    boxShadow:
+      "0 10px 25px rgba(255,94,0,0.3)",
+  },
+
+  name: {
+    fontSize: "38px",
+    marginBottom: "10px",
+    fontWeight: "bold",
+  },
+
+  info: {
+    marginBottom: "5px",
+    color: "#555",
+  },
+
+  role: {
+    marginTop: "10px",
+    color: "#ff5e00",
+    fontWeight: "bold",
+    fontSize: "18px",
+  },
+
+  section: {
+    marginTop: "28px",
+  },
+
+  sectionTitle: {
+    marginBottom: "8px",
+    color: "#ff5e00",
+    fontSize: "20px",
+  },
+
+  sectionText: {
+    color: "#333",
+    lineHeight: "1.7",
+    whiteSpace:
+      "pre-wrap",
+  },
+};
