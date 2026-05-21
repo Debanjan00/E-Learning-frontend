@@ -494,8 +494,10 @@ function Dashboard() {
 
 const styles = {
 
+  // FIXED SCROLL ISSUE
   page: {
-    minHeight: "100vh",
+    minHeight:
+      "calc(100vh - 80px)",
 
     paddingTop:
       window.innerWidth <= 768
@@ -524,6 +526,8 @@ const styles = {
 
     overflowX: "hidden",
 
+    overflowY: "auto",
+
     boxSizing:
       "border-box",
   },
@@ -550,7 +554,8 @@ const styles = {
     background:
       "rgba(255,140,0,0.15)",
 
-    filter: "blur(90px)",
+    filter:
+      "blur(90px)",
   },
 
   glow2: {
@@ -575,7 +580,8 @@ const styles = {
     background:
       "rgba(255,94,0,0.15)",
 
-    filter: "blur(90px)",
+    filter:
+      "blur(90px)",
   },
 
   header: {
@@ -604,7 +610,8 @@ const styles = {
         ? "18px"
         : "0px",
 
-    position: "relative",
+    position:
+      "relative",
 
     zIndex: 2,
   },
@@ -612,7 +619,8 @@ const styles = {
   left: {
     display: "flex",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap:
       window.innerWidth <= 768
@@ -631,11 +639,13 @@ const styles = {
         ? "58px"
         : "65px",
 
-    borderRadius: "22px",
+    borderRadius:
+      "22px",
 
     display: "flex",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     justifyContent:
       "center",
@@ -692,7 +702,8 @@ const styles = {
         ? "14px"
         : "12px 20px",
 
-    borderRadius: "16px",
+    borderRadius:
+      "16px",
 
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
@@ -701,7 +712,8 @@ const styles = {
 
     display: "flex",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "10px",
 
@@ -726,7 +738,8 @@ const styles = {
         ? "1fr"
         : "repeat(auto-fit,minmax(240px,280px))",
 
-    justifyContent: "center",
+    justifyContent:
+      "center",
 
     gap:
       window.innerWidth <= 768
@@ -737,7 +750,8 @@ const styles = {
 
     margin: "auto",
 
-    position: "relative",
+    position:
+      "relative",
 
     zIndex: 2,
   },
@@ -762,13 +776,16 @@ const styles = {
     boxShadow:
       "0 0 30px rgba(255,140,0,0.08)",
 
-    paddingBottom: "12px",
+    paddingBottom:
+      "12px",
 
-    transition: "0.3s",
+    transition:
+      "0.3s",
   },
 
   imageWrapper: {
-    position: "relative",
+    position:
+      "relative",
   },
 
   image: {
@@ -779,11 +796,13 @@ const styles = {
         ? "190px"
         : "160px",
 
-    objectFit: "cover",
+    objectFit:
+      "cover",
   },
 
   overlay: {
-    position: "absolute",
+    position:
+      "absolute",
 
     top: "12px",
 
@@ -791,7 +810,8 @@ const styles = {
 
     display: "flex",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "6px",
 
@@ -800,7 +820,8 @@ const styles = {
         ? "8px 12px"
         : "8px 14px",
 
-    borderRadius: "12px",
+    borderRadius:
+      "12px",
 
     background:
       "rgba(0,0,0,0.55)",
@@ -831,12 +852,8 @@ const styles = {
         ? "18px"
         : "19px",
 
-    lineHeight: "1.4",
-
-    minHeight:
-      window.innerWidth <= 768
-        ? "auto"
-        : "48px",
+    lineHeight:
+      "1.4",
   },
 
   mainBtn: {
@@ -857,7 +874,8 @@ const styles = {
         ? "13px"
         : "12px",
 
-    borderRadius: "14px",
+    borderRadius:
+      "14px",
 
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
@@ -869,18 +887,15 @@ const styles = {
     justifyContent:
       "center",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "8px",
 
-    fontWeight: "bold",
+    fontWeight:
+      "bold",
 
     cursor: "pointer",
-
-    fontSize:
-      window.innerWidth <= 768
-        ? "13px"
-        : "14px",
   },
 
   certificateBtn: {
@@ -902,30 +917,29 @@ const styles = {
         ? "13px"
         : "12px",
 
-    borderRadius: "14px",
+    borderRadius:
+      "14px",
 
     background:
       "rgba(255,255,255,0.04)",
 
-    color: "#ff9800",
+    color:
+      "#ff9800",
 
     display: "flex",
 
     justifyContent:
       "center",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "8px",
 
-    fontWeight: "bold",
+    fontWeight:
+      "bold",
 
     cursor: "pointer",
-
-    fontSize:
-      window.innerWidth <= 768
-        ? "13px"
-        : "14px",
   },
 
   lectureBtn: {
@@ -946,7 +960,8 @@ const styles = {
         ? "13px"
         : "12px",
 
-    borderRadius: "14px",
+    borderRadius:
+      "14px",
 
     background:
       "#007bff",
@@ -958,18 +973,15 @@ const styles = {
     justifyContent:
       "center",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "8px",
 
-    fontWeight: "bold",
+    fontWeight:
+      "bold",
 
     cursor: "pointer",
-
-    fontSize:
-      window.innerWidth <= 768
-        ? "13px"
-        : "14px",
   },
 
   manageBtn: {
@@ -990,7 +1002,8 @@ const styles = {
         ? "13px"
         : "12px",
 
-    borderRadius: "14px",
+    borderRadius:
+      "14px",
 
     background:
       "#6c757d",
@@ -1002,18 +1015,15 @@ const styles = {
     justifyContent:
       "center",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "8px",
 
-    fontWeight: "bold",
+    fontWeight:
+      "bold",
 
     cursor: "pointer",
-
-    fontSize:
-      window.innerWidth <= 768
-        ? "13px"
-        : "14px",
   },
 
   deleteBtn: {
@@ -1034,7 +1044,8 @@ const styles = {
         ? "13px"
         : "12px",
 
-    borderRadius: "14px",
+    borderRadius:
+      "14px",
 
     background:
       "#ff2d55",
@@ -1046,18 +1057,15 @@ const styles = {
     justifyContent:
       "center",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "8px",
 
-    fontWeight: "bold",
+    fontWeight:
+      "bold",
 
     cursor: "pointer",
-
-    fontSize:
-      window.innerWidth <= 768
-        ? "13px"
-        : "14px",
   },
 
   empty: {
@@ -1068,7 +1076,8 @@ const styles = {
     justifyContent:
       "center",
 
-    alignItems: "center",
+    alignItems:
+      "center",
 
     gap: "12px",
 

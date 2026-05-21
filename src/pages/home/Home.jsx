@@ -32,6 +32,14 @@ function Home() {
   const navigate =
     useNavigate();
 
+  const isMobile =
+    window.innerWidth <= 768;
+
+  const token =
+    localStorage.getItem(
+      "token"
+    );
+
   useEffect(() => {
 
     fetchCourses();
@@ -61,14 +69,15 @@ function Home() {
   return (
     <div style={styles.page}>
 
-      {/* GLOW */}
+      {/* BACKGROUND GLOW */}
       <div style={styles.glow1}></div>
 
       <div style={styles.glow2}></div>
 
-      {/* HERO */}
+      {/* HERO SECTION */}
       <section style={styles.hero}>
 
+        {/* LEFT */}
         <motion.div
           initial={{
             opacity: 0,
@@ -118,19 +127,22 @@ function Home() {
 
           </motion.h1>
 
+          {/* TEXT */}
           <p style={styles.heroText}>
 
             Upgrade your future
             with futuristic AI
-            courses, live classes,
-            and premium learning
-            experiences.
+            courses, premium
+            learning experiences,
+            live classes and
+            certificates.
 
           </p>
 
           {/* BUTTONS */}
           <div style={styles.heroButtons}>
 
+            {/* EXPLORE */}
             <motion.button
               type="button"
 
@@ -159,6 +171,7 @@ function Home() {
 
             </motion.button>
 
+            {/* LOGIN CTA */}
             <motion.button
               type="button"
 
@@ -176,11 +189,6 @@ function Home() {
 
               onClick={() => {
 
-                const token =
-                  localStorage.getItem(
-                    "token"
-                  );
-
                 if (token) {
 
                   navigate(
@@ -196,13 +204,9 @@ function Home() {
               }}
             >
 
-              {
-                localStorage.getItem(
-                  "token"
-                )
-                  ? "Dashboard"
-                  : "Join Free"
-              }
+              {token
+                ? "Dashboard"
+                : "Join Free"}
 
             </motion.button>
 
@@ -210,7 +214,7 @@ function Home() {
 
         </motion.div>
 
-        {/* HERO IMAGE */}
+        {/* RIGHT */}
         <motion.div
           initial={{
             opacity: 0,
@@ -250,8 +254,8 @@ function Home() {
 
           <p style={styles.subHeading}>
             Learn trending skills
-            with immersive
-            futuristic education
+            with immersive AI
+            education
           </p>
 
         </div>
@@ -548,6 +552,7 @@ function Home() {
 
         </p>
 
+        {/* FIXED BUTTON */}
         <motion.button
           type="button"
 
@@ -563,14 +568,26 @@ function Home() {
             styles.ctaBtn
           }
 
-          onClick={() =>
-            navigate(
-              "/register"
-            )
-          }
+          onClick={() => {
+
+            if (token) {
+
+              navigate(
+                "/dashboard"
+              );
+
+            } else {
+
+              navigate(
+                "/register"
+              );
+            }
+          }}
         >
 
-          Join Now
+          {token
+            ? "Go to Dashboard"
+            : "Join Now"}
 
         </motion.button>
 
@@ -600,9 +617,15 @@ const styles = {
 
     left: "-120px",
 
-    width: "350px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
-    height: "350px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
     borderRadius: "50%",
 
@@ -619,9 +642,15 @@ const styles = {
 
     right: "-120px",
 
-    width: "350px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
-    height: "350px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
     borderRadius: "50%",
 
@@ -632,23 +661,44 @@ const styles = {
   },
 
   hero: {
-    minHeight: "85vh",
+    minHeight:
+      window.innerWidth <= 768
+        ? "auto"
+        : "85vh",
 
     display: "flex",
 
-    justifyContent: "space-between",
+    flexDirection:
+      window.innerWidth <= 768
+        ? "column"
+        : "row",
+
+    justifyContent:
+      "space-between",
 
     alignItems: "center",
 
     gap: "40px",
 
-    paddingTop: "40px",
+    paddingTop:
+      window.innerWidth <= 768
+        ? "100px"
+        : "40px",
 
-    paddingBottom: "60px",
+    paddingBottom:
+      window.innerWidth <= 768
+        ? "50px"
+        : "60px",
 
-    paddingLeft: "8%",
+    paddingLeft:
+      window.innerWidth <= 768
+        ? "18px"
+        : "8%",
 
-    paddingRight: "8%",
+    paddingRight:
+      window.innerWidth <= 768
+        ? "18px"
+        : "8%",
 
     position: "relative",
 
@@ -658,7 +708,15 @@ const styles = {
   },
 
   heroContent: {
-    maxWidth: "620px",
+    maxWidth:
+      window.innerWidth <= 768
+        ? "100%"
+        : "620px",
+
+    textAlign:
+      window.innerWidth <= 768
+        ? "center"
+        : "left",
   },
 
   badge: {
@@ -685,7 +743,10 @@ const styles = {
   },
 
   heroTitle: {
-    fontSize: "72px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "42px"
+        : "72px",
 
     lineHeight: "1.1",
 
@@ -697,7 +758,10 @@ const styles = {
   heroText: {
     color: "#bdbdbd",
 
-    fontSize: "18px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "15px"
+        : "18px",
 
     lineHeight: "1.8",
 
@@ -707,13 +771,29 @@ const styles = {
   heroButtons: {
     display: "flex",
 
+    flexDirection:
+      window.innerWidth <= 768
+        ? "column"
+        : "row",
+
     gap: "18px",
 
-    flexWrap: "wrap",
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "auto",
   },
 
   primaryBtn: {
     border: "none",
+
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "auto",
+
+    justifyContent:
+      "center",
 
     padding:
       "16px 28px",
@@ -733,17 +813,17 @@ const styles = {
 
     fontWeight: "bold",
 
-    fontSize: "16px",
-
     cursor: "pointer",
-
-    boxShadow:
-      "0 0 25px rgba(255,140,0,0.35)",
   },
 
   secondaryBtn: {
     border:
       "1px solid rgba(255,255,255,0.12)",
+
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "auto",
 
     padding:
       "16px 28px",
@@ -757,26 +837,33 @@ const styles = {
 
     fontWeight: "bold",
 
-    fontSize: "16px",
-
     cursor: "pointer",
   },
 
   heroRight: {
-    flex: 1,
-
     display: "flex",
 
     justifyContent:
       "center",
+
+    alignItems: "center",
   },
 
   robotBox: {
-    width: "320px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "320px",
 
-    height: "320px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "320px",
 
-    borderRadius: "40px",
+    borderRadius:
+      window.innerWidth <= 768
+        ? "30px"
+        : "40px",
 
     display: "flex",
 
@@ -788,7 +875,10 @@ const styles = {
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
 
-    fontSize: "140px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "90px"
+        : "140px",
 
     color: "white",
 
@@ -798,7 +888,9 @@ const styles = {
 
   section: {
     padding:
-      "60px 8%",
+      window.innerWidth <= 768
+        ? "50px 18px"
+        : "60px 8%",
   },
 
   sectionHeader: {
@@ -810,20 +902,25 @@ const styles = {
   heading: {
     color: "white",
 
-    fontSize: "42px",
-
-    marginBottom: "10px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "32px"
+        : "42px",
   },
 
   subHeading: {
     color: "#aaa",
+
+    marginTop: "10px",
   },
 
   grid: {
     display: "grid",
 
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(280px,1fr))",
+      window.innerWidth <= 768
+        ? "1fr"
+        : "repeat(auto-fit,minmax(280px,1fr))",
 
     gap: "28px",
   },
@@ -841,9 +938,6 @@ const styles = {
 
     border:
       "1px solid rgba(255,140,0,0.15)",
-
-    boxShadow:
-      "0 0 35px rgba(255,140,0,0.08)",
   },
 
   imageWrapper: {
@@ -853,7 +947,10 @@ const styles = {
   image: {
     width: "100%",
 
-    height: "220px",
+    height:
+      window.innerWidth <= 768
+        ? "200px"
+        : "220px",
 
     objectFit: "cover",
   },
@@ -880,8 +977,6 @@ const styles = {
       "rgba(0,0,0,0.55)",
 
     color: "white",
-
-    fontSize: "13px",
   },
 
   cardContent: {
@@ -890,8 +985,6 @@ const styles = {
 
   courseTitle: {
     color: "white",
-
-    fontSize: "24px",
 
     marginBottom: "18px",
   },
@@ -936,7 +1029,9 @@ const styles = {
 
   featuresSection: {
     padding:
-      "60px 8%",
+      window.innerWidth <= 768
+        ? "50px 18px"
+        : "60px 8%",
 
     textAlign: "center",
   },
@@ -945,7 +1040,9 @@ const styles = {
     display: "grid",
 
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(250px,1fr))",
+      window.innerWidth <= 768
+        ? "1fr"
+        : "repeat(auto-fit,minmax(250px,1fr))",
 
     gap: "28px",
 
@@ -1006,7 +1103,9 @@ const styles = {
 
   cta: {
     padding:
-      "80px 8%",
+      window.innerWidth <= 768
+        ? "60px 18px"
+        : "80px 8%",
 
     textAlign: "center",
   },
@@ -1014,7 +1113,10 @@ const styles = {
   ctaTitle: {
     color: "white",
 
-    fontSize: "52px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "34px"
+        : "52px",
 
     marginBottom: "20px",
   },
@@ -1023,12 +1125,15 @@ const styles = {
     color: "#aaa",
 
     marginBottom: "30px",
-
-    fontSize: "18px",
   },
 
   ctaBtn: {
     border: "none",
+
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "auto",
 
     padding:
       "18px 34px",

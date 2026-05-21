@@ -54,6 +54,9 @@ function LiveClasses() {
   const navigate =
     useNavigate();
 
+  const isMobile =
+    window.innerWidth <= 768;
+
   useEffect(() => {
 
     fetchClasses();
@@ -249,7 +252,7 @@ function LiveClasses() {
       {(user?.role ===
         "admin" ||
         user?.role ===
-        "instructor") && (
+          "instructor") && (
 
           <div
             style={
@@ -473,7 +476,7 @@ function LiveClasses() {
                 {(user?.role ===
                   "instructor" ||
                   user?.role ===
-                  "admin") && (
+                    "admin") && (
                     <button
                       type="button"
 
@@ -560,270 +563,546 @@ function LiveClasses() {
 const styles = {
 
   page: {
-    minHeight: "100vh",
-    paddingTop: "90px",
-    paddingBottom: "40px",
-    paddingLeft: "20px",
-    paddingRight: "20px",
+    minHeight:
+      "calc(100vh - 80px)",
+
+    paddingTop:
+      window.innerWidth <= 768
+        ? "80px"
+        : "90px",
+
+    paddingBottom:
+      window.innerWidth <= 768
+        ? "20px"
+        : "40px",
+
+    paddingLeft:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
+
+    paddingRight:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
+
     background:
       "linear-gradient(135deg,#0f0f0f,#111827)",
+
     position: "relative",
+
     overflowX: "hidden",
+
+    overflowY: "auto",
+
+    boxSizing:
+      "border-box",
   },
 
   glow1: {
     position: "absolute",
+
     top: "-100px",
+
     left: "-100px",
-    width: "350px",
-    height: "350px",
+
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
     borderRadius: "50%",
+
     background:
       "rgba(255,140,0,0.15)",
+
     filter: "blur(90px)",
   },
 
   glow2: {
     position: "absolute",
+
     bottom: "-100px",
+
     right: "-100px",
-    width: "350px",
-    height: "350px",
+
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
     borderRadius: "50%",
+
     background:
       "rgba(255,94,0,0.15)",
+
     filter: "blur(90px)",
   },
 
   header: {
     display: "flex",
-    alignItems: "center",
-    gap: "18px",
+
+    flexDirection:
+      window.innerWidth <= 768
+        ? "column"
+        : "row",
+
+    alignItems:
+      window.innerWidth <= 768
+        ? "flex-start"
+        : "center",
+
+    gap:
+      window.innerWidth <= 768
+        ? "14px"
+        : "18px",
+
     maxWidth: "1200px",
+
     margin:
-      "0 auto 40px auto",
+      "0 auto 30px auto",
+
     position: "relative",
+
     zIndex: 2,
   },
 
   topBar: {
     display: "flex",
+
     justifyContent:
-      "flex-end",
+      window.innerWidth <= 768
+        ? "stretch"
+        : "flex-end",
+
     maxWidth: "1200px",
+
     margin:
-      "0 auto 30px auto",
+      "0 auto 25px auto",
+
     position: "relative",
+
     zIndex: 2,
   },
 
   createBtn: {
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "auto",
+
     padding:
-      "14px 22px",
+      window.innerWidth <= 768
+        ? "14px"
+        : "14px 22px",
+
     border: "none",
+
     borderRadius: "14px",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     color: "white",
+
     fontWeight: "bold",
+
     cursor: "pointer",
-    fontSize: "14px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "14px"
+        : "15px",
+
     boxShadow:
       "0 0 18px rgba(255,140,0,0.22)",
   },
 
   logo: {
-    width: "70px",
-    height: "70px",
+    width:
+      window.innerWidth <= 768
+        ? "60px"
+        : "70px",
+
+    height:
+      window.innerWidth <= 768
+        ? "60px"
+        : "70px",
+
     borderRadius: "22px",
+
     display: "flex",
+
     alignItems: "center",
+
     justifyContent:
       "center",
-    fontSize: "30px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "24px"
+        : "30px",
+
     color: "white",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     boxShadow:
       "0 0 30px rgba(255,140,0,0.35)",
   },
 
   title: {
     color: "white",
+
     margin: 0,
-    fontSize: "40px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "30px"
+        : "40px",
   },
 
   subtitle: {
     marginTop: "5px",
+
     color: "#aaa",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "15px",
   },
 
   grid: {
     display: "grid",
+
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(280px,320px))",
+      window.innerWidth <= 768
+        ? "1fr"
+        : "repeat(auto-fit,minmax(280px,320px))",
+
     justifyContent: "center",
-    gap: "25px",
+
+    gap:
+      window.innerWidth <= 768
+        ? "18px"
+        : "25px",
+
     maxWidth: "1300px",
+
     margin: "auto",
+
     position: "relative",
+
     zIndex: 2,
   },
 
   card: {
-    borderRadius: "28px",
+    borderRadius:
+      window.innerWidth <= 768
+        ? "22px"
+        : "28px",
+
     background:
       "rgba(255,255,255,0.04)",
+
     backdropFilter:
       "blur(18px)",
+
     border:
       "1px solid rgba(255,140,0,0.15)",
+
     boxShadow:
       "0 0 35px rgba(255,140,0,0.08)",
-    padding: "24px",
+
+    padding:
+      window.innerWidth <= 768
+        ? "18px"
+        : "24px",
+
     overflow: "hidden",
   },
 
   top: {
     display: "flex",
+
     justifyContent:
       "space-between",
+
     alignItems: "center",
+
     marginBottom: "20px",
   },
 
   liveBadge: {
     padding:
-      "8px 14px",
+      window.innerWidth <= 768
+        ? "7px 12px"
+        : "8px 14px",
+
     borderRadius: "12px",
+
     background:
       "rgba(255,0,0,0.15)",
+
     color: "#ff4d4d",
+
     fontWeight: "bold",
-    fontSize: "13px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "11px"
+        : "13px",
+
     border:
       "1px solid rgba(255,0,0,0.2)",
   },
 
   iconBox: {
-    width: "55px",
-    height: "55px",
+    width:
+      window.innerWidth <= 768
+        ? "48px"
+        : "55px",
+
+    height:
+      window.innerWidth <= 768
+        ? "48px"
+        : "55px",
+
     borderRadius: "18px",
+
     display: "flex",
+
     justifyContent:
       "center",
-    alignItems:
-      "center",
+
+    alignItems: "center",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     color: "white",
-    fontSize: "22px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "18px"
+        : "22px",
+
     boxShadow:
       "0 0 25px rgba(255,140,0,0.35)",
   },
 
   cardTitle: {
     color: "white",
-    fontSize: "24px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "22px"
+        : "24px",
+
     marginBottom: "18px",
+
+    lineHeight: "1.4",
   },
 
   info: {
     color: "#bbb",
-    fontSize: "14px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
+
     lineHeight: "1.8",
+
     marginBottom: "22px",
   },
 
   infoRow: {
     display: "flex",
-    alignItems:
-      "center",
+
+    alignItems: "center",
+
     gap: "10px",
+
     marginBottom: "10px",
+
+    wordBreak: "break-word",
   },
 
   joinBtn: {
     width: "100%",
+
     border: "none",
-    padding: "14px",
+
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
+
     borderRadius: "16px",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     color: "white",
+
     display: "flex",
+
     justifyContent:
       "center",
-    alignItems:
-      "center",
+
+    alignItems: "center",
+
     gap: "10px",
+
     fontWeight: "bold",
+
     cursor: "pointer",
+
     marginBottom: "10px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
+
     boxShadow:
       "0 0 25px rgba(255,140,0,0.3)",
   },
 
   chatBtn: {
     width: "100%",
+
     border:
       "1px solid rgba(255,255,255,0.1)",
-    padding: "14px",
+
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
+
     borderRadius: "16px",
+
     background:
       "rgba(255,255,255,0.05)",
+
     color: "white",
+
     display: "flex",
+
     justifyContent:
       "center",
-    alignItems:
-      "center",
+
+    alignItems: "center",
+
     gap: "10px",
+
     fontWeight: "bold",
+
     cursor: "pointer",
+
     marginBottom: "10px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   endBtn: {
     width: "100%",
+
     border: "none",
-    padding: "14px",
+
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
+
     borderRadius: "16px",
+
     background:
       "linear-gradient(135deg,#ff2d55,#ff0044)",
+
     color: "white",
+
     display: "flex",
+
     justifyContent:
       "center",
-    alignItems:
-      "center",
+
+    alignItems: "center",
+
     gap: "10px",
+
     fontWeight: "bold",
+
     cursor: "pointer",
+
     marginBottom: "10px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   chatBox: {
     marginTop: "18px",
-    padding: "16px",
+
+    padding:
+      window.innerWidth <= 768
+        ? "12px"
+        : "16px",
+
     borderRadius: "18px",
+
     background:
       "rgba(0,0,0,0.25)",
+
     border:
       "1px solid rgba(255,255,255,0.06)",
+
+    overflowX: "hidden",
   },
 
   empty: {
     color: "white",
+
     display: "flex",
+
     justifyContent:
       "center",
-    alignItems:
-      "center",
+
+    alignItems: "center",
+
     gap: "12px",
-    fontSize: "20px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "16px"
+        : "20px",
+
     marginTop: "80px",
+
+    textAlign: "center",
+
+    padding:
+      window.innerWidth <= 768
+        ? "0 20px"
+        : "0",
   },
 };
 
