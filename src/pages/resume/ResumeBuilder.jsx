@@ -63,43 +63,235 @@ function ResumeBuilder() {
       });
     };
 
-  // ATS SCORE
+  // IMPROVED ATS SCORE
   const calculateATSScore =
     () => {
 
       let score = 0;
 
-      if (resume.name)
+      // REGEX
+      const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      const phoneRegex =
+        /^[0-9]{10}$/;
+
+      // ATS KEYWORDS
+      const skillKeywords = [
+        "react",
+        "node",
+        "mongodb",
+        "express",
+        "javascript",
+        "python",
+        "java",
+        "html",
+        "css",
+        "sql",
+        "aws",
+        "docker",
+        "git",
+        "api",
+        "redux",
+        "typescript",
+        "nextjs",
+        "firebase",
+      ];
+
+      // ACTION WORDS
+      const actionWords = [
+        "developed",
+        "created",
+        "designed",
+        "implemented",
+        "managed",
+        "built",
+        "optimized",
+        "improved",
+        "integrated",
+        "deployed",
+      ];
+
+      // NAME
+      if (
+        resume.name
+          .trim()
+          .length >= 3
+      ) {
         score += 10;
+      }
 
-      if (resume.email)
+      // EMAIL
+      if (
+        emailRegex.test(
+          resume.email
+        )
+      ) {
         score += 10;
+      }
 
-      if (resume.phone)
+      // PHONE
+      if (
+        phoneRegex.test(
+          resume.phone
+        )
+      ) {
         score += 10;
+      }
 
-      if (resume.role)
+      // ROLE
+      if (
+        resume.role
+          .trim()
+          .length >= 4
+      ) {
         score += 10;
+      }
 
-      if (resume.skills)
-        score += 20;
+      // SKILLS ANALYSIS
+      const skillsText =
+        resume.skills.toLowerCase();
 
+      let matchedSkills = 0;
+
+      skillKeywords.forEach(
+        (skill) => {
+
+          if (
+            skillsText.includes(
+              skill
+            )
+          ) {
+            matchedSkills++;
+          }
+        }
+      );
+
+      score += Math.min(
+        matchedSkills * 2,
+        20
+      );
+
+      // EDUCATION
       if (
         resume.education
-      )
+          .trim()
+          .split(" ").length >= 6
+      ) {
+        score += 10;
+      }
+
+      // PROJECTS
+      if (
+        resume.projects
+          .trim()
+          .split(" ").length >= 20
+      ) {
         score += 15;
+      }
+
+      // EXPERIENCE
+      const expText =
+        resume.experience.toLowerCase();
+
+      let matchedActions = 0;
+
+      actionWords.forEach(
+        (word) => {
+
+          if (
+            expText.includes(
+              word
+            )
+          ) {
+            matchedActions++;
+          }
+        }
+      );
+
+      score += Math.min(
+        matchedActions * 3,
+        15
+      );
+
+      // SUMMARY QUALITY
+      if (
+        resume.summary
+          .trim()
+          .split(" ").length >= 20
+      ) {
+        score += 10;
+      }
+
+      return Math.min(
+        score,
+        100
+      );
+    };
+
+  // ATS FEEDBACK
+  const getATSFeedback =
+    () => {
+
+      const feedback = [];
+
+      const emailRegex =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      const phoneRegex =
+        /^[0-9]{10}$/;
+
+      if (
+        !emailRegex.test(
+          resume.email
+        )
+      ) {
+        feedback.push(
+          "Valid email missing"
+        );
+      }
+
+      if (
+        !phoneRegex.test(
+          resume.phone
+        )
+      ) {
+        feedback.push(
+          "Phone number should be 10 digits"
+        );
+      }
+
+      if (
+        resume.skills
+          .split(",")
+          .length < 3
+      ) {
+        feedback.push(
+          "Add more technical skills"
+        );
+      }
 
       if (
         resume.projects
-      )
-        score += 15;
+          .trim()
+          .split(" ").length < 20
+      ) {
+        feedback.push(
+          "Projects section too short"
+        );
+      }
 
       if (
         resume.experience
-      )
-        score += 10;
+          .trim()
+          .split(" ").length < 15
+      ) {
+        feedback.push(
+          "Experience section weak"
+        );
+      }
 
-      return score;
+      return feedback;
     };
 
   // AI GENERATE
@@ -229,11 +421,8 @@ ${resume.education}
         style={styles.formCard}
       >
 
-        {/* LOGO */}
         <div style={styles.logo}>
-
           <FaRobot />
-
         </div>
 
         <h1 style={styles.title}>
@@ -241,109 +430,73 @@ ${resume.education}
         </h1>
 
         <p style={styles.subtitle}>
-          Build AI-powered
-          professional resumes 🚀
+          Build professional ATS-friendly resumes 🚀
         </p>
 
-        {/* NAME */}
         <InputBox
           icon={<FaUser />}
           name="name"
           placeholder="Full Name"
           value={resume.name}
-          onChange={
-            handleChange
-          }
+          onChange={handleChange}
         />
 
-        {/* EMAIL */}
         <InputBox
           icon={<FaEnvelope />}
           name="email"
           placeholder="Email"
           value={resume.email}
-          onChange={
-            handleChange
-          }
+          onChange={handleChange}
         />
 
-        {/* PHONE */}
         <InputBox
           icon={<FaPhone />}
           name="phone"
           placeholder="Phone"
           value={resume.phone}
-          onChange={
-            handleChange
-          }
+          onChange={handleChange}
         />
 
-        {/* ROLE */}
         <InputBox
           icon={<FaBolt />}
           name="role"
           placeholder="Target Role"
           value={resume.role}
-          onChange={
-            handleChange
-          }
+          onChange={handleChange}
         />
 
-        {/* SKILLS */}
         <TextAreaBox
           icon={<FaCode />}
           name="skills"
           placeholder="Skills"
           value={resume.skills}
-          onChange={
-            handleChange
-          }
+          onChange={handleChange}
         />
 
-        {/* EDUCATION */}
         <TextAreaBox
-          icon={
-            <FaGraduationCap />
-          }
+          icon={<FaGraduationCap />}
           name="education"
           placeholder="Education"
-          value={
-            resume.education
-          }
-          onChange={
-            handleChange
-          }
+          value={resume.education}
+          onChange={handleChange}
         />
 
-        {/* PROJECTS */}
         <TextAreaBox
           icon={<FaFileAlt />}
           name="projects"
           placeholder="Projects"
-          value={
-            resume.projects
-          }
-          onChange={
-            handleChange
-          }
+          value={resume.projects}
+          onChange={handleChange}
         />
 
-        {/* EXPERIENCE */}
         <TextAreaBox
-          icon={
-            <FaBriefcase />
-          }
+          icon={<FaBriefcase />}
           name="experience"
           placeholder="Experience"
-          value={
-            resume.experience
-          }
-          onChange={
-            handleChange
-          }
+          value={resume.experience}
+          onChange={handleChange}
         />
 
-        {/* AI BUTTON */}
         <motion.button
           whileHover={{
             scale: 1.03,
@@ -386,11 +539,7 @@ ${resume.education}
 
           </div>
 
-          <div
-            style={
-              styles.progressBar
-            }
-          >
+          <div style={styles.progressBar}>
 
             <motion.div
               initial={{
@@ -406,18 +555,12 @@ ${resume.education}
                 duration: 0.6,
               }}
 
-              style={
-                styles.progress
-              }
+              style={styles.progress}
             />
 
           </div>
 
-          <div
-            style={
-              styles.analysisBox
-            }
-          >
+          <div style={styles.analysisBox}>
 
             {calculateATSScore() <
               50 && (
@@ -432,11 +575,7 @@ ${resume.education}
               calculateATSScore() <
                 80 && (
 
-                <p
-                  style={
-                    styles.midText
-                  }
-                >
+                <p style={styles.midText}>
                   Good Resume ⚠
                 </p>
               )}
@@ -444,20 +583,63 @@ ${resume.education}
             {calculateATSScore() >=
               80 && (
 
-              <p
-                style={
-                  styles.goodText
-                }
-              >
+              <p style={styles.goodText}>
                 Excellent Resume ✅
               </p>
             )}
 
           </div>
 
+          {/* FEEDBACK */}
+          <div style={styles.feedbackBox}>
+
+            <h4
+              style={{
+                color: "white",
+                marginBottom: "10px",
+              }}
+            >
+              ATS Suggestions
+            </h4>
+
+            {getATSFeedback()
+              .length === 0 ? (
+
+              <p
+                style={{
+                  color: "#4ade80",
+                }}
+              >
+                Resume looks ATS optimized ✅
+              </p>
+
+            ) : (
+
+              getATSFeedback().map(
+                (
+                  item,
+                  index
+                ) => (
+
+                  <p
+                    key={index}
+                    style={{
+                      color:
+                        "#facc15",
+                      marginBottom:
+                        "6px",
+                    }}
+                  >
+                    • {item}
+                  </p>
+                )
+              )
+            )}
+
+          </div>
+
         </div>
 
-        {/* DOWNLOAD */}
         <motion.button
           whileHover={{
             scale: 1.03,
@@ -467,13 +649,9 @@ ${resume.education}
             scale: 0.95,
           }}
 
-          style={
-            styles.downloadBtn
-          }
+          style={styles.downloadBtn}
 
-          onClick={
-            downloadPDF
-          }
+          onClick={downloadPDF}
         >
 
           <FaDownload />
@@ -498,9 +676,7 @@ ${resume.education}
           x: 0,
         }}
 
-        style={
-          styles.previewCard
-        }
+        style={styles.previewCard}
       >
 
         <h1 style={styles.name}>
@@ -590,9 +766,7 @@ function InputBox({
 
         name={name}
 
-        placeholder={
-          placeholder
-        }
+        placeholder={placeholder}
 
         value={value}
 
@@ -624,9 +798,7 @@ function TextAreaBox({
       <textarea
         name={name}
 
-        placeholder={
-          placeholder
-        }
+        placeholder={placeholder}
 
         value={value}
 
@@ -662,312 +834,10 @@ function Section({
 
 const styles = {
 
-  page: {
-    minHeight: "100vh",
-
-    display: "grid",
-
-    gridTemplateColumns:
-      "repeat(auto-fit,minmax(360px,1fr))",
-
-    gap: "30px",
-
-    padding: "40px",
-
-    background:
-      "linear-gradient(135deg,#0f0f0f,#111827)",
-  },
-
-  formCard: {
-    padding: "35px",
-
-    borderRadius: "30px",
-
-    background:
-      "rgba(255,255,255,0.04)",
-
-    backdropFilter:
-      "blur(18px)",
-
-    border:
-      "1px solid rgba(255,140,0,0.15)",
-  },
-
-  previewCard: {
-    padding: "45px",
-
-    borderRadius: "30px",
-
-    background:
-      "white",
-
-    color: "#111",
-  },
-
-  logo: {
-    width: "80px",
-
-    height: "80px",
-
-    borderRadius: "24px",
-
-    background:
-      "linear-gradient(135deg,#ff9800,#ff5e00)",
-
-    display: "flex",
-
-    justifyContent:
-      "center",
-
-    alignItems: "center",
-
-    color: "white",
-
-    fontSize: "34px",
-
-    marginBottom: "20px",
-  },
-
-  title: {
-    color: "white",
-
-    fontSize: "42px",
-
-    marginBottom: "10px",
-  },
-
-  subtitle: {
-    color: "#aaa",
-
-    marginBottom: "30px",
-  },
-
-  inputBox: {
-    display: "flex",
-
-    gap: "12px",
-
-    marginBottom: "18px",
-
-    padding:
-      "14px 18px",
-
-    borderRadius: "18px",
-
-    background:
-      "rgba(255,255,255,0.04)",
-
-    border:
-      "1px solid rgba(255,140,0,0.15)",
-  },
-
-  icon: {
-    color: "#ff9800",
-
-    fontSize: "18px",
-
-    marginTop: "5px",
-  },
-
-  input: {
-    flex: 1,
-
-    background:
-      "transparent",
-
-    border: "none",
-
-    outline: "none",
-
-    color: "white",
-  },
-
-  textarea: {
-    flex: 1,
-
-    minHeight: "90px",
-
-    background:
-      "transparent",
-
-    border: "none",
-
-    outline: "none",
-
-    resize: "none",
-
-    color: "white",
-
-    fontFamily:
-      "inherit",
-  },
-
-  aiBtn: {
-    width: "100%",
-
-    marginTop: "10px",
-
-    padding: "16px",
-
-    border: "none",
-
-    borderRadius: "18px",
-
-    background:
-      "rgba(255,140,0,0.12)",
-
-    color: "#ffb347",
-
-    display: "flex",
-
-    justifyContent:
-      "center",
-
-    alignItems: "center",
-
-    gap: "10px",
-
-    fontWeight: "bold",
-
-    cursor: "pointer",
-  },
-
-  leftATSBox: {
+  feedbackBox: {
     marginTop: "20px",
-
-    padding: "18px",
-
-    borderRadius: "18px",
-
-    background:
-      "rgba(255,255,255,0.04)",
-
-    border:
-      "1px solid rgba(255,140,0,0.15)",
   },
 
-  leftATSTop: {
-    display: "flex",
-
-    justifyContent:
-      "space-between",
-
-    marginBottom: "12px",
-
-    color: "white",
-
-    fontWeight: "bold",
-  },
-
-  progressBar: {
-    width: "100%",
-
-    height: "10px",
-
-    borderRadius: "10px",
-
-    background: "#222",
-
-    overflow: "hidden",
-  },
-
-  progress: {
-    height: "100%",
-
-    background:
-      "linear-gradient(90deg,#ff9800,#ff5e00)",
-  },
-
-  analysisBox: {
-    marginTop: "15px",
-  },
-
-  goodText: {
-    color: "#4ade80",
-
-    fontWeight: "bold",
-  },
-
-  midText: {
-    color: "#facc15",
-
-    fontWeight: "bold",
-  },
-
-  badText: {
-    color: "#f87171",
-
-    fontWeight: "bold",
-  },
-
-  downloadBtn: {
-    width: "100%",
-
-    marginTop: "20px",
-
-    padding: "16px",
-
-    border: "none",
-
-    borderRadius: "18px",
-
-    background:
-      "linear-gradient(135deg,#ff9800,#ff5e00)",
-
-    color: "white",
-
-    display: "flex",
-
-    justifyContent:
-      "center",
-
-    alignItems: "center",
-
-    gap: "10px",
-
-    fontWeight: "bold",
-
-    cursor: "pointer",
-  },
-
-  name: {
-    fontSize: "38px",
-
-    marginBottom: "10px",
-  },
-
-  info: {
-    marginBottom: "5px",
-
-    color: "#555",
-  },
-
-  role: {
-    marginTop: "10px",
-
-    color: "#ff5e00",
-
-    fontWeight: "bold",
-  },
-
-  section: {
-    marginTop: "28px",
-  },
-
-  sectionTitle: {
-    marginBottom: "8px",
-
-    color: "#ff5e00",
-  },
-
-  sectionText: {
-    color: "#333",
-
-    lineHeight: "1.7",
-
-    whiteSpace:
-      "pre-wrap",
-  },
 };
 
 export default ResumeBuilder;
