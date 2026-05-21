@@ -979,3 +979,4 @@ const styles = {
       "pre-wrap",
   },
 };
+export default ResumeBuilder;
