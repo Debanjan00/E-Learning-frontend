@@ -28,6 +28,7 @@ import AllTests from "./pages/test/AllTests";
 import TestResults from "./pages/test/TestResults";
 import AdminAnalytics from "./pages/admin/AdminAnalytics.jsx";
 import BuyCourse from "./pages/payment/BuyCourse.jsx";
+import About from "./pages/About/About";
 
 
 
@@ -62,6 +63,7 @@ function App() {
         <Route path="/test-results" element={<TestResults />} />
         <Route path="/admin-analytics" element={<AdminAnalytics />} />
         <Route path="/buy-course/:id" element={<BuyCourse />} />
+        <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
     </BrowserRouter>
