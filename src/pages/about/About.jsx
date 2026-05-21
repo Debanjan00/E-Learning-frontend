@@ -1,546 +1,607 @@
 import React from "react";
-import { motion } from "framer-motion";
 
 import {
-  FaRobot,
-  FaChartLine,
-  FaFileAlt,
-  FaDownload,
-  FaLaptopCode,
-  FaUserGraduate,
+  motion,
+} from "framer-motion";
+
+import {
+  FaGraduationCap,
+  FaCertificate,
+  FaUsers,
   FaRocket,
-  FaShieldAlt,
-  FaBrain,
-  FaCheckCircle,
+  FaBookOpen,
+  FaMapMarkerAlt,
+  FaClock,
+  FaGlobe,
 } from "react-icons/fa";
 
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
+
+import L from "leaflet";
+
+import "leaflet/dist/leaflet.css";
+
+// FIX MARKER ICON ISSUE
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+
+  iconUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+
+  shadowUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+});
+
 function About() {
+
+  // OFFICE LOCATION
+  const officePosition = [
+    22.5018,
+    88.3611,
+  ];
 
   const features = [
 
     {
-      icon: <FaRobot />,
-      title: "AI Resume Builder",
+      icon:
+        <FaGraduationCap />,
+
+      title:
+        "Smart Learning",
+
       desc:
-        "Generate smart ATS-friendly resumes instantly using AI technology.",
+        "Interactive courses with modern learning experience.",
     },
 
     {
-      icon: <FaChartLine />,
-      title: "Advanced ATS Score",
+      icon:
+        <FaCertificate />,
+
+      title:
+        "Certificates",
+
       desc:
-        "Realistic ATS scoring system specially optimized for MCA students and developers.",
+        "Get certificates after successful course completion.",
     },
 
     {
-      icon: <FaFileAlt />,
-      title: "Modern Resume Design",
+      icon:
+        <FaUsers />,
+
+      title:
+        "Student Community",
+
       desc:
-        "Beautiful futuristic resume templates for placements and internships.",
+        "Connect with learners and instructors worldwide.",
     },
 
     {
-      icon: <FaDownload />,
-      title: "PDF Export",
+      icon:
+        <FaRocket />,
+
+      title:
+        "Career Growth",
+
       desc:
-        "Download professional resumes instantly in high-quality PDF format.",
+        "Build industry-ready skills and grow your career.",
     },
 
     {
-      icon: <FaLaptopCode />,
-      title: "Skill Analysis",
+      icon:
+        <FaBookOpen />,
+
+      title:
+        "AI Powered Tutor",
+
       desc:
-        "Detects technical skills like React, Node.js, Java, Python, DBMS, AI and more.",
+        "AI-assisted learning for smarter education experience.",
     },
 
     {
-      icon: <FaUserGraduate />,
-      title: "Student Focused",
-      desc:
-        "Perfect for MCA students, freshers, developers and placement preparation.",
-    },
+      icon:
+        <FaGlobe />,
 
+      title:
+        "Global Access",
+
+      desc:
+        "Learn anytime and anywhere across the world.",
+    },
   ];
 
   return (
-
-    <div style={styles.page}>
-
-      {/* BACKGROUND GLOW */}
-
-      <div style={styles.blur1}></div>
-
-      <div style={styles.blur2}></div>
+    <div style={styles.container}>
 
       {/* HERO */}
+      <div style={styles.hero}>
 
-      <div style={styles.heroSection}>
+        <motion.h1
 
-        {/* LEFT */}
-
-        <motion.div
           initial={{
             opacity: 0,
-            x: -40,
+            y: -40,
           }}
+
           animate={{
             opacity: 1,
-            x: 0,
+            y: 0,
           }}
+
           transition={{
-            duration: 0.7,
+            duration: 0.8,
           }}
-          style={styles.left}
+
+          style={styles.heading}
         >
 
-          <div style={styles.badge}>
+          About Our
+          E-Learning Platform  
 
-            <FaRocket />
+        </motion.h1>
 
-            Next Gen Learning
+        <motion.p
 
-          </div>
-
-          <h1 style={styles.heading}>
-            About Our
-            <br />
-            AI Platform 🚀
-          </h1>
-
-          <p style={styles.desc}>
-
-            A futuristic AI-powered E-Learning and Resume Building platform specially designed for MCA students, developers and freshers.
-
-            <br /><br />
-
-            Learn skills, build ATS-friendly resumes, prepare for placements, practice tests and improve your career with modern AI tools.
-
-          </p>
-
-          <div style={styles.statsRow}>
-
-            <div style={styles.statCard}>
-
-              <h2 style={styles.statNumber}>
-                100+
-              </h2>
-
-              <p style={styles.statText}>
-                AI Features
-              </p>
-
-            </div>
-
-            <div style={styles.statCard}>
-
-              <h2 style={styles.statNumber}>
-                ATS
-              </h2>
-
-              <p style={styles.statText}>
-                Smart Resume
-              </p>
-
-            </div>
-
-            <div style={styles.statCard}>
-
-              <h2 style={styles.statNumber}>
-                MCA
-              </h2>
-
-              <p style={styles.statText}>
-                Student Focused
-              </p>
-
-            </div>
-
-          </div>
-
-        </motion.div>
-
-        {/* RIGHT */}
-
-        <motion.div
           initial={{
             opacity: 0,
-            x: 40,
           }}
+
           animate={{
             opacity: 1,
-            x: 0,
           }}
+
           transition={{
-            duration: 0.7,
+            delay: 0.4,
           }}
-          style={styles.right}
+
+          style={styles.subtitle}
         >
 
-          <div style={styles.robotCard}>
+          Learn smarter with AI-powered education,
+          modern courses, certificates,
+          analytics, and futuristic learning tools.
 
-            <FaRobot style={styles.robotIcon} />
-
-          </div>
-
-        </motion.div>
+        </motion.p>
 
       </div>
 
       {/* FEATURES */}
-
-      <div style={styles.featureGrid}>
+      <div style={styles.grid}>
 
         {features.map(
-          (item, index) => (
+          (
+            item,
+            index
+          ) => (
 
             <motion.div
+
               key={index}
+
               initial={{
                 opacity: 0,
-                y: 30,
+                y: 40,
               }}
-              animate={{
+
+              whileInView={{
                 opacity: 1,
                 y: 0,
               }}
+
               transition={{
+                duration: 0.5,
                 delay:
                   index * 0.1,
               }}
+
               whileHover={{
-                y: -10,
+                scale: 1.05,
               }}
-              style={styles.featureCard}
+
+              style={styles.card}
             >
 
-              <div style={styles.featureIcon}>
+              <div style={styles.icon}>
+
                 {item.icon}
+
               </div>
 
-              <h2 style={styles.featureTitle}>
+              <h2 style={styles.cardTitle}>
+
                 {item.title}
+
               </h2>
 
-              <p style={styles.featureDesc}>
+              <p style={styles.cardDesc}>
+
                 {item.desc}
+
               </p>
 
             </motion.div>
-
           )
         )}
 
       </div>
 
-      {/* WHY CHOOSE */}
-
+      {/* OFFICE LOCATION */}
       <motion.div
+
         initial={{
           opacity: 0,
-          y: 30,
+          y: 50,
         }}
-        animate={{
+
+        whileInView={{
           opacity: 1,
           y: 0,
         }}
+
         transition={{
-          delay: 0.5,
+          duration: 0.7,
         }}
-        style={styles.bottomBox}
+
+        style={styles.officeSection}
       >
 
-        <div style={styles.bottomLeft}>
+        <h2 style={styles.officeTitle}>
 
-          <h1 style={styles.bottomHeading}>
-            Why Choose Us?
-          </h1>
+          Registered Office 📍
 
-          <p style={styles.bottomDesc}>
+        </h2>
 
-            Unlike normal resume builders and learning platforms, this system combines AI learning, resume optimization and placement preparation into one modern platform.
+        <p style={styles.officeText}>
 
-          </p>
+          Visit our registered office location
+          and explore our learning ecosystem.
 
-        </div>
+        </p>
 
-        <div style={styles.checkList}>
+        {/* LEAFLET MAP */}
+        <MapContainer
 
-          <div style={styles.checkItem}>
-            <FaCheckCircle />
-            ATS Friendly Resume Builder
+          center={officePosition}
+
+          zoom={13}
+
+          scrollWheelZoom={false}
+
+          style={styles.map}
+        >
+
+          <TileLayer
+
+            attribution='&copy; OpenStreetMap contributors'
+
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+
+          <Marker position={officePosition}>
+
+            <Popup>
+
+              <Popup>
+
+                🚀 Registered Office <br />
+
+                375, Prince Anwar Shah Rd, <br />
+
+                South City Complex, <br />
+
+                Jadavpur, Kolkata, <br />
+
+                West Bengal 700068
+
+              </Popup>
+
+            </Popup>
+
+          </Marker>
+
+        </MapContainer>
+
+        {/* OFFICE INFO */}
+        <div style={styles.officeInfo}>
+
+          <div style={styles.infoCard}>
+
+            <FaMapMarkerAlt />
+
+            <span>
+              375, Prince Anwar Shah Rd,
+              South City Complex,
+              Jadavpur, Kolkata,
+              West Bengal 700068
+            </span>
+
           </div>
 
-          <div style={styles.checkItem}>
-            <FaCheckCircle />
-            AI Tutor & Smart Learning
+          <div style={styles.infoCard}>
+
+            <FaClock />
+
+            <span>
+              Mon - Sat : 9AM - 7PM
+            </span>
+
           </div>
 
-          <div style={styles.checkItem}>
-            <FaCheckCircle />
-            Placement Preparation
-          </div>
+          <div style={styles.infoCard}>
 
-          <div style={styles.checkItem}>
-            <FaCheckCircle />
-            Modern UI Experience
-          </div>
+            <FaGlobe />
 
-          <div style={styles.checkItem}>
-            <FaCheckCircle />
-            MCA Technical Focus
-          </div>
+            <span>
+              https://e-learning-frontend-psi.vercel.app
+            </span>
 
-          <div style={styles.checkItem}>
-            <FaCheckCircle />
-            Smart Skill Detection
           </div>
 
         </div>
 
       </motion.div>
 
+      {/* MISSION */}
+      <motion.div
+
+        initial={{
+          opacity: 0,
+          y: 50,
+        }}
+
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+
+        transition={{
+          duration: 0.7,
+        }}
+
+        style={styles.mission}
+      >
+
+        <h2 style={styles.missionTitle}>
+
+          Our Mission 🎯
+
+        </h2>
+
+        <p style={styles.missionText}>
+
+          Our mission is to make education
+          accessible, engaging, and futuristic
+          for every learner through AI,
+          live learning, analytics,
+          and practical knowledge.
+
+        </p>
+
+      </motion.div>
+
     </div>
-
   );
-
 }
 
 const styles = {
 
-  page: {
+  container: {
     minHeight: "100vh",
+
     background:
-      "linear-gradient(135deg,#050816,#0b1120)",
-    padding: "60px 8%",
-    position: "relative",
-    overflow: "hidden",
+      "linear-gradient(135deg,#0f0f0f,#111827)",
+
+    color: "white",
+
+    padding: "40px 20px",
   },
 
-  blur1: {
-    position: "absolute",
-    width: "350px",
-    height: "350px",
-    background:
-      "rgba(255,140,0,0.15)",
-    filter: "blur(120px)",
-    top: "-100px",
-    left: "-100px",
-    borderRadius: "50%",
-  },
+  hero: {
+    textAlign: "center",
 
-  blur2: {
-    position: "absolute",
-    width: "350px",
-    height: "350px",
-    background:
-      "rgba(255,140,0,0.12)",
-    filter: "blur(120px)",
-    bottom: "-120px",
-    right: "-120px",
-    borderRadius: "50%",
-  },
-
-  heroSection: {
-    display: "grid",
-    gridTemplateColumns:
-      "repeat(auto-fit,minmax(320px,1fr))",
-    alignItems: "center",
-    gap: "60px",
-    marginBottom: "90px",
-    position: "relative",
-    zIndex: 2,
-  },
-
-  left: {
-    display: "flex",
-    flexDirection: "column",
-  },
-
-  badge: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "10px",
-    padding: "12px 22px",
-    borderRadius: "18px",
-    background:
-      "rgba(255,140,0,0.08)",
-    border:
-      "1px solid rgba(255,140,0,0.18)",
-    color: "#ff9800",
-    fontWeight: "600",
-    width: "fit-content",
-    marginBottom: "28px",
+    marginBottom: "60px",
   },
 
   heading: {
-    fontSize: "72px",
-    lineHeight: "1.1",
-    color: "white",
-    marginBottom: "24px",
-    fontWeight: "800",
-  },
-
-  desc: {
-    color: "#c9c9c9",
-    lineHeight: "1.9",
-    fontSize: "18px",
-    maxWidth: "700px",
-  },
-
-  statsRow: {
-    display: "flex",
-    gap: "20px",
-    marginTop: "40px",
-    flexWrap: "wrap",
-  },
-
-  statCard: {
-    padding: "22px 28px",
-    borderRadius: "24px",
-    background:
-      "rgba(255,255,255,0.04)",
-    border:
-      "1px solid rgba(255,140,0,0.15)",
-    minWidth: "160px",
-  },
-
-  statNumber: {
-    color: "#ff9800",
-    fontSize: "34px",
-    marginBottom: "8px",
-  },
-
-  statText: {
-    color: "#bbb",
-  },
-
-  right: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  robotCard: {
-    width: "420px",
-    height: "420px",
-    borderRadius: "50px",
-    background:
-      "linear-gradient(135deg,#ff9800,#ff6a00)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    boxShadow:
-      "0 0 80px rgba(255,140,0,0.35)",
-  },
-
-  robotIcon: {
-    fontSize: "170px",
-    color: "white",
-  },
-
-  featureGrid: {
-    display: "grid",
-    gridTemplateColumns:
-      "repeat(auto-fit,minmax(280px,1fr))",
-    gap: "30px",
-    marginBottom: "90px",
-    position: "relative",
-    zIndex: 2,
-  },
-
-  featureCard: {
-    background:
-      "rgba(255,255,255,0.04)",
-    border:
-      "1px solid rgba(255,140,0,0.12)",
-    borderRadius: "30px",
-    padding: "35px",
-    backdropFilter:
-      "blur(18px)",
-  },
-
-  featureIcon: {
-    width: "75px",
-    height: "75px",
-    borderRadius: "24px",
-    background:
-      "rgba(255,140,0,0.12)",
-    color: "#ff9800",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: "30px",
-    marginBottom: "25px",
-  },
-
-  featureTitle: {
-    color: "white",
-    fontSize: "26px",
-    marginBottom: "14px",
-  },
-
-  featureDesc: {
-    color: "#bbb",
-    lineHeight: "1.8",
-    fontSize: "15px",
-  },
-
-  bottomBox: {
-    display: "grid",
-    gridTemplateColumns:
-      "repeat(auto-fit,minmax(320px,1fr))",
-    gap: "50px",
-    background:
-      "rgba(255,255,255,0.04)",
-    border:
-      "1px solid rgba(255,140,0,0.15)",
-    borderRadius: "35px",
-    padding: "50px",
-    backdropFilter:
-      "blur(18px)",
-    position: "relative",
-    zIndex: 2,
-  },
-
-  bottomLeft: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
-
-  bottomHeading: {
-    color: "white",
     fontSize: "52px",
+
+    fontWeight: "bold",
+
     marginBottom: "20px",
-  },
 
-  bottomDesc: {
-    color: "#bbb",
-    lineHeight: "1.9",
-    fontSize: "17px",
-  },
-
-  checkList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    justifyContent: "center",
-  },
-
-  checkItem: {
-    display: "flex",
-    alignItems: "center",
-    gap: "14px",
-    color: "white",
-    fontSize: "17px",
     background:
-      "rgba(255,255,255,0.03)",
-    padding: "18px 22px",
-    borderRadius: "18px",
-    border:
-      "1px solid rgba(255,140,0,0.08)",
+      "linear-gradient(90deg,#ff9800,#ff5e00)",
+
+    WebkitBackgroundClip:
+      "text",
+
+    WebkitTextFillColor:
+      "transparent",
   },
 
+  subtitle: {
+    maxWidth: "800px",
+
+    margin: "auto",
+
+    color: "#cfcfcf",
+
+    fontSize: "20px",
+
+    lineHeight: "1.8",
+  },
+
+  grid: {
+    display: "grid",
+
+    gridTemplateColumns:
+      "repeat(auto-fit,minmax(250px,1fr))",
+
+    gap: "25px",
+
+    marginBottom: "70px",
+  },
+
+  card: {
+    background:
+      "rgba(255,255,255,0.05)",
+
+    backdropFilter:
+      "blur(12px)",
+
+    border:
+      "1px solid rgba(255,140,0,0.2)",
+
+    borderRadius: "25px",
+
+    padding: "30px",
+
+    textAlign: "center",
+
+    boxShadow:
+      "0 0 25px rgba(255,140,0,0.08)",
+  },
+
+  icon: {
+    fontSize: "45px",
+
+    marginBottom: "20px",
+
+    color: "#ff9800",
+  },
+
+  cardTitle: {
+    fontSize: "24px",
+
+    marginBottom: "15px",
+  },
+
+  cardDesc: {
+    color: "#bdbdbd",
+
+    lineHeight: "1.7",
+  },
+
+  officeSection: {
+    maxWidth: "1000px",
+
+    margin:
+      "0 auto 70px auto",
+
+    background:
+      "rgba(255,255,255,0.05)",
+
+    border:
+      "1px solid rgba(255,140,0,0.2)",
+
+    borderRadius: "30px",
+
+    padding: "40px",
+
+    backdropFilter:
+      "blur(12px)",
+  },
+
+  officeTitle: {
+    fontSize: "38px",
+
+    color: "#ff9800",
+
+    textAlign: "center",
+
+    marginBottom: "15px",
+  },
+
+  officeText: {
+    textAlign: "center",
+
+    color: "#cfcfcf",
+
+    marginBottom: "30px",
+  },
+
+  map: {
+    width: "100%",
+
+    height: "450px",
+
+    borderRadius: "20px",
+  },
+
+  officeInfo: {
+    display: "grid",
+
+    gridTemplateColumns:
+      "repeat(auto-fit,minmax(220px,1fr))",
+
+    gap: "20px",
+
+    marginTop: "30px",
+  },
+
+  infoCard: {
+    background:
+      "rgba(255,255,255,0.06)",
+
+    padding: "18px",
+
+    borderRadius: "18px",
+
+    display: "flex",
+
+    alignItems: "center",
+
+    gap: "12px",
+
+    color: "#fff",
+
+    fontSize: "16px",
+  },
+
+  mission: {
+    maxWidth: "900px",
+
+    margin: "auto",
+
+    background:
+      "rgba(255,255,255,0.05)",
+
+    border:
+      "1px solid rgba(255,140,0,0.2)",
+
+    borderRadius: "30px",
+
+    padding: "40px",
+
+    textAlign: "center",
+
+    backdropFilter:
+      "blur(12px)",
+  },
+
+  missionTitle: {
+    fontSize: "38px",
+
+    marginBottom: "20px",
+
+    color: "#ff9800",
+  },
+
+  missionText: {
+    color: "#d1d5db",
+
+    lineHeight: "1.9",
+
+    fontSize: "18px",
+  },
 };
 
 export default About;

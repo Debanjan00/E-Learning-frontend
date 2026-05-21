@@ -10,6 +10,8 @@ import "./App.css";
 
 import "react-toastify/dist/ReactToastify.css";
 
+import "leaflet/dist/leaflet.css";
+
 import {
   ToastContainer,
 } from "react-toastify";
