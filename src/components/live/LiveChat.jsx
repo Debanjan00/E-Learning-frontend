@@ -36,6 +36,9 @@ function LiveChat({ classId }) {
     localStorage.getItem("user")
   );
 
+  const isMobile =
+    window.innerWidth <= 768;
+
   // AUTO SCROLL
   useEffect(() => {
 
@@ -128,22 +131,57 @@ function LiveChat({ classId }) {
         duration: 0.5,
       }}
 
-      style={styles.wrapper}
+      style={{
+        ...styles.wrapper,
+
+        borderRadius:
+          isMobile
+            ? "18px"
+            : "24px",
+      }}
     >
 
       {/* HEADER */}
-      <div style={styles.header}>
+      <div
+        style={{
+          ...styles.header,
+
+          padding: isMobile
+            ? "14px 16px"
+            : "18px 22px",
+        }}
+      >
 
         <div style={styles.liveDot}></div>
 
-        <h3 style={styles.title}>
+        <h3
+          style={{
+            ...styles.title,
+
+            fontSize: isMobile
+              ? "15px"
+              : "18px",
+          }}
+        >
           Live Class Chat
         </h3>
 
       </div>
 
       {/* CHAT AREA */}
-      <div style={styles.chatArea}>
+      <div
+        style={{
+          ...styles.chatArea,
+
+          height: isMobile
+            ? "300px"
+            : "350px",
+
+          padding: isMobile
+            ? "14px"
+            : "20px",
+        }}
+      >
 
         <AnimatePresence>
 
@@ -192,6 +230,21 @@ function LiveChat({ classId }) {
                     style={{
                       ...styles.messageBox,
 
+                      maxWidth:
+                        isMobile
+                          ? "88%"
+                          : "75%",
+
+                      padding:
+                        isMobile
+                          ? "12px 14px"
+                          : "14px 16px",
+
+                      fontSize:
+                        isMobile
+                          ? "13px"
+                          : "15px",
+
                       ...(isMine
                         ? styles.myMessage
                         : styles.otherMessage),
@@ -199,9 +252,14 @@ function LiveChat({ classId }) {
                   >
 
                     <div
-                      style={
-                        styles.messageUser
-                      }
+                      style={{
+                        ...styles.messageUser,
+
+                        fontSize:
+                          isMobile
+                            ? "11px"
+                            : "12px",
+                      }}
                     >
 
                       {!isMine && (
@@ -212,7 +270,12 @@ function LiveChat({ classId }) {
 
                     </div>
 
-                    <div>
+                    <div
+                      style={{
+                        wordBreak:
+                          "break-word",
+                      }}
+                    >
                       {m.message}
                     </div>
 
@@ -230,7 +293,19 @@ function LiveChat({ classId }) {
       </div>
 
       {/* INPUT */}
-      <div style={styles.inputArea}>
+      <div
+        style={{
+          ...styles.inputArea,
+
+          gap: isMobile
+            ? "8px"
+            : "12px",
+
+          padding: isMobile
+            ? "12px"
+            : "18px",
+        }}
+      >
 
         <input
           value={message}
@@ -247,7 +322,22 @@ function LiveChat({ classId }) {
 
           placeholder="Send a futuristic message..."
 
-          style={styles.input}
+          style={{
+            ...styles.input,
+
+            padding: isMobile
+              ? "13px"
+              : "15px",
+
+            fontSize: isMobile
+              ? "14px"
+              : "15px",
+
+            borderRadius:
+              isMobile
+                ? "14px"
+                : "16px",
+          }}
         />
 
         <motion.button
@@ -261,7 +351,26 @@ function LiveChat({ classId }) {
 
           onClick={sendMessage}
 
-          style={styles.sendBtn}
+          style={{
+            ...styles.sendBtn,
+
+            width: isMobile
+              ? "48px"
+              : "55px",
+
+            height: isMobile
+              ? "48px"
+              : "55px",
+
+            fontSize: isMobile
+              ? "16px"
+              : "18px",
+
+            borderRadius:
+              isMobile
+                ? "14px"
+                : "18px",
+          }}
         >
 
           <FaPaperPlane />
@@ -288,12 +397,15 @@ const styles = {
     border:
       "1px solid rgba(255,140,0,0.2)",
 
-    borderRadius: "24px",
-
     overflow: "hidden",
 
     boxShadow:
       "0 0 35px rgba(255,140,0,0.12)",
+
+    width: "100%",
+
+    boxSizing:
+      "border-box",
   },
 
   header: {
@@ -302,8 +414,6 @@ const styles = {
     alignItems: "center",
 
     gap: "12px",
-
-    padding: "18px 22px",
 
     background:
       "linear-gradient(90deg,#ff9800,#ff5e00)",
@@ -322,20 +432,16 @@ const styles = {
 
     boxShadow:
       "0 0 15px #00ff99",
+
+    flexShrink: 0,
   },
 
   title: {
     margin: 0,
-
-    fontSize: "18px",
   },
 
   chatArea: {
-    height: "350px",
-
     overflowY: "auto",
-
-    padding: "20px",
 
     background:
       "rgba(255,255,255,0.02)",
@@ -345,13 +451,11 @@ const styles = {
     display: "flex",
 
     marginBottom: "14px",
+
+    width: "100%",
   },
 
   messageBox: {
-    maxWidth: "75%",
-
-    padding: "14px 16px",
-
     borderRadius: "18px",
 
     color: "white",
@@ -361,6 +465,9 @@ const styles = {
 
     border:
       "1px solid rgba(255,255,255,0.08)",
+
+    overflowWrap:
+      "break-word",
   },
 
   myMessage: {
@@ -377,8 +484,6 @@ const styles = {
   },
 
   messageUser: {
-    fontSize: "12px",
-
     marginBottom: "6px",
 
     display: "flex",
@@ -393,9 +498,7 @@ const styles = {
   inputArea: {
     display: "flex",
 
-    gap: "12px",
-
-    padding: "18px",
+    alignItems: "center",
 
     background:
       "rgba(255,255,255,0.03)",
@@ -403,10 +506,6 @@ const styles = {
 
   input: {
     flex: 1,
-
-    padding: "15px",
-
-    borderRadius: "16px",
 
     border:
       "1px solid rgba(255,140,0,0.2)",
@@ -418,29 +517,26 @@ const styles = {
 
     color: "white",
 
-    fontSize: "15px",
+    width: "100%",
+
+    boxSizing:
+      "border-box",
   },
 
   sendBtn: {
-    width: "55px",
-
-    height: "55px",
-
     border: "none",
-
-    borderRadius: "18px",
 
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
 
     color: "white",
 
-    fontSize: "18px",
-
     cursor: "pointer",
 
     boxShadow:
       "0 0 20px rgba(255,140,0,0.4)",
+
+    flexShrink: 0,
   },
 };
 

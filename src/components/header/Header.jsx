@@ -34,6 +34,9 @@ function Header() {
   const location =
     useLocation();
 
+  const isMobile =
+    window.innerWidth <= 768;
+
   useEffect(() => {
 
     const u =
@@ -83,23 +86,79 @@ function Header() {
         duration: 0.4,
       }}
 
-      style={styles.header}
+      style={{
+        ...styles.header,
+
+        flexDirection:
+          isMobile
+            ? "column"
+            : "row",
+
+        gap: isMobile
+          ? "12px"
+          : "18px",
+
+        padding: isMobile
+          ? "12px"
+          : "12px 20px",
+      }}
     >
 
       {/* LEFT */}
-      <div style={styles.left}>
+      <div
+        style={{
+          ...styles.left,
 
-        <div style={styles.logoBox}>
+          justifyContent:
+            isMobile
+              ? "center"
+              : "flex-start",
+        }}
+      >
+
+        <div
+          style={{
+            ...styles.logoBox,
+
+            width: isMobile
+              ? "42px"
+              : "46px",
+
+            height: isMobile
+              ? "42px"
+              : "46px",
+
+            fontSize: isMobile
+              ? "18px"
+              : "20px",
+          }}
+        >
           🚀
         </div>
 
         <div>
 
-          <h2 style={styles.logo}>
+          <h2
+            style={{
+              ...styles.logo,
+
+              fontSize: isMobile
+                ? "18px"
+                : "20px",
+            }}
+          >
             E-Learning
           </h2>
 
-          <p style={styles.tagline}>
+          <p
+            style={{
+              ...styles.tagline,
+
+              fontSize: isMobile
+                ? "9px"
+                : "10px",
+            }}
+          >
             AI Powered Platform
           </p>
 
@@ -108,7 +167,23 @@ function Header() {
       </div>
 
       {/* CENTER */}
-      <div style={styles.nav}>
+      <div
+        style={{
+          ...styles.nav,
+
+          width: "100%",
+
+          justifyContent:
+            isMobile
+              ? "flex-start"
+              : "center",
+
+          paddingBottom:
+            isMobile
+              ? "4px"
+              : "0",
+        }}
+      >
 
         <NavItem
           to="/"
@@ -118,6 +193,8 @@ function Header() {
             location.pathname ===
             "/"
           }
+
+          isMobile={isMobile}
         />
 
         <NavItem
@@ -128,6 +205,8 @@ function Header() {
             location.pathname ===
             "/courses"
           }
+
+          isMobile={isMobile}
         />
 
         {user && (
@@ -143,6 +222,8 @@ function Header() {
                 location.pathname ===
                 "/dashboard"
               }
+
+              isMobile={isMobile}
             />
 
             <NavItem
@@ -155,9 +236,10 @@ function Header() {
                 location.pathname ===
                 "/resume-builder"
               }
+
+              isMobile={isMobile}
             />
 
-            {/* TESTS */}
             <NavItem
               to="/tests"
               text="Tests"
@@ -168,9 +250,10 @@ function Header() {
                 location.pathname ===
                 "/tests"
               }
+
+              isMobile={isMobile}
             />
 
-            {/* ANALYTICS */}
             {user?.role ===
               "admin" && (
 
@@ -184,6 +267,8 @@ function Header() {
                   location.pathname ===
                   "/admin-analytics"
                 }
+
+                isMobile={isMobile}
               />
             )}
 
@@ -197,6 +282,8 @@ function Header() {
                 location.pathname ===
                 "/account"
               }
+
+              isMobile={isMobile}
             />
 
             <NavItem
@@ -207,6 +294,8 @@ function Header() {
                 location.pathname ===
                 "/ai"
               }
+
+              isMobile={isMobile}
             />
 
             <NavItem
@@ -219,6 +308,8 @@ function Header() {
                 location.pathname ===
                 "/chat"
               }
+
+              isMobile={isMobile}
             />
 
             <NavItem
@@ -229,6 +320,8 @@ function Header() {
                 location.pathname ===
                 "/live"
               }
+
+              isMobile={isMobile}
             />
 
           </>
@@ -237,7 +330,21 @@ function Header() {
       </div>
 
       {/* RIGHT */}
-      <div style={styles.right}>
+      <div
+        style={{
+          ...styles.right,
+
+          justifyContent:
+            isMobile
+              ? "center"
+              : "flex-end",
+
+          width:
+            isMobile
+              ? "100%"
+              : "auto",
+        }}
+      >
 
         {user ? (
 
@@ -250,9 +357,19 @@ function Header() {
               scale: 0.96,
             }}
 
-            style={
-              styles.logoutBtn
-            }
+            style={{
+              ...styles.logoutBtn,
+
+              width: isMobile
+                ? "100%"
+                : "115px",
+
+              maxWidth: "220px",
+
+              height: isMobile
+                ? "42px"
+                : "40px",
+            }}
 
             onClick={
               logoutHandler
@@ -267,11 +384,29 @@ function Header() {
 
         ) : (
 
-          <div style={styles.authBtns}>
+          <div
+            style={{
+              ...styles.authBtns,
+
+              width: isMobile
+                ? "100%"
+                : "auto",
+
+              justifyContent:
+                "center",
+            }}
+          >
 
             <Link
               to="/login"
-              style={styles.loginBtn}
+
+              style={{
+                ...styles.loginBtn,
+
+                width: isMobile
+                  ? "100%"
+                  : "80px",
+              }}
             >
 
               Login
@@ -280,9 +415,14 @@ function Header() {
 
             <Link
               to="/register"
-              style={
-                styles.registerBtn
-              }
+
+              style={{
+                ...styles.registerBtn,
+
+                width: isMobile
+                  ? "100%"
+                  : "90px",
+              }}
             >
 
               Register
@@ -305,6 +445,7 @@ const NavItem = ({
   text,
   icon,
   active,
+  isMobile,
 }) => (
 
   <Link
@@ -312,6 +453,18 @@ const NavItem = ({
 
     style={{
       ...styles.link,
+
+      minWidth: isMobile
+        ? "110px"
+        : "unset",
+
+      fontSize: isMobile
+        ? "11px"
+        : "12px",
+
+      padding: isMobile
+        ? "8px 10px"
+        : "8px 8px",
 
       ...(active
         ? styles.activeLink
@@ -339,16 +492,12 @@ const styles = {
 
     width: "100%",
 
-    display: "grid",
-
-    gridTemplateColumns:
-      "220px 1fr 120px",
+    display: "flex",
 
     alignItems: "center",
 
-    gap: "18px",
-
-    padding: "12px 20px",
+    justifyContent:
+      "space-between",
 
     background:
       "rgba(15,15,15,0.96)",
@@ -369,13 +518,11 @@ const styles = {
     alignItems: "center",
 
     gap: "12px",
+
+    flexShrink: 0,
   },
 
   logoBox: {
-    width: "46px",
-
-    height: "46px",
-
     borderRadius: "14px",
 
     display: "flex",
@@ -385,21 +532,19 @@ const styles = {
     justifyContent:
       "center",
 
-    fontSize: "20px",
-
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
 
     boxShadow:
       "0 0 20px rgba(255,140,0,0.22)",
+
+    flexShrink: 0,
   },
 
   logo: {
     margin: 0,
 
     color: "white",
-
-    fontSize: "20px",
 
     fontWeight: "700",
   },
@@ -409,20 +554,28 @@ const styles = {
 
     color: "#8d8d8d",
 
-    fontSize: "10px",
-
     letterSpacing: "1px",
   },
 
   nav: {
-    display: "grid",
+    display: "flex",
 
-    gridTemplateColumns:
-      "repeat(5, 1fr)",
+    alignItems: "center",
+
+    justifyContent:
+      "center",
 
     gap: "8px",
 
-    width: "100%",
+    flex: 1,
+
+    overflowX: "auto",
+
+    scrollbarWidth: "none",
+
+    marginLeft: "20px",
+
+    marginRight: "20px",
   },
 
   link: {
@@ -434,8 +587,6 @@ const styles = {
       "center",
 
     gap: "6px",
-
-    padding: "8px 8px",
 
     borderRadius: "12px",
 
@@ -450,13 +601,15 @@ const styles = {
     textDecoration:
       "none",
 
-    fontSize: "12px",
-
     fontWeight: "500",
 
     transition: "0.25s ease",
 
     minHeight: "38px",
+
+    whiteSpace: "nowrap",
+
+    flexShrink: 0,
   },
 
   activeLink: {
@@ -472,8 +625,9 @@ const styles = {
   right: {
     display: "flex",
 
-    justifyContent:
-      "flex-end",
+    alignItems: "center",
+
+    flexShrink: 0,
   },
 
   logoutBtn: {
@@ -485,10 +639,6 @@ const styles = {
       "center",
 
     gap: "6px",
-
-    width: "115px",
-
-    height: "40px",
 
     border: "none",
 
@@ -523,8 +673,6 @@ const styles = {
     justifyContent:
       "center",
 
-    width: "80px",
-
     height: "38px",
 
     borderRadius: "12px",
@@ -540,6 +688,8 @@ const styles = {
     fontWeight: "600",
 
     fontSize: "12px",
+
+    padding: "0 18px",
   },
 
   registerBtn: {
@@ -549,8 +699,6 @@ const styles = {
 
     justifyContent:
       "center",
-
-    width: "90px",
 
     height: "38px",
 
@@ -567,6 +715,8 @@ const styles = {
     fontWeight: "600",
 
     fontSize: "12px",
+
+    padding: "0 18px",
   },
 };
 
