@@ -144,7 +144,17 @@ function About() {
         >
 
           About Our
-          E-Learning Platform  
+          E-Learning Platform
+
+          <FaRocket
+            style={{
+              marginLeft: "15px",
+              fontSize: "clamp(30px,5vw,50px)",
+              color: "white",
+              verticalAlign:
+                "middle",
+            }}
+          />
 
         </motion.h1>
 
@@ -271,7 +281,7 @@ function About() {
 
           center={officePosition}
 
-          zoom={13}
+          zoom={15}
 
           scrollWheelZoom={false}
 
@@ -289,19 +299,15 @@ function About() {
 
             <Popup>
 
-              <Popup>
+              🚀 Registered Office <br />
 
-                🚀 Registered Office <br />
+              375, Prince Anwar Shah Rd, <br />
 
-                375, Prince Anwar Shah Rd, <br />
+              South City Complex, <br />
 
-                South City Complex, <br />
+              Jadavpur, Kolkata, <br />
 
-                Jadavpur, Kolkata, <br />
-
-                West Bengal 700068
-
-              </Popup>
+              West Bengal 700068
 
             </Popup>
 
@@ -340,7 +346,7 @@ function About() {
             <FaGlobe />
 
             <span>
-              https://e-learning-frontend-psi.vercel.app
+              www.elearning.com
             </span>
 
           </div>
@@ -401,7 +407,9 @@ const styles = {
 
     color: "white",
 
-    padding: "40px 20px",
+    padding: "20px",
+
+    overflow: "hidden",
   },
 
   hero: {
@@ -411,11 +419,13 @@ const styles = {
   },
 
   heading: {
-    fontSize: "52px",
+    fontSize: "clamp(32px,6vw,52px)",
 
     fontWeight: "bold",
 
     marginBottom: "20px",
+
+    lineHeight: "1.3",
 
     background:
       "linear-gradient(90deg,#ff9800,#ff5e00)",
@@ -434,20 +444,24 @@ const styles = {
 
     color: "#cfcfcf",
 
-    fontSize: "20px",
+    fontSize: "clamp(15px,3vw,20px)",
 
     lineHeight: "1.8",
+
+    padding: "0 10px",
   },
 
   grid: {
     display: "grid",
 
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(250px,1fr))",
+      "repeat(3,1fr)",
 
-    gap: "25px",
+    gap: "20px",
 
     marginBottom: "70px",
+
+    alignItems: "stretch",
   },
 
   card: {
@@ -462,12 +476,20 @@ const styles = {
 
     borderRadius: "25px",
 
-    padding: "30px",
+    padding: "25px 20px",
 
     textAlign: "center",
 
     boxShadow:
       "0 0 25px rgba(255,140,0,0.08)",
+
+    minHeight: "260px",
+
+    display: "flex",
+
+    flexDirection: "column",
+
+    justifyContent: "center",
   },
 
   icon: {
@@ -491,7 +513,7 @@ const styles = {
   },
 
   officeSection: {
-    maxWidth: "1000px",
+    width: "100%",
 
     margin:
       "0 auto 70px auto",
@@ -504,14 +526,14 @@ const styles = {
 
     borderRadius: "30px",
 
-    padding: "40px",
+    padding: "25px",
 
     backdropFilter:
       "blur(12px)",
   },
 
   officeTitle: {
-    fontSize: "38px",
+    fontSize: "clamp(28px,5vw,38px)",
 
     color: "#ff9800",
 
@@ -526,12 +548,14 @@ const styles = {
     color: "#cfcfcf",
 
     marginBottom: "30px",
+
+    fontSize: "clamp(14px,3vw,18px)",
   },
 
   map: {
     width: "100%",
 
-    height: "450px",
+    height: "350px",
 
     borderRadius: "20px",
   },
@@ -563,7 +587,11 @@ const styles = {
 
     color: "#fff",
 
-    fontSize: "16px",
+    fontSize: "15px",
+
+    lineHeight: "1.6",
+
+    wordBreak: "break-word",
   },
 
   mission: {
@@ -579,7 +607,7 @@ const styles = {
 
     borderRadius: "30px",
 
-    padding: "40px",
+    padding: "30px 20px",
 
     textAlign: "center",
 
@@ -588,7 +616,7 @@ const styles = {
   },
 
   missionTitle: {
-    fontSize: "38px",
+    fontSize: "clamp(28px,5vw,38px)",
 
     marginBottom: "20px",
 
@@ -600,7 +628,7 @@ const styles = {
 
     lineHeight: "1.9",
 
-    fontSize: "18px",
+    fontSize: "clamp(15px,3vw,18px)",
   },
 };
 
