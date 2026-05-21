@@ -12,60 +12,108 @@ import {
 import { motion } from "framer-motion";
 
 function Footer() {
+  const isMobile = window.innerWidth <= 768;
 
   return (
-    <div style={styles.footer}>
-
+    <div
+      style={{
+        ...styles.footer,
+        padding: isMobile
+          ? "60px 15px 30px"
+          : "80px 20px 40px",
+      }}
+    >
       {/* GLOW */}
       <div style={styles.glow1}></div>
 
       <div style={styles.glow2}></div>
 
       <div style={styles.container}>
-
         {/* BRAND */}
         <motion.div
           initial={{
             opacity: 0,
             y: 30,
           }}
-
           whileInView={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 0.7,
           }}
         >
-
-          <div style={styles.logoBox}>
-
-            <div style={styles.logoIcon}>
+          <div
+            style={{
+              ...styles.logoBox,
+              flexDirection: isMobile
+                ? "column"
+                : "row",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                ...styles.logoIcon,
+                width: isMobile
+                  ? "55px"
+                  : "60px",
+                height: isMobile
+                  ? "55px"
+                  : "60px",
+                fontSize: isMobile
+                  ? "24px"
+                  : "28px",
+              }}
+            >
               👩🏻‍💻
             </div>
 
             <div>
-              <h1 style={styles.logo}>
+              <h1
+                style={{
+                  ...styles.logo,
+                  fontSize: isMobile
+                    ? "28px"
+                    : "38px",
+                }}
+              >
                 E-Learning
               </h1>
 
-              <p style={styles.tagline}>
+              <p
+                style={{
+                  ...styles.tagline,
+                  fontSize: isMobile
+                    ? "12px"
+                    : "14px",
+                }}
+              >
                 Smart AI Learning Platform
               </p>
             </div>
-
           </div>
 
-          <p style={styles.description}>
+          <p
+            style={{
+              ...styles.description,
+              fontSize: isMobile
+                ? "14px"
+                : "16px",
+              lineHeight: isMobile
+                ? "1.7"
+                : "1.8",
+              padding: isMobile
+                ? "0 5px"
+                : "0",
+            }}
+          >
             Experience futuristic
             AI-powered learning with
             live classes, smart
             tutoring, real-time chat,
             and immersive education.
           </p>
-
         </motion.div>
 
         {/* FEATURES */}
@@ -74,43 +122,67 @@ function Footer() {
             opacity: 0,
             y: 30,
           }}
-
           whileInView={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 0.8,
           }}
-
-          style={styles.featureBox}
+          style={{
+            ...styles.featureBox,
+            gap: isMobile
+              ? "12px"
+              : "20px",
+          }}
         >
-
-          <div style={styles.featureCard}>
+          <div
+            style={{
+              ...styles.featureCard,
+              width: isMobile
+                ? "100%"
+                : "auto",
+              justifyContent: "center",
+              padding: isMobile
+                ? "12px 18px"
+                : "14px 22px",
+            }}
+          >
             <FaRobot />
-
-            <span>
-              AI Tutor
-            </span>
+            <span>AI Tutor</span>
           </div>
 
-          <div style={styles.featureCard}>
+          <div
+            style={{
+              ...styles.featureCard,
+              width: isMobile
+                ? "100%"
+                : "auto",
+              justifyContent: "center",
+              padding: isMobile
+                ? "12px 18px"
+                : "14px 22px",
+            }}
+          >
             <FaGraduationCap />
-
-            <span>
-              Smart Courses
-            </span>
+            <span>Smart Courses</span>
           </div>
 
-          <div style={styles.featureCard}>
+          <div
+            style={{
+              ...styles.featureCard,
+              width: isMobile
+                ? "100%"
+                : "auto",
+              justifyContent: "center",
+              padding: isMobile
+                ? "12px 18px"
+                : "14px 22px",
+            }}
+          >
             <FaRocket />
-
-            <span>
-              Live Learning
-            </span>
+            <span>Live Learning</span>
           </div>
-
         </motion.div>
 
         {/* SOCIALS */}
@@ -119,36 +191,42 @@ function Footer() {
             opacity: 0,
             y: 30,
           }}
-
           whileInView={{
             opacity: 1,
             y: 0,
           }}
-
           transition={{
             duration: 1,
           }}
-
-          style={styles.icons}
+          style={{
+            ...styles.icons,
+            gap: isMobile
+              ? "16px"
+              : "24px",
+          }}
         >
-
           <motion.a
             whileHover={{
               scale: 1.2,
               y: -5,
             }}
-
             href="https://wa.me/919907667450"
-
             target="_blank"
-
             rel="noreferrer"
-
-            style={styles.icon}
+            style={{
+              ...styles.icon,
+              width: isMobile
+                ? "50px"
+                : "58px",
+              height: isMobile
+                ? "50px"
+                : "58px",
+              fontSize: isMobile
+                ? "20px"
+                : "24px",
+            }}
           >
-
             <FaWhatsapp />
-
           </motion.a>
 
           <motion.a
@@ -156,18 +234,23 @@ function Footer() {
               scale: 1.2,
               y: -5,
             }}
-
             href="https://instagram.com/ig_debanjan26"
-
             target="_blank"
-
             rel="noreferrer"
-
-            style={styles.icon}
+            style={{
+              ...styles.icon,
+              width: isMobile
+                ? "50px"
+                : "58px",
+              height: isMobile
+                ? "50px"
+                : "58px",
+              fontSize: isMobile
+                ? "20px"
+                : "24px",
+            }}
           >
-
             <FaInstagram />
-
           </motion.a>
 
           <motion.a
@@ -175,20 +258,24 @@ function Footer() {
               scale: 1.2,
               y: -5,
             }}
-
             href="https://facebook.com/yourprofile"
-
             target="_blank"
-
             rel="noreferrer"
-
-            style={styles.icon}
+            style={{
+              ...styles.icon,
+              width: isMobile
+                ? "50px"
+                : "58px",
+              height: isMobile
+                ? "50px"
+                : "58px",
+              fontSize: isMobile
+                ? "20px"
+                : "24px",
+            }}
           >
-
             <FaFacebook />
-
           </motion.a>
-
         </motion.div>
 
         {/* CREDIT */}
@@ -196,39 +283,42 @@ function Footer() {
           initial={{
             opacity: 0,
           }}
-
           whileInView={{
             opacity: 1,
           }}
-
           transition={{
             delay: 0.3,
             duration: 1,
           }}
         >
-
-          <h2 style={styles.madeBy}>
+          <h2
+            style={{
+              ...styles.madeBy,
+              fontSize: isMobile
+                ? "20px"
+                : "24px",
+            }}
+          >
             Made By Debanjan ⚡
           </h2>
 
-          <p style={styles.copy}>
-            ©{" "}
-            {new Date().getFullYear()}
-            {" "}
-            E-Learning — All rights
-            reserved
+          <p
+            style={{
+              ...styles.copy,
+              fontSize: isMobile
+                ? "12px"
+                : "14px",
+            }}
+          >
+            © {new Date().getFullYear()} E-Learning — All rights reserved
           </p>
-
         </motion.div>
-
       </div>
-
     </div>
   );
 }
 
 const styles = {
-
   footer: {
     position: "relative",
 
@@ -236,9 +326,6 @@ const styles = {
 
     background:
       "linear-gradient(180deg,#0d0d0d,#111827)",
-
-    padding:
-      "80px 20px 40px",
 
     marginTop: "80px",
 
@@ -299,8 +386,7 @@ const styles = {
   logoBox: {
     display: "flex",
 
-    justifyContent:
-      "center",
+    justifyContent: "center",
 
     alignItems: "center",
 
@@ -308,20 +394,13 @@ const styles = {
   },
 
   logoIcon: {
-    width: "60px",
-
-    height: "60px",
-
     borderRadius: "18px",
 
     display: "flex",
 
     alignItems: "center",
 
-    justifyContent:
-      "center",
-
-    fontSize: "28px",
+    justifyContent: "center",
 
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
@@ -335,8 +414,6 @@ const styles = {
 
     color: "white",
 
-    fontSize: "38px",
-
     fontWeight: "800",
 
     letterSpacing: "1px",
@@ -346,30 +423,20 @@ const styles = {
     margin: 0,
 
     color: "#aaa",
-
-    fontSize: "14px",
   },
 
   description: {
     maxWidth: "700px",
 
-    margin:
-      "30px auto",
+    margin: "30px auto",
 
     color: "#bbb",
-
-    lineHeight: "1.8",
-
-    fontSize: "16px",
   },
 
   featureBox: {
     display: "flex",
 
-    justifyContent:
-      "center",
-
-    gap: "20px",
+    justifyContent: "center",
 
     flexWrap: "wrap",
 
@@ -382,9 +449,6 @@ const styles = {
     alignItems: "center",
 
     gap: "10px",
-
-    padding:
-      "14px 22px",
 
     borderRadius: "18px",
 
@@ -406,29 +470,21 @@ const styles = {
   icons: {
     display: "flex",
 
-    justifyContent:
-      "center",
-
-    gap: "24px",
+    justifyContent: "center",
 
     marginBottom: "30px",
+
+    flexWrap: "wrap",
   },
 
   icon: {
-    width: "58px",
-
-    height: "58px",
-
     borderRadius: "18px",
 
     display: "flex",
 
     alignItems: "center",
 
-    justifyContent:
-      "center",
-
-    fontSize: "24px",
+    justifyContent: "center",
 
     color: "white",
 
@@ -450,15 +506,11 @@ const styles = {
   madeBy: {
     color: "white",
 
-    fontSize: "24px",
-
     marginBottom: "10px",
   },
 
   copy: {
     color: "#888",
-
-    fontSize: "14px",
   },
 };
 
