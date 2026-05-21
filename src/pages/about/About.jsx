@@ -346,7 +346,7 @@ function About() {
             <FaGlobe />
 
             <span>
-              www.elearning.com
+              https://e-learning-frontend-psi.vercel.app
             </span>
 
           </div>
