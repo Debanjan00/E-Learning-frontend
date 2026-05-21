@@ -38,9 +38,6 @@ function ChatPage() {
   const [isListening, setIsListening] =
     useState(false);
 
-  const messagesEndRef =
-    useRef(null);
-
   const chatBoxRef =
     useRef(null);
 
@@ -50,6 +47,9 @@ function ChatPage() {
   const user = JSON.parse(
     localStorage.getItem("user")
   );
+
+  const isMobile =
+    window.innerWidth <= 768;
 
   // AUTO SCROLL
   useEffect(() => {
@@ -81,24 +81,30 @@ function ChatPage() {
 
         setMessages((prev) => {
 
-          // PREVENT DUPLICATE MESSAGES
           const exists =
             prev.some(
               (msg) =>
-                msg.message === data.message &&
+                msg.message ===
+                  data.message &&
                 (
-                  msg.sender === data.senderId ||
-                  msg.senderId === data.senderId
+                  msg.sender ===
+                    data.senderId ||
+                  msg.senderId ===
+                    data.senderId
                 )
             );
 
-          if (exists) return prev;
+          if (exists)
+            return prev;
 
           return [
             ...prev,
             {
-              sender: data.senderId,
-              message: data.message,
+              sender:
+                data.senderId,
+
+              message:
+                data.message,
             },
           ];
         });
@@ -113,7 +119,6 @@ function ChatPage() {
         "receiveMessage"
       );
 
-      // STOP MIC ON UNMOUNT
       if (
         recognitionRef.current
       ) {
@@ -125,233 +130,335 @@ function ChatPage() {
   }, []);
 
   // FETCH USERS
-  const fetchUsers = async () => {
+  const fetchUsers =
+    async () => {
 
-    try {
+      try {
 
-      const token =
-        localStorage.getItem("token");
+        const token =
+          localStorage.getItem(
+            "token"
+          );
 
-      const { data } =
-        await axios.get(
-          `${server}/api/chat/users/all`,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
-          }
+        const { data } =
+          await axios.get(
+            `${server}/api/chat/users/all`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
+
+        setUsers(data.users);
+
+      } catch (error) {
+
+        console.log(error);
+      }
+    };
+
+  // LOAD MESSAGES
+  const loadMessages =
+    async (receiverId) => {
+
+      try {
+
+        setSelectedUser(
+          receiverId
         );
 
-      setUsers(data.users);
+        const token =
+          localStorage.getItem(
+            "token"
+          );
 
-    } catch (error) {
+        const { data } =
+          await axios.get(
+            `${server}/api/chat/${receiverId}`,
+            {
+              headers: {
+                Authorization:
+                  `Bearer ${token}`,
+              },
+            }
+          );
 
-      console.log(error);
-    }
-  };
-
-  // LOAD CHAT
-  const loadMessages = async (
-    receiverId
-  ) => {
-
-    try {
-
-      setSelectedUser(receiverId);
-
-      const token =
-        localStorage.getItem("token");
-
-      const { data } =
-        await axios.get(
-          `${server}/api/chat/${receiverId}`,
-          {
-            headers: {
-              Authorization:
-                `Bearer ${token}`,
-            },
-          }
+        setMessages(
+          data.messages
         );
 
-      setMessages(data.messages);
+      } catch (error) {
 
-    } catch (error) {
-
-      console.log(error);
-    }
-  };
+        console.log(error);
+      }
+    };
 
   // SEND MESSAGE
-  const sendMessage = async () => {
+  const sendMessage =
+    async () => {
 
-    if (
-      !message.trim() ||
-      !selectedUser
-    )
-      return;
-
-    try {
-
-      const token =
-        localStorage.getItem("token");
-
-      await axios.post(
-        `${server}/api/chat/send`,
-        {
-          receiverId:
-            selectedUser,
-
-          message,
-        },
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`,
-          },
-        }
-      );
-
-      socket.emit(
-        "sendMessage",
-        {
-          senderId: user._id,
-
-          receiverId:
-            selectedUser,
-
-          message,
-        }
-      );
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          sender: user._id,
-
-          message,
-        },
-      ]);
-
-      setMessage("");
-
-    } catch (error) {
-
-      console.log(error);
-    }
-  };
-
-  // START VOICE
-  const startListening = () => {
-
-    const SpeechRecognition =
-      window.SpeechRecognition ||
-      window.webkitSpeechRecognition;
-
-    // NOT SUPPORTED
-    if (!SpeechRecognition) {
-
-      alert(
-        "Voice recognition not supported in this browser"
-      );
-
-      return;
-    }
-
-    // STOP OLD SESSION
-    if (
-      recognitionRef.current
-    ) {
-
-      recognitionRef.current.stop();
-    }
-
-    const recognition =
-      new SpeechRecognition();
-
-    recognition.lang = "en-US";
-
-    recognition.continuous = false;
-
-    recognition.interimResults = true;
-
-    recognition.maxAlternatives = 1;
-
-    recognitionRef.current =
-      recognition;
-
-    // START
-    recognition.start();
-
-    setIsListening(true);
-
-    // RESULT
-    recognition.onresult = (
-      event
-    ) => {
-
-      let transcript = "";
-
-      for (
-        let i =
-          event.resultIndex;
-        i <
-        event.results.length;
-        i++
-      ) {
-
-        transcript +=
-          event.results[i][0]
-            .transcript;
-      }
-
-      setMessage(transcript);
-    };
-
-    // END
-    recognition.onend = () => {
-
-      setIsListening(false);
-    };
-
-    // ERROR
-    recognition.onerror = (
-      e
-    ) => {
-
-      console.log(
-        "Speech error:",
-        e.error
-      );
-
-      setIsListening(false);
-
-      // AUTO FIX
       if (
-        e.error === "network"
+        !message.trim() ||
+        !selectedUser
+      )
+        return;
+
+      try {
+
+        const token =
+          localStorage.getItem(
+            "token"
+          );
+
+        await axios.post(
+          `${server}/api/chat/send`,
+          {
+            receiverId:
+              selectedUser,
+
+            message,
+          },
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        );
+
+        socket.emit(
+          "sendMessage",
+          {
+            senderId:
+              user._id,
+
+            receiverId:
+              selectedUser,
+
+            message,
+          }
+        );
+
+        setMessages(
+          (prev) => [
+            ...prev,
+            {
+              sender:
+                user._id,
+
+              message,
+            },
+          ]
+        );
+
+        setMessage("");
+
+      } catch (error) {
+
+        console.log(error);
+      }
+    };
+
+  // VOICE
+  const startListening =
+    () => {
+
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+      if (
+        !SpeechRecognition
       ) {
 
         alert(
-          "Microphone blocked or internet issue"
+          "Voice recognition not supported"
         );
+
+        return;
       }
+
+      if (
+        recognitionRef.current
+      ) {
+
+        recognitionRef.current.stop();
+      }
+
+      const recognition =
+        new SpeechRecognition();
+
+      recognition.lang =
+        "en-US";
+
+      recognition.continuous =
+        false;
+
+      recognition.interimResults =
+        true;
+
+      recognition.maxAlternatives =
+        1;
+
+      recognitionRef.current =
+        recognition;
+
+      recognition.start();
+
+      setIsListening(true);
+
+      recognition.onresult =
+        (event) => {
+
+          let transcript =
+            "";
+
+          for (
+            let i =
+              event.resultIndex;
+            i <
+            event.results
+              .length;
+            i++
+          ) {
+
+            transcript +=
+              event.results[
+                i
+              ][0]
+                .transcript;
+          }
+
+          setMessage(
+            transcript
+          );
+        };
+
+      recognition.onend =
+        () => {
+
+          setIsListening(
+            false
+          );
+        };
+
+      recognition.onerror =
+        (e) => {
+
+          console.log(
+            "Speech error:",
+            e.error
+          );
+
+          setIsListening(
+            false
+          );
+        };
     };
-  };
 
   return (
-    <div style={styles.page}>
+    <div
+      style={{
+        ...styles.page,
+
+        paddingTop:
+          isMobile
+            ? "85px"
+            : "120px",
+
+        paddingLeft:
+          isMobile
+            ? "10px"
+            : "30px",
+
+        paddingRight:
+          isMobile
+            ? "10px"
+            : "30px",
+
+        paddingBottom:
+          isMobile
+            ? "10px"
+            : "30px",
+      }}
+    >
 
       {/* GLOW */}
       <div style={styles.glow1}></div>
 
       <div style={styles.glow2}></div>
 
-      <div style={styles.container}>
+      {/* CONTAINER */}
+      <div
+        style={{
+          ...styles.container,
+
+          flexDirection:
+            isMobile
+              ? "column"
+              : "row",
+
+          height:
+            isMobile
+              ? "auto"
+              : "calc(100vh - 160px)",
+
+          minHeight:
+            isMobile
+              ? "calc(100vh - 100px)"
+              : "auto",
+
+          borderRadius:
+            isMobile
+              ? "20px"
+              : "30px",
+        }}
+      >
 
         {/* SIDEBAR */}
-        <div style={styles.sidebar}>
+        <div
+          style={{
+            ...styles.sidebar,
 
-          <div style={styles.sideHeader}>
+            width:
+              isMobile
+                ? "100%"
+                : "320px",
+
+            maxHeight:
+              isMobile
+                ? "220px"
+                : "100%",
+
+            borderRight:
+              isMobile
+                ? "none"
+                : "1px solid rgba(255,255,255,0.06)",
+
+            borderBottom:
+              isMobile
+                ? "1px solid rgba(255,255,255,0.06)"
+                : "none",
+
+            padding:
+              isMobile
+                ? "14px"
+                : "20px",
+          }}
+        >
+
+          <div
+            style={{
+              ...styles.sideHeader,
+
+              fontSize:
+                isMobile
+                  ? "18px"
+                  : "22px",
+            }}
+          >
 
             <FaRobot />
 
@@ -378,6 +485,11 @@ function ChatPage() {
                     u._id
                     ? "linear-gradient(135deg,#ff9800,#ff5e00)"
                     : "rgba(255,255,255,0.04)",
+
+                padding:
+                  isMobile
+                    ? "12px"
+                    : "16px",
               }}
 
               onClick={() =>
@@ -387,7 +499,26 @@ function ChatPage() {
               }
             >
 
-              <div style={styles.avatar}>
+              <div
+                style={{
+                  ...styles.avatar,
+
+                  width:
+                    isMobile
+                      ? "42px"
+                      : "50px",
+
+                  height:
+                    isMobile
+                      ? "42px"
+                      : "50px",
+
+                  fontSize:
+                    isMobile
+                      ? "17px"
+                      : "20px",
+                }}
+              >
 
                 <FaUserAstronaut />
 
@@ -410,8 +541,11 @@ function ChatPage() {
                     margin: 0,
                     color:
                       "#aaa",
+
                     fontSize:
-                      "13px",
+                      isMobile
+                        ? "12px"
+                        : "13px",
                   }}
                 >
                   {u.role}
@@ -425,12 +559,33 @@ function ChatPage() {
         </div>
 
         {/* CHAT AREA */}
-        <div style={styles.chatArea}>
+        <div
+          style={
+            styles.chatArea
+          }
+        >
 
           {/* HEADER */}
-          <div style={styles.chatHeader}>
+          <div
+            style={{
+              ...styles.chatHeader,
 
-            <h3>
+              padding:
+                isMobile
+                  ? "16px"
+                  : "22px",
+            }}
+          >
+
+            <h3
+              style={{
+                margin: 0,
+                fontSize:
+                  isMobile
+                    ? "16px"
+                    : "20px",
+              }}
+            >
               {selectedUser
                 ? "Live Chat ⚡"
                 : "Select a user"}
@@ -441,7 +596,19 @@ function ChatPage() {
           {/* CHAT BOX */}
           <div
             ref={chatBoxRef}
-            style={styles.chatBox}
+            style={{
+              ...styles.chatBox,
+
+              padding:
+                isMobile
+                  ? "14px"
+                  : "25px",
+
+              minHeight:
+                isMobile
+                  ? "300px"
+                  : "auto",
+            }}
           >
 
             {messages.map(
@@ -466,8 +633,32 @@ function ChatPage() {
                   style={
                     msg.sender ===
                       user._id
-                      ? styles.myMessage
-                      : styles.otherMessage
+                      ? {
+                          ...styles.myMessage,
+
+                          maxWidth:
+                            isMobile
+                              ? "85%"
+                              : "70%",
+
+                          fontSize:
+                            isMobile
+                              ? "14px"
+                              : "15px",
+                        }
+                      : {
+                          ...styles.otherMessage,
+
+                          maxWidth:
+                            isMobile
+                              ? "85%"
+                              : "70%",
+
+                          fontSize:
+                            isMobile
+                              ? "14px"
+                              : "15px",
+                        }
                   }
                 >
 
@@ -477,19 +668,24 @@ function ChatPage() {
               )
             )}
 
-            <div
-              ref={
-                messagesEndRef
-              }
-              style={{
-                height: "1px",
-              }}
-            ></div>
-
           </div>
 
           {/* INPUT */}
-          <div style={styles.bottom}>
+          <div
+            style={{
+              ...styles.bottom,
+
+              padding:
+                isMobile
+                  ? "12px"
+                  : "20px",
+
+              gap:
+                isMobile
+                  ? "8px"
+                  : "12px",
+            }}
+          >
 
             <input
               type="text"
@@ -519,9 +715,14 @@ function ChatPage() {
                 }
               }}
 
-              style={
-                styles.input
-              }
+              style={{
+                ...styles.input,
+
+                fontSize:
+                  isMobile
+                    ? "14px"
+                    : "16px",
+              }}
             />
 
             {/* MIC */}
@@ -540,6 +741,21 @@ function ChatPage() {
 
               style={{
                 ...styles.sendBtn,
+
+                width:
+                  isMobile
+                    ? "50px"
+                    : "60px",
+
+                height:
+                  isMobile
+                    ? "50px"
+                    : "60px",
+
+                fontSize:
+                  isMobile
+                    ? "16px"
+                    : "18px",
 
                 background:
                   isListening
@@ -571,9 +787,24 @@ function ChatPage() {
                 sendMessage();
               }}
 
-              style={
-                styles.sendBtn
-              }
+              style={{
+                ...styles.sendBtn,
+
+                width:
+                  isMobile
+                    ? "50px"
+                    : "60px",
+
+                height:
+                  isMobile
+                    ? "50px"
+                    : "60px",
+
+                fontSize:
+                  isMobile
+                    ? "16px"
+                    : "18px",
+              }}
             >
 
               <FaPaperPlane />
@@ -593,18 +824,10 @@ function ChatPage() {
 const styles = {
 
   page: {
-    height: "90vh",
+    minHeight: "100vh",
 
     background:
       "linear-gradient(135deg,#0f0f0f,#111827)",
-
-    paddingTop: "120px",
-
-    paddingLeft: "30px",
-
-    paddingRight: "30px",
-
-    paddingBottom: "30px",
 
     position: "relative",
 
@@ -659,12 +882,6 @@ const styles = {
   container: {
     display: "flex",
 
-    height:
-      "calc(100vh - 160px)",
-
-    borderRadius:
-      "30px",
-
     overflow: "hidden",
 
     backdropFilter:
@@ -686,13 +903,6 @@ const styles = {
   },
 
   sidebar: {
-    width: "320px",
-
-    borderRight:
-      "1px solid rgba(255,255,255,0.06)",
-
-    padding: "20px",
-
     overflowY: "auto",
 
     background:
@@ -710,19 +920,15 @@ const styles = {
     color: "white",
 
     marginBottom:
-      "25px",
-
-    fontSize: "22px",
+      "20px",
   },
 
   userCard: {
-    padding: "16px",
-
     borderRadius:
       "18px",
 
     marginBottom:
-      "14px",
+      "12px",
 
     cursor: "pointer",
 
@@ -741,10 +947,6 @@ const styles = {
   },
 
   avatar: {
-    width: "50px",
-
-    height: "50px",
-
     borderRadius:
       "16px",
 
@@ -760,8 +962,6 @@ const styles = {
       "linear-gradient(135deg,#ff9800,#ff5e00)",
 
     color: "white",
-
-    fontSize: "20px",
   },
 
   chatArea: {
@@ -771,11 +971,11 @@ const styles = {
 
     flexDirection:
       "column",
+
+    minHeight: 0,
   },
 
   chatHeader: {
-    padding: "22px",
-
     borderBottom:
       "1px solid rgba(255,255,255,0.06)",
 
@@ -787,8 +987,6 @@ const styles = {
 
   chatBox: {
     flex: 1,
-
-    padding: "25px",
 
     overflowY: "auto",
 
@@ -815,8 +1013,6 @@ const styles = {
 
     marginTop: "12px",
 
-    maxWidth: "70%",
-
     wordBreak:
       "break-word",
 
@@ -840,8 +1036,6 @@ const styles = {
 
     marginTop: "12px",
 
-    maxWidth: "70%",
-
     border:
       "1px solid rgba(255,255,255,0.08)",
 
@@ -851,10 +1045,6 @@ const styles = {
 
   bottom: {
     display: "flex",
-
-    padding: "20px",
-
-    gap: "12px",
 
     borderTop:
       "1px solid rgba(255,255,255,0.06)",
@@ -871,18 +1061,17 @@ const styles = {
     outline: "none",
 
     background:
-      "transparent",
+      "rgba(255,255,255,0.06)",
 
     color: "white",
 
-    fontSize: "16px",
+    paddingLeft: "14px",
 
-    paddingLeft: "10px",
+    borderRadius:
+      "14px",
   },
 
   sendBtn: {
-    width: "60px",
-
     border: "none",
 
     borderRadius:
@@ -893,12 +1082,12 @@ const styles = {
 
     color: "white",
 
-    fontSize: "18px",
-
     cursor: "pointer",
 
     boxShadow:
       "0 0 25px rgba(255,140,0,0.3)",
+
+    flexShrink: 0,
   },
 };
 

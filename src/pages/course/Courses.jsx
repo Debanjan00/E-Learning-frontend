@@ -30,6 +30,9 @@ function Courses() {
   const navigate =
     useNavigate();
 
+  const isMobile =
+    window.innerWidth <= 768;
+
   useEffect(() => {
 
     fetchCourses();
@@ -66,7 +69,26 @@ function Courses() {
       <div style={styles.glow2}></div>
 
       {/* HEADER */}
-      <div style={styles.header}>
+      <div
+        style={{
+          ...styles.header,
+
+          flexDirection:
+            isMobile
+              ? "column"
+              : "row",
+
+          alignItems:
+            isMobile
+              ? "flex-start"
+              : "center",
+
+          gap:
+            isMobile
+              ? "14px"
+              : "18px",
+        }}
+      >
 
         <motion.div
           animate={{
@@ -85,7 +107,24 @@ function Courses() {
             duration: 4,
           }}
 
-          style={styles.logo}
+          style={{
+            ...styles.logo,
+
+            width:
+              isMobile
+                ? "65px"
+                : "75px",
+
+            height:
+              isMobile
+                ? "65px"
+                : "75px",
+
+            fontSize:
+              isMobile
+                ? "28px"
+                : "34px",
+          }}
         >
 
           <FaBolt />
@@ -94,11 +133,29 @@ function Courses() {
 
         <div>
 
-          <h1 style={styles.title}>
+          <h1
+            style={{
+              ...styles.title,
+
+              fontSize:
+                isMobile
+                  ? "32px"
+                  : "42px",
+            }}
+          >
             Explore Courses
           </h1>
 
-          <p style={styles.subtitle}>
+          <p
+            style={{
+              ...styles.subtitle,
+
+              fontSize:
+                isMobile
+                  ? "14px"
+                  : "16px",
+            }}
+          >
             Upgrade your skills
             with futuristic
             learning ⚡
@@ -109,7 +166,21 @@ function Courses() {
       </div>
 
       {/* GRID */}
-      <div style={styles.grid}>
+      <div
+        style={{
+          ...styles.grid,
+
+          gridTemplateColumns:
+            isMobile
+              ? "1fr"
+              : "repeat(auto-fit,minmax(300px,1fr))",
+
+          gap:
+            isMobile
+              ? "20px"
+              : "28px",
+        }}
+      >
 
         {courses.map(
           (course, index) => (
@@ -137,7 +208,14 @@ function Courses() {
                 scale: 1.02,
               }}
 
-              style={styles.card}
+              style={{
+                ...styles.card,
+
+                borderRadius:
+                  isMobile
+                    ? "22px"
+                    : "28px",
+              }}
             >
 
               {/* IMAGE */}
@@ -155,15 +233,30 @@ function Courses() {
 
                   alt="course"
 
-                  style={
-                    styles.image
-                  }
+                  style={{
+                    ...styles.image,
+
+                    height:
+                      isMobile
+                        ? "200px"
+                        : "220px",
+                  }}
                 />
 
                 <div
-                  style={
-                    styles.overlay
-                  }
+                  style={{
+                    ...styles.overlay,
+
+                    fontSize:
+                      isMobile
+                        ? "12px"
+                        : "13px",
+
+                    padding:
+                      isMobile
+                        ? "8px 14px"
+                        : "10px 16px",
+                  }}
                 >
 
                   <FaBookOpen />
@@ -176,15 +269,25 @@ function Courses() {
 
               {/* CONTENT */}
               <div
-                style={
-                  styles.content
-                }
+                style={{
+                  ...styles.content,
+
+                  padding:
+                    isMobile
+                      ? "18px"
+                      : "24px",
+                }}
               >
 
                 <h2
-                  style={
-                    styles.courseTitle
-                  }
+                  style={{
+                    ...styles.courseTitle,
+
+                    fontSize:
+                      isMobile
+                        ? "22px"
+                        : "24px",
+                  }}
                 >
                   {
                     course.title
@@ -192,26 +295,57 @@ function Courses() {
                 </h2>
 
                 <p
-                  style={
-                    styles.desc
-                  }
+                  style={{
+                    ...styles.desc,
+
+                    fontSize:
+                      isMobile
+                        ? "14px"
+                        : "15px",
+
+                    minHeight:
+                      isMobile
+                        ? "auto"
+                        : "75px",
+                  }}
                 >
                   {
                     course.description
                   }
                 </p>
 
-                {/* PRICE */}
+                {/* PRICE + BUTTON */}
                 <div
-                  style={
-                    styles.bottom
-                  }
+                  style={{
+                    ...styles.bottom,
+
+                    flexDirection:
+                      isMobile
+                        ? "column"
+                        : "row",
+
+                    alignItems:
+                      isMobile
+                        ? "stretch"
+                        : "center",
+
+                    gap:
+                      isMobile
+                        ? "16px"
+                        : "0px",
+                  }}
                 >
 
+                  {/* PRICE */}
                   <div
-                    style={
-                      styles.price
-                    }
+                    style={{
+                      ...styles.price,
+
+                      fontSize:
+                        isMobile
+                          ? "22px"
+                          : "24px",
+                    }}
                   >
 
                     ₹{" "}
@@ -221,10 +355,21 @@ function Courses() {
 
                   </div>
 
+                  {/* BUTTONS */}
                   <div
-                    style={
-                      styles.btnGroup
-                    }
+                    style={{
+                      ...styles.btnGroup,
+
+                      width:
+                        isMobile
+                          ? "100%"
+                          : "auto",
+
+                      flexDirection:
+                        isMobile
+                          ? "column"
+                          : "row",
+                    }}
                   >
 
                     {/* VIEW */}
@@ -241,9 +386,27 @@ function Courses() {
                           0.95,
                       }}
 
-                      style={
-                        styles.btn
-                      }
+                      style={{
+                        ...styles.btn,
+
+                        width:
+                          isMobile
+                            ? "100%"
+                            : "auto",
+
+                        justifyContent:
+                          "center",
+
+                        padding:
+                          isMobile
+                            ? "13px"
+                            : "12px 20px",
+
+                        fontSize:
+                          isMobile
+                            ? "14px"
+                            : "15px",
+                      }}
 
                       onClick={() =>
                         navigate(
@@ -272,9 +435,24 @@ function Courses() {
                           0.95,
                       }}
 
-                      style={
-                        styles.buyBtn
-                      }
+                      style={{
+                        ...styles.buyBtn,
+
+                        width:
+                          isMobile
+                            ? "100%"
+                            : "auto",
+
+                        padding:
+                          isMobile
+                            ? "13px"
+                            : "12px 18px",
+
+                        fontSize:
+                          isMobile
+                            ? "14px"
+                            : "15px",
+                      }}
 
                       onClick={() =>
                         navigate(
@@ -308,13 +486,25 @@ const styles = {
   page: {
     minHeight: "100vh",
 
-    paddingTop: "90px",
+    paddingTop:
+      window.innerWidth <= 768
+        ? "80px"
+        : "90px",
 
-    paddingBottom: "40px",
+    paddingBottom:
+      window.innerWidth <= 768
+        ? "20px"
+        : "40px",
 
-    paddingLeft: "20px",
+    paddingLeft:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
 
-    paddingRight: "20px",
+    paddingRight:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
 
     background:
       "linear-gradient(135deg,#0f0f0f,#111827)",
@@ -322,6 +512,9 @@ const styles = {
     position: "relative",
 
     overflowX: "hidden",
+
+    boxSizing:
+      "border-box",
   },
 
   glow1: {
@@ -331,9 +524,15 @@ const styles = {
 
     left: "-120px",
 
-    width: "350px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
-    height: "350px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
     borderRadius: "50%",
 
@@ -350,9 +549,15 @@ const styles = {
 
     right: "-120px",
 
-    width: "350px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
-    height: "350px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
     borderRadius: "50%",
 
@@ -365,14 +570,10 @@ const styles = {
   header: {
     display: "flex",
 
-    alignItems: "center",
-
-    gap: "18px",
-
     maxWidth: "1200px",
 
     margin:
-      "0 auto 40px auto",
+      "0 auto 35px auto",
 
     position: "relative",
 
@@ -380,10 +581,6 @@ const styles = {
   },
 
   logo: {
-    width: "75px",
-
-    height: "75px",
-
     borderRadius: "24px",
 
     display: "flex",
@@ -392,8 +589,6 @@ const styles = {
 
     justifyContent:
       "center",
-
-    fontSize: "34px",
 
     color: "white",
 
@@ -409,7 +604,7 @@ const styles = {
 
     margin: 0,
 
-    fontSize: "42px",
+    lineHeight: "1.2",
   },
 
   subtitle: {
@@ -421,11 +616,6 @@ const styles = {
   grid: {
     display: "grid",
 
-    gridTemplateColumns:
-      "repeat(auto-fit,minmax(300px,1fr))",
-
-    gap: "28px",
-
     maxWidth: "1200px",
 
     margin: "auto",
@@ -436,8 +626,6 @@ const styles = {
   },
 
   card: {
-    borderRadius: "28px",
-
     overflow: "hidden",
 
     background:
@@ -462,8 +650,6 @@ const styles = {
   image: {
     width: "100%",
 
-    height: "220px",
-
     objectFit: "cover",
   },
 
@@ -480,9 +666,6 @@ const styles = {
 
     gap: "8px",
 
-    padding:
-      "10px 16px",
-
     borderRadius: "14px",
 
     background:
@@ -492,30 +675,22 @@ const styles = {
       "blur(10px)",
 
     color: "white",
-
-    fontSize: "13px",
   },
 
-  content: {
-    padding: "24px",
-  },
+  content: {},
 
   courseTitle: {
     color: "white",
 
     marginBottom: "12px",
 
-    fontSize: "24px",
+    lineHeight: "1.4",
   },
 
   desc: {
     color: "#bbb",
 
     lineHeight: "1.7",
-
-    fontSize: "15px",
-
-    minHeight: "75px",
   },
 
   bottom: {
@@ -525,13 +700,9 @@ const styles = {
 
     justifyContent:
       "space-between",
-
-    alignItems: "center",
   },
 
   price: {
-    fontSize: "24px",
-
     fontWeight: "bold",
 
     color: "#ff9800",
@@ -548,9 +719,6 @@ const styles = {
 
   btn: {
     border: "none",
-
-    padding:
-      "12px 20px",
 
     borderRadius: "16px",
 
@@ -575,9 +743,6 @@ const styles = {
 
   buyBtn: {
     border: "none",
-
-    padding:
-      "12px 18px",
 
     borderRadius: "16px",
 

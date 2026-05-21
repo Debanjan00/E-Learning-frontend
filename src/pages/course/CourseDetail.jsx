@@ -44,6 +44,9 @@ function CourseDetail() {
     setCompletedLectures,
   ] = useState([]);
 
+  const isMobile =
+    window.innerWidth <= 768;
+
   useEffect(() => {
 
     fetchCourse();
@@ -55,26 +58,27 @@ function CourseDetail() {
   }, [id]);
 
   // FETCH COURSE
-  const fetchCourse = async () => {
+  const fetchCourse =
+    async () => {
 
-    try {
+      try {
 
-      const { data } =
-        await axios.get(
-          `${server}/api/course/${id}`
+        const { data } =
+          await axios.get(
+            `${server}/api/course/${id}`
+          );
+
+        setCourse(data);
+
+      } catch (error) {
+
+        console.log(error);
+
+        alert(
+          "Error loading course"
         );
-
-      setCourse(data);
-
-    } catch (error) {
-
-      console.log(error);
-
-      alert(
-        "Error loading course"
-      );
-    }
-  };
+      }
+    };
 
   // CHECK PURCHASE
   const checkPurchase =
@@ -87,7 +91,8 @@ function CourseDetail() {
             "token"
           );
 
-        if (!token) return;
+        if (!token)
+          return;
 
         const { data } =
           await axios.get(
@@ -147,7 +152,8 @@ function CourseDetail() {
           );
 
         setCompletedLectures(
-          data.completedLectures || []
+          data.completedLectures ||
+            []
         );
 
       } catch (error) {
@@ -338,11 +344,23 @@ function CourseDetail() {
       : 0;
 
   return (
-    <div style={styles.page}>
+    <div
+      style={
+        styles.page
+      }
+    >
 
-      <div style={styles.glow1}></div>
+      <div
+        style={
+          styles.glow1
+        }
+      ></div>
 
-      <div style={styles.glow2}></div>
+      <div
+        style={
+          styles.glow2
+        }
+      ></div>
 
       <motion.div
         initial={{
@@ -359,11 +377,17 @@ function CourseDetail() {
           duration: 0.6,
         }}
 
-        style={styles.container}
+        style={
+          styles.container
+        }
       >
 
         {/* IMAGE */}
-        <div style={styles.imageWrapper}>
+        <div
+          style={
+            styles.imageWrapper
+          }
+        >
 
           <img
             src={
@@ -393,9 +417,17 @@ function CourseDetail() {
         </div>
 
         {/* CONTENT */}
-        <div style={styles.content}>
+        <div
+          style={
+            styles.content
+          }
+        >
 
-          <h1 style={styles.title}>
+          <h1
+            style={
+              styles.title
+            }
+          >
             {course.title}
           </h1>
 
@@ -409,6 +441,7 @@ function CourseDetail() {
             }
           </p>
 
+          {/* PRICE */}
           <div
             style={
               styles.priceBox
@@ -540,6 +573,7 @@ function CourseDetail() {
                 styles.lectureTitle
               }
             >
+
               <FaVideo />
 
               Course Lectures
@@ -675,61 +709,127 @@ const styles = {
 
   page: {
     minHeight: "100vh",
-    paddingTop: "90px",
-    paddingBottom: "40px",
-    paddingLeft: "20px",
-    paddingRight: "20px",
+
+    paddingTop:
+      window.innerWidth <= 768
+        ? "80px"
+        : "90px",
+
+    paddingBottom:
+      window.innerWidth <= 768
+        ? "20px"
+        : "40px",
+
+    paddingLeft:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
+
+    paddingRight:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
+
     background:
       "linear-gradient(135deg,#0f0f0f,#111827)",
+
     position: "relative",
+
     overflowX: "hidden",
+
+    boxSizing:
+      "border-box",
   },
 
   glow1: {
     position: "absolute",
+
     top: "-100px",
+
     left: "-100px",
-    width: "350px",
-    height: "350px",
+
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
     borderRadius: "50%",
+
     background:
       "rgba(255,140,0,0.15)",
+
     filter: "blur(90px)",
   },
 
   glow2: {
     position: "absolute",
+
     bottom: "-100px",
+
     right: "-100px",
-    width: "350px",
-    height: "350px",
+
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
+
     borderRadius: "50%",
+
     background:
       "rgba(255,94,0,0.15)",
+
     filter: "blur(90px)",
   },
 
   loading: {
     color: "white",
+
     textAlign: "center",
+
     marginTop: "150px",
-    fontSize: "24px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "20px"
+        : "24px",
   },
 
   container: {
     maxWidth: "1100px",
+
     margin: "auto",
+
     background:
       "rgba(255,255,255,0.04)",
+
     backdropFilter:
       "blur(18px)",
-    borderRadius: "30px",
+
+    borderRadius:
+      window.innerWidth <= 768
+        ? "20px"
+        : "30px",
+
     overflow: "hidden",
+
     border:
       "1px solid rgba(255,140,0,0.15)",
+
     boxShadow:
       "0 0 35px rgba(255,140,0,0.12)",
+
     position: "relative",
+
     zIndex: 2,
   },
 
@@ -739,95 +839,198 @@ const styles = {
 
   image: {
     width: "100%",
-    height: "420px",
+
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "420px",
+
     objectFit: "cover",
   },
 
   overlay: {
     position: "absolute",
-    bottom: "20px",
-    left: "20px",
+
+    bottom:
+      window.innerWidth <= 768
+        ? "12px"
+        : "20px",
+
+    left:
+      window.innerWidth <= 768
+        ? "12px"
+        : "20px",
+
     display: "flex",
+
     alignItems: "center",
-    gap: "10px",
+
+    gap:
+      window.innerWidth <= 768
+        ? "8px"
+        : "10px",
+
     padding:
-      "12px 20px",
+      window.innerWidth <= 768
+        ? "10px 14px"
+        : "12px 20px",
+
     borderRadius: "18px",
+
     background:
       "rgba(0,0,0,0.6)",
+
     color: "white",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "15px",
   },
 
   content: {
-    padding: "35px",
+    padding:
+      window.innerWidth <= 768
+        ? "18px"
+        : "35px",
   },
 
   title: {
     color: "white",
-    fontSize: "42px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "28px"
+        : "42px",
+
     marginBottom: "15px",
+
+    lineHeight: "1.2",
+
+    wordBreak:
+      "break-word",
   },
 
   description: {
     color: "#bbb",
+
     lineHeight: "1.8",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "14px"
+        : "16px",
   },
 
   priceBox: {
     marginTop: "25px",
+
     display: "inline-block",
+
     padding:
-      "12px 22px",
+      window.innerWidth <= 768
+        ? "10px 16px"
+        : "12px 22px",
+
     borderRadius: "18px",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     color: "white",
+
     fontWeight: "bold",
-    fontSize: "24px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "20px"
+        : "24px",
   },
 
   btn: {
     marginTop: "25px",
+
     border: "none",
+
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "fit-content",
+
+    justifyContent:
+      "center",
+
     padding:
-      "16px 28px",
+      window.innerWidth <= 768
+        ? "14px"
+        : "16px 28px",
+
     borderRadius: "18px",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
+
     color: "white",
+
     fontWeight: "bold",
-    fontSize: "16px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "14px"
+        : "16px",
+
     display: "flex",
+
     alignItems: "center",
+
     gap: "12px",
+
     cursor: "pointer",
   },
 
   progressBox: {
     marginTop: "30px",
+
     marginBottom: "30px",
   },
 
   progressTop: {
     display: "flex",
+
     justifyContent:
       "space-between",
+
     color: "white",
+
     marginBottom: "10px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "15px",
   },
 
   progressBar: {
     width: "100%",
-    height: "12px",
+
+    height:
+      window.innerWidth <= 768
+        ? "10px"
+        : "12px",
+
     borderRadius: "20px",
+
     background:
       "rgba(255,255,255,0.1)",
+
     overflow: "hidden",
   },
 
   progressFill: {
     height: "100%",
+
     borderRadius: "20px",
+
     background:
       "linear-gradient(135deg,#ff9800,#ff5e00)",
   },
@@ -838,60 +1041,138 @@ const styles = {
 
   lectureTitle: {
     color: "white",
+
     display: "flex",
+
     alignItems: "center",
+
     gap: "12px",
+
     marginBottom: "25px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "22px"
+        : "28px",
   },
 
   lectureCard: {
-    padding: "20px",
-    borderRadius: "22px",
+    padding:
+      window.innerWidth <= 768
+        ? "14px"
+        : "20px",
+
+    borderRadius:
+      window.innerWidth <= 768
+        ? "18px"
+        : "22px",
+
     background:
       "rgba(255,255,255,0.04)",
+
     border:
       "1px solid rgba(255,255,255,0.06)",
+
     marginBottom: "25px",
   },
 
   lecName: {
     color: "white",
+
     marginBottom: "15px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "18px"
+        : "22px",
+
+    lineHeight: "1.4",
   },
 
   video: {
     width: "100%",
-    borderRadius: "18px",
+
+    borderRadius:
+      window.innerWidth <= 768
+        ? "14px"
+        : "18px",
+
     background: "black",
+
+    maxHeight:
+      window.innerWidth <= 768
+        ? "220px"
+        : "500px",
   },
 
   completeBtn: {
     marginTop: "14px",
+
     border: "none",
+
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "fit-content",
+
     padding:
-      "12px 18px",
+      window.innerWidth <= 768
+        ? "12px"
+        : "12px 18px",
+
     borderRadius: "14px",
+
     background:
       "linear-gradient(135deg,#22c55e,#16a34a)",
+
     color: "white",
+
     cursor: "pointer",
+
     fontWeight: "bold",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "15px",
   },
 
   locked: {
     display: "flex",
+
     alignItems: "center",
+
     gap: "12px",
-    padding: "20px",
+
+    padding:
+      window.innerWidth <= 768
+        ? "16px"
+        : "20px",
+
     borderRadius: "18px",
+
     background:
       "rgba(255,255,255,0.04)",
+
     color: "#aaa",
+
     marginTop: "20px",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "14px"
+        : "16px",
+
+    flexWrap: "wrap",
   },
 
   empty: {
     color: "#888",
+
+    fontSize:
+      window.innerWidth <= 768
+        ? "14px"
+        : "16px",
   },
 };
 

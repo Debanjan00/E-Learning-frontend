@@ -36,6 +36,9 @@ function Dashboard() {
   const navigate =
     useNavigate();
 
+  const isMobile =
+    window.innerWidth <= 768;
+
   useEffect(() => {
 
     fetchMyCourses();
@@ -226,9 +229,7 @@ function Dashboard() {
               scale: 0.95,
             }}
 
-            style={
-              styles.addBtn
-            }
+            style={styles.addBtn}
 
             onClick={() =>
               navigate(
@@ -300,9 +301,7 @@ function Dashboard() {
                     scale: 1.02,
                   }}
 
-                  style={
-                    styles.card
-                  }
+                  style={styles.card}
                 >
 
                   {/* IMAGE */}
@@ -498,13 +497,25 @@ const styles = {
   page: {
     minHeight: "100vh",
 
-    paddingTop: "90px",
+    paddingTop:
+      window.innerWidth <= 768
+        ? "80px"
+        : "90px",
 
-    paddingBottom: "40px",
+    paddingBottom:
+      window.innerWidth <= 768
+        ? "20px"
+        : "40px",
 
-    paddingLeft: "20px",
+    paddingLeft:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
 
-    paddingRight: "20px",
+    paddingRight:
+      window.innerWidth <= 768
+        ? "10px"
+        : "20px",
 
     background:
       "linear-gradient(135deg,#0f0f0f,#111827)",
@@ -512,6 +523,9 @@ const styles = {
     position: "relative",
 
     overflowX: "hidden",
+
+    boxSizing:
+      "border-box",
   },
 
   glow1: {
@@ -521,9 +535,15 @@ const styles = {
 
     left: "-100px",
 
-    width: "350px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
-    height: "350px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
     borderRadius: "50%",
 
@@ -540,9 +560,15 @@ const styles = {
 
     right: "-100px",
 
-    width: "350px",
+    width:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
-    height: "350px",
+    height:
+      window.innerWidth <= 768
+        ? "220px"
+        : "350px",
 
     borderRadius: "50%",
 
@@ -556,14 +582,27 @@ const styles = {
     maxWidth: "1200px",
 
     margin:
-      "0 auto 35px auto",
+      "0 auto 30px auto",
 
     display: "flex",
+
+    flexDirection:
+      window.innerWidth <= 768
+        ? "column"
+        : "row",
 
     justifyContent:
       "space-between",
 
-    alignItems: "center",
+    alignItems:
+      window.innerWidth <= 768
+        ? "flex-start"
+        : "center",
+
+    gap:
+      window.innerWidth <= 768
+        ? "18px"
+        : "0px",
 
     position: "relative",
 
@@ -575,13 +614,22 @@ const styles = {
 
     alignItems: "center",
 
-    gap: "16px",
+    gap:
+      window.innerWidth <= 768
+        ? "12px"
+        : "16px",
   },
 
   logo: {
-    width: "65px",
+    width:
+      window.innerWidth <= 768
+        ? "58px"
+        : "65px",
 
-    height: "65px",
+    height:
+      window.innerWidth <= 768
+        ? "58px"
+        : "65px",
 
     borderRadius: "22px",
 
@@ -592,7 +640,10 @@ const styles = {
     justifyContent:
       "center",
 
-    fontSize: "28px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "24px"
+        : "28px",
 
     color: "white",
 
@@ -608,7 +659,10 @@ const styles = {
 
     color: "white",
 
-    fontSize: "34px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "28px"
+        : "34px",
   },
 
   subtitle: {
@@ -616,14 +670,27 @@ const styles = {
 
     color: "#aaa",
 
-    fontSize: "14px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   addBtn: {
     border: "none",
 
+    width:
+      window.innerWidth <= 768
+        ? "100%"
+        : "auto",
+
+    justifyContent:
+      "center",
+
     padding:
-      "12px 20px",
+      window.innerWidth <= 768
+        ? "14px"
+        : "12px 20px",
 
     borderRadius: "16px",
 
@@ -642,6 +709,11 @@ const styles = {
 
     cursor: "pointer",
 
+    fontSize:
+      window.innerWidth <= 768
+        ? "14px"
+        : "15px",
+
     boxShadow:
       "0 0 20px rgba(255,140,0,0.3)",
   },
@@ -650,11 +722,16 @@ const styles = {
     display: "grid",
 
     gridTemplateColumns:
-      "repeat(auto-fit,minmax(240px,280px))",
+      window.innerWidth <= 768
+        ? "1fr"
+        : "repeat(auto-fit,minmax(240px,280px))",
 
     justifyContent: "center",
 
-    gap: "22px",
+    gap:
+      window.innerWidth <= 768
+        ? "18px"
+        : "22px",
 
     maxWidth: "1200px",
 
@@ -666,7 +743,10 @@ const styles = {
   },
 
   card: {
-    borderRadius: "24px",
+    borderRadius:
+      window.innerWidth <= 768
+        ? "20px"
+        : "24px",
 
     overflow: "hidden",
 
@@ -694,7 +774,10 @@ const styles = {
   image: {
     width: "100%",
 
-    height: "160px",
+    height:
+      window.innerWidth <= 768
+        ? "190px"
+        : "160px",
 
     objectFit: "cover",
   },
@@ -713,7 +796,9 @@ const styles = {
     gap: "6px",
 
     padding:
-      "8px 14px",
+      window.innerWidth <= 768
+        ? "8px 12px"
+        : "8px 14px",
 
     borderRadius: "12px",
 
@@ -725,32 +810,52 @@ const styles = {
 
     color: "white",
 
-    fontSize: "12px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "11px"
+        : "12px",
   },
 
   courseTitle: {
     color: "white",
 
     padding:
-      "18px 18px 8px 18px",
+      window.innerWidth <= 768
+        ? "16px 16px 8px 16px"
+        : "18px 18px 8px 18px",
 
     margin: 0,
 
-    fontSize: "19px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "18px"
+        : "19px",
 
-    minHeight: "48px",
+    lineHeight: "1.4",
+
+    minHeight:
+      window.innerWidth <= 768
+        ? "auto"
+        : "48px",
   },
 
   mainBtn: {
     margin:
-      "0 18px 8px 18px",
+      window.innerWidth <= 768
+        ? "0 16px 8px 16px"
+        : "0 18px 8px 18px",
 
     width:
-      "calc(100% - 36px)",
+      window.innerWidth <= 768
+        ? "calc(100% - 32px)"
+        : "calc(100% - 36px)",
 
     border: "none",
 
-    padding: "12px",
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "12px",
 
     borderRadius: "14px",
 
@@ -772,20 +877,30 @@ const styles = {
 
     cursor: "pointer",
 
-    fontSize: "14px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   certificateBtn: {
     margin:
-      "0 18px 8px 18px",
+      window.innerWidth <= 768
+        ? "0 16px 8px 16px"
+        : "0 18px 8px 18px",
 
     width:
-      "calc(100% - 36px)",
+      window.innerWidth <= 768
+        ? "calc(100% - 32px)"
+        : "calc(100% - 36px)",
 
     border:
       "1px solid rgba(255,140,0,0.3)",
 
-    padding: "12px",
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "12px",
 
     borderRadius: "14px",
 
@@ -807,19 +922,29 @@ const styles = {
 
     cursor: "pointer",
 
-    fontSize: "14px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   lectureBtn: {
     margin:
-      "0 18px 8px 18px",
+      window.innerWidth <= 768
+        ? "0 16px 8px 16px"
+        : "0 18px 8px 18px",
 
     width:
-      "calc(100% - 36px)",
+      window.innerWidth <= 768
+        ? "calc(100% - 32px)"
+        : "calc(100% - 36px)",
 
     border: "none",
 
-    padding: "12px",
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "12px",
 
     borderRadius: "14px",
 
@@ -841,19 +966,29 @@ const styles = {
 
     cursor: "pointer",
 
-    fontSize: "14px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   manageBtn: {
     margin:
-      "0 18px 8px 18px",
+      window.innerWidth <= 768
+        ? "0 16px 8px 16px"
+        : "0 18px 8px 18px",
 
     width:
-      "calc(100% - 36px)",
+      window.innerWidth <= 768
+        ? "calc(100% - 32px)"
+        : "calc(100% - 36px)",
 
     border: "none",
 
-    padding: "12px",
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "12px",
 
     borderRadius: "14px",
 
@@ -875,19 +1010,29 @@ const styles = {
 
     cursor: "pointer",
 
-    fontSize: "14px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   deleteBtn: {
     margin:
-      "0 18px 8px 18px",
+      window.innerWidth <= 768
+        ? "0 16px 8px 16px"
+        : "0 18px 8px 18px",
 
     width:
-      "calc(100% - 36px)",
+      window.innerWidth <= 768
+        ? "calc(100% - 32px)"
+        : "calc(100% - 36px)",
 
     border: "none",
 
-    padding: "12px",
+    padding:
+      window.innerWidth <= 768
+        ? "13px"
+        : "12px",
 
     borderRadius: "14px",
 
@@ -909,7 +1054,10 @@ const styles = {
 
     cursor: "pointer",
 
-    fontSize: "14px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "13px"
+        : "14px",
   },
 
   empty: {
@@ -924,9 +1072,15 @@ const styles = {
 
     gap: "12px",
 
-    fontSize: "18px",
+    fontSize:
+      window.innerWidth <= 768
+        ? "16px"
+        : "18px",
 
-    padding: "60px",
+    padding:
+      window.innerWidth <= 768
+        ? "40px 20px"
+        : "60px",
   },
 };
 
